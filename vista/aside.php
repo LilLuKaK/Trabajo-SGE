@@ -1,0 +1,56 @@
+<aside>
+    <div class="top">
+        <div class="logo">
+            <img src="./assets/images/common/logo.png" />
+            <h2 cla>JUAN XXIII</span></h2>
+        </div>
+        <div class="close" id="close-btn">
+            <span class="material-icons-sharp">close</span>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <a href="index.php?pages=landing" class="active">
+            <span class="material-icons-sharp">dashboard</span>
+            <h3>Inicio</h3>
+        </a>
+        <a href="index.php?pages=login">
+            <span class="material-icons-sharp">person_outline</span>
+            <h3>Login(provisional)</h3>
+        </a>
+        <a href="index.php?pages=register">
+            <span class="material-icons-sharp">receipt_long</span>
+            <h3>Registro(provisional)</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">insights</span>
+            <h3>Ejemplo 3</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">mail_outline</span>
+            <h3>Ejemplo 4</h3>
+            <span class="message-count">26</span>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">inventory</span>
+            <h3>Ejemplo 5</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">report_gmailerrorred</span>
+            <h3>Ejemplo 6</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">settings</span>
+            <h3>Ejemplo 7</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">add</span>
+            <h3>Ejemplo 8</h3>
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">logout</span>
+            <h3>Cerrar Sesión</h3>
+        </a>
+    </div>
+</aside>
+<!------------------ FIN DE ASIDE ------------------>

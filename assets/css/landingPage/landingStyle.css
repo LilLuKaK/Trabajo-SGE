@@ -1,0 +1,465 @@
+/* ================= RIGHT ================ */
+.right {
+    margin-top: 1.4rem;
+}
+
+.right .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.right .top .profile {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2rem;
+    text-align: right;
+}
+
+.right .top .info {
+    order: 1;
+    font-size: 1.25rem;
+}
+
+.right .top .profile-photo {
+    order: 2;
+}
+
+.right .mid{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ================= ULTIMOS CAMBIOS ================ */
+.right .sales-analytics {
+    margin-top: 5rem;
+    width: 30%;
+}
+
+.right .sales-analytics h2 {
+    margin-bottom: 0.8rem;
+}
+
+.right .sales-analytics .item {
+    background: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    padding: 1.4rem var(--card-padding);
+    border-radius: var(--border-radius-3);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.right .sales-analytics .item:hover {
+    box-shadow: none;
+}
+
+.right .sales-analytics .item .right {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: 0;
+    width: 100%;
+}
+
+.right .sales-analytics .item .icon {
+    padding: 0.6rem;
+    color: var(--color-white);
+    border-radius: 50%;
+    background: var(--color-primary);
+    display: flex;
+}
+
+.right .sales-analytics .item.offline .icon {
+    background: var(--color-danger);
+}
+
+.right .sales-analytics .item.customers .icon {
+    background: var(--color-success);
+}
+
+.right .sales-analytics .add-product {
+    background-color: transparent;
+    border: 2px dashed var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: white;
+}
+
+.right .sales-analytics .add-product:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.right .sales-analytics .add-product div {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.right .sales-analytics .add-product div h3 {
+    font-weight: 600;
+}
+
+/* ================= CALENDARIO ================ */
+.calendar-container{
+    margin-top: 5rem;
+    width: 30%;
+}
+
+.calendar-container h2 {
+    margin-bottom: 0.8rem;
+}
+
+.datepicker {
+	background-color: var(--c-bg-tertiary);
+	border-radius: 10px;
+	box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
+	padding: 1rem;
+
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.datepicker:hover {
+    box-shadow: none;
+}
+
+.datepicker-top {
+	margin-bottom: 1rem;
+}
+
+.btn-group {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 1rem;
+	margin-top: -.5rem;
+}
+
+.tag {
+	margin-right: .5rem;
+	margin-top: .5rem;
+	border: 0;
+	background-color: var(--c-bg-secondary);
+	border-radius: 10px;
+	padding: .5em .75em;
+	font-weight: 600;
+}
+
+.month-selector {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	background-color:#FFF;
+	border-radius: 12px;
+	width: 2.5rem;
+	height: 2.5rem;
+	box-shadow: 0 0 2px 0 rgba(#000,.25), 0 0 10px 0 rgba(#000, .15);
+}
+
+.month-name {
+	font-weight: 600;
+}
+
+.datepicker-calendar {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-row-gap: 1rem;
+}
+
+.day, .date {
+	justify-self: center;
+}
+
+.day {
+	color: var(--c-text-secondary);
+	font-size: .875em;
+	font-weight: 500;
+	justify-self: center;
+}
+
+.date {
+	border: 0;
+	padding: 0;
+	width: 2.25rem;
+	height: 2.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 6px;
+	font-weight: 600;
+	border: 2px solid transparent;
+	background-color: transparent;
+	cursor: pointer;
+	&:focus {
+		outline: 0;
+		color: var(--c-theme-primary);
+		border: 2px solid var(--c-theme-primary-accent);	
+	}	
+}
+
+.faded {
+	color: var(--c-text-secondary);
+}
+
+.current-day {
+	color: #FFF;
+	border-color: var(--c-theme-primary);
+	background-color: var(--c-theme-primary);
+	&:focus {
+		background-color: var(--c-theme-primary-accent);
+	}
+}
+
+/* ================= TUTORES ================ */
+.right .recent-updates {
+    margin-top: 5rem;
+    width: 30%;
+}
+
+.right .recent-updates h2 {
+    margin-bottom: 0.8rem;
+}
+
+.right .recent-updates .updates {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.right .recent-updates .updates:hover {
+    box-shadow: none;
+}
+
+.right .recent-updates .updates .update {
+    display: grid;
+    grid-template-columns: 2.6rem auto;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* ================= MEDIA ================ */
+@media screen and (max-width: 1200px) {
+    .container {
+        width: 94%;
+        grid-template-columns: 7rem auto 23rem;
+    }
+    
+    aside .logo h2 {
+        display: none;
+    }
+    
+    aside .sidebar h3 {
+        display: none;
+    }
+    
+    aside .sidebar a {
+        width: 5.6rem;
+    }
+    
+    aside .sidebar a:last-child {
+        position: relative;
+        margin-top: 1.8rem;
+    }
+    
+    main .insights {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    
+    main .recent-orders {
+        width: 94%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 2rem 0 0 8.8rem;
+    }
+    
+    main .recent-orders table {
+        width: 83vw;
+    }
+    
+    main table thead tr th:last-child,
+    main table thead tr th:first-child {
+        display: none;
+    }
+    
+    main table tbody tr td:last-child,
+    main table tbody tr td:first-child {
+        display: none;
+    }
+}
+
+/* ================= MEDIA ================ */
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+    
+    aside {
+        position: fixed;
+        left: -100%;
+        background: var(--color-white);
+        width: 18rem;
+        z-index: 3;
+        box-shadow: 1rem 3rem 4rem var(--color-light);
+        height: 100vh;
+        padding-right: var(--card-padding);
+        display: none;
+        animation: showMenu 400ms ease forwards;
+    }
+    
+    @keyframes showMenu {
+        to {
+            left: 0;
+        }
+    }
+    
+    aside .logo {
+        margin-left: 1rem;
+    }
+    
+    aside .logo h2 {
+        display: inline;
+    }
+    
+    aside .sidebar h3 {
+        display: inline;
+    }
+    
+    aside .sidebar a {
+        width: 100%;
+        height: 3.4rem;
+    }
+    
+    aside .sidebar a:last-child {
+        position: absolute;
+        bottom: 5rem;
+    }
+    
+    aside .close {
+        display: inline-block;
+        cursor: pointer;
+    }
+    
+    main {
+        margin-top: 8rem;
+        padding: 0 1rem;
+    }
+    
+    main .insights > div {
+        width: 100%;
+    }
+    
+    main .recent-orders {
+        position: relative;
+        margin: 3rem 0 0 0;
+        width: 100%;
+    }
+    
+    main .recent-orders table {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .right {
+        width: 94%;
+        margin: 0 auto 4rem;
+    }
+    
+    .right .top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        padding: 0 0.8rem;
+        height: 4.6rem;
+        background: var(--color-white);
+        width: 100%;
+        margin: 0;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--color-light);
+    }
+    
+    .right .top .theme-toggler {
+        width: 4.4rem;
+        position: absolute;
+        left: 66%;
+    }
+    
+    .right .profile .info {
+        display: none;
+    }
+    
+    .right .top button {
+        display: inline-block;
+        background: transparent;
+        cursor: pointer;
+        color: var(--color-dark);
+        position: absolute;
+        left: 1rem;
+    }
+    
+    .right .top button span {
+        font-size: 2rem;
+    }
+}
+
+/*--------------------------------------------------------------------------------SLIDER*/
+
+.low{
+    width: 100%;
+    margin-top: 4rem;
+}
+
+.slider-valores {
+    width: 85vw;
+    height: auto;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slider-valores .slide-track {
+    display: flex;
+    animation: scroll 40s linear infinite;
+    -webkit-animation: scroll 40s linear infinite;
+    width: calc(200px * 14);
+}
+
+.slider-valores .slide {
+    width: 200px;
+}
+
+.slider-valores .slide img {
+    width: 100%;
+}
+
+@keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(calc(-200px * 7));
+        transform: translateX(calc(-200px * 7));
+    }
+}
