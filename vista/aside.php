@@ -47,7 +47,7 @@
             <span class="material-icons-sharp">add</span>
             <h3>Ejemplo 8</h3>
         </a>
-        <a href="#">
+        <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>
             <h3>Cerrar Sesión</h3>
         </a>

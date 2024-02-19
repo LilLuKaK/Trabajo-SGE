@@ -11,19 +11,24 @@
             <h1>Iniciar Sesión</h1>
             <p>Inicie sesión en su cuenta utilizando sus credenciales</p>
             <form class="sign-in__form">
-                <div class="form__control">
+                <div class="form__control" id="contenedorEmail">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Introduce tu correo electrónico">
+                    <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico">
+                    <div id="email-error"></div>
                 </div>
-                <div class="form__control">
+                <div class="form__control" id="contenedorClave">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="email" placeholder="Introduce tu contraseña">
+                    <input type="password" id="clave" name="clave" placeholder="Introduce tu contraseña">
+                    <div id="clave-error"></div>
                 </div>
-                <button class="btn primary" type="submit">Acceder</button>
+                <input type="hidden" name="login" value="login">
+                <input type="submit" class="btn primary" value="Acceder" name="login" id="buttonEnviar">
             </form>
         </article>
         <article class="sign-in__logo">
         </article>
     </section>
+    <script src="./assets/js/login/loginScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

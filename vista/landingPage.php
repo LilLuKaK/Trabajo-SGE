@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +19,7 @@
             <div class="top">
                 <div class="profile">
                     <div class="info">
-                        <p>Bienvenido, <b>Usuario</b></p>
+                        <p>Bienvenido, <b><?php $_SESSION['nombre'] ?></b></p>
                         <small class="text-muted">Tutor de prácticas</small>
                     </div>
                     <div class="profile-photo">
@@ -238,5 +239,7 @@
         </div>
     </div>
     <script src="./assets/js/landingPage/landingScript.js"></script>
+    <script src="./assets/js/common/commonScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
