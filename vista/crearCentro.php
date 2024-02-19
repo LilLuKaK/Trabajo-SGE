@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
+    <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
+</head>
+<body>
+    <div class="container">
+        
+        <?php
+        $activeLink = 'crearCentro';
+        include 'aside.php';
+        ?>
+
+        <div class="contenedorRegistro">
+            <section class="sign-in">
+                <article class="sign-in__details">
+                    <h1>Crear Centro</h1>
+                    <p>Complete el siguiente formulario para crear un centro educativo</p>
+                    <form class="sign-in__form">
+                        <div class="form__control">
+                            <label for="name">Nombre</label>
+                            <input type="text" id="name" name="name" placeholder="Introduce el nombre">
+                        </div>
+                        <div class="form__control">
+                            <label for="cif">CIF</label>
+                            <input type="text" id="cif" name="cif" placeholder="Introduce el cif">
+                        </div>
+                        <div class="form__control">
+                            <label for="duenyo">Dueño</label>
+                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el dueño">
+                        </div>
+                        <div class="form__control">
+                            <label for="direccion">Direccion</label>
+                            <input type="text" id="direccion" name="direccion" placeholder="Introduce la direccion">
+                        </div>
+                        <div class="form__control">
+                            <label for="telefono">Telefono</label>
+                            <input type="text" id="telefono" name="telefono" placeholder="Introduce el telefono">
+                        </div>
+                        <div class="form__control" id="contenedorEmail">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico">
+                            <div id="email-error"></div>
+                        </div>
+                        <input type="hidden" name="login" value="login">
+                        <input type="submit" class="btn primary" value="Crear Centro" name="login" id="buttonEnviar">
+                    </form>
+                </article>
+                <article class="sign-in__logo">
+                </article>
+            </section>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./assets/js/register/registerScript.js"></script>
+    <script src="./assets/js/common/commonScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>

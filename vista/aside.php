@@ -22,9 +22,9 @@
             <span class="material-icons-sharp">receipt_long</span>
             <h3>Registro(provisional)</h3>
         </a>
-        <a href="#">
+        <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">insights</span>
-            <h3>Ejemplo 3</h3>
+            <h3>Crear Centro</h3>
         </a>
         <a href="#">
             <span class="material-icons-sharp">mail_outline</span>
