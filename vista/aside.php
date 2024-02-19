@@ -10,7 +10,7 @@
     </div>
     
     <div class="sidebar">
-        <a href="index.php?pages=landing" class="active">
+        <a href="index.php?pages=landing" <?php if ($activeLink === 'landing') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">dashboard</span>
             <h3>Inicio</h3>
         </a>
@@ -18,7 +18,7 @@
             <span class="material-icons-sharp">person_outline</span>
             <h3>Login(provisional)</h3>
         </a>
-        <a href="index.php?pages=register">
+        <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">receipt_long</span>
             <h3>Registro(provisional)</h3>
         </a>

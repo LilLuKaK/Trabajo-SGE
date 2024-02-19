@@ -1,4 +1,6 @@
-<?php session_start(); ?>
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,13 +15,16 @@
 <body>
     <div class="container">
         
-        <?php include 'aside.php'; ?>
+        <?php
+        $activeLink = 'landing';
+        include 'aside.php';
+        ?>
         
         <div class="right">
             <div class="top">
                 <div class="profile">
                     <div class="info">
-                        <p>Bienvenido, <b><?php $_SESSION['nombre'] ?></b></p>
+                        <p>Bienvenido, <b><?php echo $_SESSION['nombre'] ?></b></p>
                         <small class="text-muted">Tutor de prácticas</small>
                     </div>
                     <div class="profile-photo">
@@ -32,7 +37,7 @@
                 
                 <div class="sales-analytics">
                     <h2>Ultimos cámbios</h2>
-                    <a href="#"><div class="item online">
+                    <div class="item online">
                         <div class="icon">
                             <span class="material-icons-sharp">person_add</span>
                         </div>
@@ -44,7 +49,7 @@
                             <h5 class="success">-----</h5>
                             <h3>-----</h3>
                         </div>
-                    </div></a>
+                    </div>
                     <div class="item offline">
                         <div class="icon">
                             <span class="material-icons-sharp">manage_accounts</span>

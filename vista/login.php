@@ -29,6 +29,7 @@
         </article>
     </section>
     <script src="./assets/js/login/loginScript.js"></script>
+    <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

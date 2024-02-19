@@ -10,7 +10,10 @@
 <body>
     <div class="container">
         
-        <?php include 'aside.php'; ?>
+        <?php
+        $activeLink = 'register';
+        include 'aside.php';
+        ?>
 
         <div class="contenedorRegistro">
             <section class="sign-in">
@@ -58,5 +61,7 @@
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/register/registerScript.js"></script>
+    <script src="./assets/js/common/commonScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
