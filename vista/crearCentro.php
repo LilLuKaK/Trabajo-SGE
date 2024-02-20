@@ -20,34 +20,39 @@
                 <article class="sign-in__details">
                     <h1>Crear Centro</h1>
                     <p>Complete el siguiente formulario para crear un centro educativo</p>
-                    <form class="sign-in__form">
-                        <div class="form__control">
-                            <label for="name">Nombre</label>
-                            <input type="text" id="name" name="name" placeholder="Introduce el nombre">
+                    <form class="sign-in__form" id="registroForm">
+                        <div class="form__control" id="contenedorNombre">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre">
+                            <div id="nombre-error"></div>
                         </div>
-                        <div class="form__control">
+                        <div class="form__control" id="contenedorDif">
                             <label for="cif">CIF</label>
                             <input type="text" id="cif" name="cif" placeholder="Introduce el cif">
+                            <div id="cif-error"></div>
                         </div>
-                        <div class="form__control">
+                        <div class="form__control" id="contenedorDuenyo">
                             <label for="duenyo">Dueño</label>
                             <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el dueño">
+                            <div id="duenyo-error"></div>
                         </div>
-                        <div class="form__control">
+                        <div class="form__control" id="contenedorDireccion">
                             <label for="direccion">Direccion</label>
                             <input type="text" id="direccion" name="direccion" placeholder="Introduce la direccion">
+                            <div id="direccion-error"></div>
                         </div>
-                        <div class="form__control">
+                        <div class="form__control" id="contenedorTelefono">
                             <label for="telefono">Telefono</label>
                             <input type="text" id="telefono" name="telefono" placeholder="Introduce el telefono">
+                            <div id="telefono-error"></div>
                         </div>
                         <div class="form__control" id="contenedorEmail">
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico">
                             <div id="email-error"></div>
                         </div>
-                        <input type="hidden" name="login" value="login">
-                        <input type="submit" class="btn primary" value="Crear Centro" name="login" id="buttonEnviar">
+                        <input type="hidden" name="registrarCentro" value="registrarCentro">
+                        <input type="submit" class="btn primary" value="Crear Centro" name="registrarCentro" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
@@ -55,9 +60,9 @@
             </section>
         </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/register/registerScript.js"></script>
+    <script src="./assets/js/centroFormativo/centroFormativoScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>

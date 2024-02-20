@@ -24,7 +24,7 @@
         </a>
         <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">insights</span>
-            <h3>Crear Centro</h3>
+            <h3>Crear Centro(provisional)</h3>
         </a>
         <a href="#">
             <span class="material-icons-sharp">mail_outline</span>

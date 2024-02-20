@@ -64,6 +64,31 @@ function registrarUsuario($nombre, $apellidos, $direccion, $email, $telefono, $c
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) {
+    $conn = ConexionBD::conectar();
+
+    // Si a conexion a la base de datos es correcta
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT Nombre FROM centro_formativo WHERE Nombre = ?");
+        $stmt->execute([$nombre]);
+        $existeCentro = $stmt->fetch();
+        
+        // Si el Centro esta registrado en la base de datos
+        if ($existeCentro) {
+            return json_encode(array('error' => 'El centro ya está registrado.'));
+
+        // Si el centro no existe en la base de datos
+        }else{
+            $stmt = $conn->prepare("INSERT INTO centro_formativo (Nombre, CIF, DUENYO, Direccion, Telefono, EMAIL) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$nombre, $cif, $duenyo, $direccion, $telefono, $email]);
+    
+            return json_encode(array('success' => 'Centro registrado con éxito.'));
+        }
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
 function cerrarSesion() {
     session_start();
     session_unset();
