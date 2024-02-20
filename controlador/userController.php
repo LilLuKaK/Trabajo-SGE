@@ -36,6 +36,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
+    }else if(isset($_POST["registrarTutor"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombre = limpiaString($_POST["nombre"]);
+        $apellidos = limpiaString($_POST["apellidos"]);
+        $email = limpiaString($_POST["email"]);
+        $clave = limpiaString($_POST["clave"]);
+
+        $registroLimpio = array(
+            'nombre' => $nombre, 
+            'apellidos' => $apellidos,
+            'clave' => $clave
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarTutor($nombre, $apellidos, $clave);
+
+        echo $respuesta;
+
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();

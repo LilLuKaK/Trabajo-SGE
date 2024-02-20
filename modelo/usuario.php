@@ -39,12 +39,12 @@ function logearUsuario($email, $clave) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarUsuario($nombre, $apellidos, $direccion, $email, $telefono, $cpostal, $clave) {
+function registrarTutor($nombre, $apellidos, $email, $clave) {
     $conn = ConexionBD::conectar();
 
     // Si a conexion a la base de datos es correcta
     if ($conn) {
-        $stmt = $conn->prepare("SELECT email_cuenta FROM cuentas WHERE email_cuenta = ?");
+        $stmt = $conn->prepare("SELECT EMAIL_Usuario FROM usuario WHERE EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $existeCorreo = $stmt->fetch();
         
@@ -54,8 +54,8 @@ function registrarUsuario($nombre, $apellidos, $direccion, $email, $telefono, $c
 
         // Si el correo no existe en la base de datos
         }else{
-            $stmt = $conn->prepare("INSERT INTO cuentas (nombre_cuenta, apellidos_cuenta, direccion_cuenta, email_cuenta, telefono_cuenta, cpostal_cuenta, clave_cuenta, rol_cuenta) VALUES (?, ?, ?, ?, ?, ?, ?, 'user')");
-            $stmt->execute([$nombre, $apellidos, $direccion, $email, $telefono, $cpostal, password_hash($clave, PASSWORD_DEFAULT)]);
+            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellidos, EMAIL_Usuario, clave) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$nombre, $apellidos, $email, password_hash($clave, PASSWORD_DEFAULT)]);
     
             return json_encode(array('success' => 'Usuario registrado con éxito.'));
         }

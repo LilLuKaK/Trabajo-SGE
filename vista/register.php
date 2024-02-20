@@ -20,14 +20,16 @@
                 <article class="sign-in__details">
                     <h1>Crear Cuenta</h1>
                     <p>Complete el siguiente formulario para crear una cuenta</p>
-                    <form class="sign-in__form">
+                    <form class="sign-in__form" id="registroForm">
                         <div class="form__control">
-                            <label for="fullname">Nombre</label>
-                            <input type="text" id="fullname" placeholder="Introduce el nombre completo">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
+                            <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="fullname">Apellido/s</label>
-                            <input type="text" id="apellidos" placeholder="Introduce el apellido o apellidos">
+                            <label for="apellidos">Apellido/s</label>
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Introduce el apellido o apellidos">
+                            <div id="apellidos-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="fullname">Centro</label>
@@ -41,17 +43,21 @@
                         </div>
                         <div class="form__control">
                             <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="Introduce el correo">
+                            <input type="email" id="email" name="email" placeholder="Introduce el correo">
+                            <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="password">Contraseña</label>
-                            <input type="password" id="clave" placeholder="Introduce la contraseña">
+                            <input type="password" id="clave" name="clave" placeholder="Introduce la contraseña">
+                            <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="cpassword">Confirmar Contraseña</label>
-                            <input type="password" id="claveRepetida" placeholder="Introduce la contraseña otra vez">
+                            <input type="password" id="claveRepetida" name="claveRepetida" placeholder="Introduce la contraseña otra vez">
+                            <div id="nombre-error"></div>
                         </div>
-                        <button class="btn primary" type="submit">Registrar</button>
+                        <input type="hidden" name="registrarTutor" value="registrarTutor">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarTutor" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
