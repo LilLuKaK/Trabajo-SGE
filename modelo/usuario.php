@@ -7,7 +7,7 @@ function logearUsuario($email, $clave) {
 
     if ($conn) {
         // Consulta a la base de datos para obtener el usuario por su email
-        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas WHERE usuario.EMAIL_Usuario = ?");
+        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave, centro_formativo.Nombre AS nombre_centro FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE usuario.EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch();
 
@@ -17,43 +17,7 @@ function logearUsuario($email, $clave) {
                 session_start();
                 $_SESSION['nombre'] = $usuario['Nombre'];
                 $_SESSION['email'] = $usuario['EMAIL_Usuario'];
-
-                // Devolver todos los datos del usuario
-                return json_encode(array(
-                    'success' => 'Inicio de sesion exitoso.',
-                    'nombre' => $usuario['Nombre'],
-                    'apellido1' => $usuario['Apellido1'],
-                    'apellido2' => $usuario['Apellido2'],
-                    'email' => $usuario['EMAIL_Usuario']
-                ));
-            // Si la contraseña esta incorrecta
-            } else {
-                return json_encode(array('error' => 'Contraseña incorrecta.'));
-            }
-        // Si no se reconoce que el email este registrado en la base de datos
-        } else {
-            return json_encode(array('error' => 'Correo desconocido.'));
-        }
-    }
-
-    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
-}
-
-function logearUsuario1($email, $clave) {
-    $conn = ConexionBD::conectar();
-
-    if ($conn) {
-        // Consulta a la base de datos para obtener el usuario por su email y la contraseña hasheada
-        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave_hash FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas WHERE usuario.EMAIL_Usuario = ?");
-        $stmt->execute([$email]);
-        $usuario = $stmt->fetch();
-
-        if ($usuario) {
-            // Verifica si la contraseña ingresada por el usuario coincide con la contraseña hasheada en la base de datos
-            if (password_verify($clave, $usuario['clave_hash'])) {
-                session_start();
-                $_SESSION['nombre'] = $usuario['Nombre'];
-                $_SESSION['email'] = $usuario['EMAIL_Usuario'];
+                $_SESSION['nombre_centro'] = $usuario['nombre_centro']; // Guardar el nombre del centro en la sesión
 
                 // Devolver todos los datos del usuario
                 return json_encode(array(
@@ -61,11 +25,14 @@ function logearUsuario1($email, $clave) {
                     'nombre' => $usuario['Nombre'],
                     'apellido1' => $usuario['Apellido1'],
                     'apellido2' => $usuario['Apellido2'],
-                    'email' => $usuario['EMAIL_Usuario']
+                    'email' => $usuario['EMAIL_Usuario'],
+                    'nombre_centro' => $usuario['nombre_centro'] // Incluir el nombre del centro en la respuesta
                 ));
+            // Si la contraseña está incorrecta
             } else {
                 return json_encode(array('error' => 'Contraseña incorrecta.'));
             }
+        // Si no se reconoce que el email esté registrado en la base de datos
         } else {
             return json_encode(array('error' => 'Correo desconocido.'));
         }
@@ -179,3 +146,4 @@ function limpiaString($cadena){
     $string = str_ireplace("==", "", $string);
     return $string;
 }
+

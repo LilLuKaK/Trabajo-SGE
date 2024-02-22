@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -147,42 +144,40 @@ session_start();
                     </div>
                 </div>
                 <!----------------- FIN DE CALENDARIO -------------------->
+                <?php
+                require './modelo/conexion.php';
+                // Obtener el nombre del centro educativo del usuario actual
+                $nombre_centro = ($_SESSION['nombre_centro']);
+
+                // Consultar la base de datos para obtener los nombres de los usuarios del mismo centro educativo
+                $conn = ConexionBD::conectar();
+
+                if ($conn) {
+                    $stmt = $conn->prepare("SELECT usuario.Nombre FROM usuario INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE UPPER(centro_formativo.Nombre) = ?");
+                    $stmt->execute([$nombre_centro]);
+                    $usuarios = $stmt->fetchAll(PDO::FETCH_COLUMN);
+                }
+                ?>
                 <div class="recent-updates">
                     <h2>Tutores de prácticas</h2>
                     <div class="updates">
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="./assets/images/common/profile-1.jpg" />
-                            </div>
-                            <div class="message">
-                                <p>
-                                    <b>Nombre Ejemplo</b>
-                                </p>
-                                <small class="text-muted">Tutor de prácticas</small>
-                            </div>
-                        </div>
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="./assets/images/common/profile-1.jpg" />
-                            </div>
-                            <div class="message">
-                                <p>
-                                    <b>Nombre Ejemplo</b>
-                                </p>
-                                <small class="text-muted">Tutor de prácticas</small>
-                            </div>
-                        </div>
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="./assets/images/common/profile-1.jpg" />
-                            </div>
-                            <div class="message">
-                                <p>
-                                    <b>Nombre Ejemplo</b>
-                                </p>
-                                <small class="text-muted">Tutor de prácticas</small>
-                            </div>
-                        </div>
+                        <?php if (!empty($usuarios)): ?>
+                            <?php foreach ($usuarios as $nombre_usuario): ?>
+                                <div class="update">
+                                    <div class="profile-photo">
+                                        <img src="./assets/images/common/profile-1.jpg" />
+                                    </div>
+                                    <div class="message">
+                                        <p>
+                                            <b><?php echo $nombre_usuario; ?></b>
+                                        </p>
+                                        <small class="text-muted">Tutor de prácticas</small>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No hay tutores de prácticas en este centro educativo.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!----------------- FIN DE TUTORES -------------------->

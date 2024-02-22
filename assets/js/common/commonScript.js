@@ -48,3 +48,10 @@ document.getElementById('cerrarSesion').addEventListener('click', function() {
 });
 
 //-----------------------------------------------------------------------------------------------------------------------------
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Aquí verificas si hay una sesión iniciada y si hay un nombre de centro educativo asociado
+    if (sessionStorage.getItem('nombre_centro')) {
+        document.getElementById('nombreCentro').textContent = sessionStorage.getItem('nombre_centro');
+    }
+});

@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function validarNombre() {
-        const nombrePattern = /(^[A-ZÁÉÍÓÚ]{1}[a-záéíóú]+)(\s[A-ZÁÉÍÓÚ]{1}[a-záéíóú]+)?$/;
+        const nombrePattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
         if (nombreInput.value.trim() === "") {
             nombreError.textContent = '';
             return false;
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validarApellidos() {
         const contenedorApellidos = document.getElementById('contenedorApellidos');
-        const apellidosPattern = /(^[A-ZÁÉÍÓÚ]{1}[a-záéíóú]+)(\s[A-ZÁÉÍÓÚ]{1}[a-záéíóú]+)?$/;
+        const apellidosPattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
         if (apellidosInput.value.trim() === "") {
             apellidosError.textContent = '';
             return false;

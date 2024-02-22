@@ -2,7 +2,8 @@
     <div class="top">
         <div class="logo">
             <img src="./assets/images/common/logo.png" />
-            <h2 cla>JUAN XXIII</span></h2>
+            <?php session_start(); ?>
+            <h2><?php echo strtoupper($_SESSION['nombre_centro']); ?></h2>
         </div>
         <div class="close" id="close-btn">
             <span class="material-icons-sharp">close</span>
