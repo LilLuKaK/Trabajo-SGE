@@ -109,6 +109,72 @@ a, a:active, a:visited {
     gap: 0.5rem;
 }
 
+/* Estilo para el contenedor del radio */
+#activo {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para los botones de radio */
+#activo input[type="radio"] {
+    display: none; /* Oculta el botón de radio original */
+}
+
+/* Estilo para la etiqueta del botón de radio */
+#activo label {
+    margin-right: 10px; /* Espacio entre el botón y el texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+/* Estilo para el botón de radio personalizado */
+#activo label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* Tamaño del botón de radio */
+    height: 20px; /* Tamaño del botón de radio */
+    border: 1px solid var(--color-body-bg); /* Borde del botón de radio */
+    border-radius: 50%; /* Forma redondeada del botón de radio */
+    margin-right: 5px; /* Espacio entre el botón y el texto */
+}
+
+/* Estilo para el botón de radio seleccionado */
+#activo input[type="radio"]:checked + label::before {
+    background-color: var(--color-body-bg); /* Color de fondo cuando está seleccionado */
+}
+
+/* Estilo para el contenedor del radio */
+#validez {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para los botones de radio */
+#validez input[type="radio"] {
+    display: none; /* Oculta el botón de radio original */
+}
+
+/* Estilo para la etiqueta del botón de radio */
+#validez label {
+    margin-right: 10px; /* Espacio entre el botón y el texto */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+}
+
+/* Estilo para el botón de radio personalizado */
+#validez label::before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* Tamaño del botón de radio */
+    height: 20px; /* Tamaño del botón de radio */
+    border: 1px solid var(--color-body-bg); /* Borde del botón de radio */
+    border-radius: 50%; /* Forma redondeada del botón de radio */
+    margin-right: 5px; /* Espacio entre el botón y el texto */
+}
+
+/* Estilo para el botón de radio seleccionado */
+#validez input[type="radio"]:checked + label::before {
+    background-color: var(--color-body-bg); /* Color de fondo cuando está seleccionado */
+}
+
 input:not([type="checkbox"]) {
     width: 100%;
     border: 1px solid var(--color-body-bg);

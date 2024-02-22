@@ -32,30 +32,81 @@
                             <div id="apellidos-error"></div>
                         </div>
                         <div class="form__control">
+                            <label for="dni">DNI</label>
+                            <input type="text" id="dni" name="dni" placeholder="Introduce el dni">
+                            <div id="dni-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="N_Seg_social">Numero de la Seguridad Social</label>
+                            <input type="text" id="N_Seg_social" name="N_Seg_social" placeholder="Introduce el Numero de la Seguridad Social">
+                            <div id="N_Seg_social-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="Curriculum_Vitae">Curriculum Vitae</label>
+                            <input type="text" id="Curriculum_Vitae" name="Curriculum_Vitae" placeholder="Introduce el Curriculum Vitae">
+                            <div id="Curriculum_Vitae-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="activo">Activo</label>
+                            <div id="activo">
+                                <input type="radio" id="siActivo" name="activo" value="1">
+                                <label for="siActivo">Sí</label>
+                                <input type="radio" id="noActivo" name="activo" value="0">
+                                <label for="noActivo">No</label>
+                            </div>
+                            <div id="activo-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="validez">Validez</label>
+                            <div id="validez">
+                                <input type="radio" id="siValidez" name="validez" value="1">
+                                <label for="siValidez">Sí</label>
+                                <input type="radio" id="noValidez" name="validez" value="0">
+                                <label for="noValidez">No</label>
+                            </div>
+                            <div id="validez-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="TELF_Alumno">Telefono</label>
+                            <input type="text" id="TELF_Alumno" name="TELF_Alumno" placeholder="Introduce el telefono">
+                            <div id="TELF_Alumno-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="EMAIL_Alumno">Email</label>
+                            <input type="text" id="EMAIL_Alumno" name="EMAIL_Alumno" placeholder="Introduce el email">
+                            <div id="EMAIL_Alumno-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="Direccion">Direccion</label>
+                            <input type="text" id="Direccion" name="Direccion" placeholder="Introduce el Direccion">
+                            <div id="Direccion-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="Codigo_Postal">Codigo Postal</label>
+                            <input type="text" id="Codigo_Postal" name="Codigo_Postal" placeholder="Introduce el Codigo Postal">
+                            <div id="Codigo_Postal-error"></div>
+                        </div>
+                        <div class="form__control">
                             <label for="fullname">Centro</label>
                             <select name="centro" id="centro">
                                 <option value='' selected disabled>-- Selecciona el centro --</option>
                                 <?php
                                 // Incluir la consulta de los centros
-                                include './../modelo/centro_formativo.phps';
+                                include './../modelo/centro_formativo.php';
                                 ?>
                             </select>
                             <div id="centro-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Introduce el correo">
-                            <div id="email-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="password">Contraseña</label>
-                            <input type="password" id="clave" name="clave" placeholder="Introduce la contraseña">
-                            <div id="clave-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="cpassword">Confirmar Contraseña</label>
-                            <input type="password" id="claveRepetida" name="claveRepetida" placeholder="Introduce la contraseña otra vez">
-                            <div id="claveRepetida-error"></div>
+                            <label for="fullname">Centro</label>
+                            <select name="centro" id="centro">
+                                <option value='' selected disabled>-- Selecciona el centro --</option>
+                                <?php
+                                // Incluir la consulta de los centros
+                                include './../modelo/centro_formativo.php';
+                                ?>
+                            </select>
+                            <div id="centro-error"></div>
                         </div>
                         <input type="hidden" name="registrarAlumno" value="registrarAlumno">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
