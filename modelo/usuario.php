@@ -7,7 +7,7 @@ function logearUsuario($email, $clave) {
 
     if ($conn) {
         // Consulta a la base de datos para obtener el usuario por su email
-        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave, centro_formativo.Nombre AS nombre_centro FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE usuario.EMAIL_Usuario = ?");
+        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave, centro_formativo.Nombre AS nombre_centro FROM usuario INNER JOIN notas ON usuario.ID_Usuario = notas.ID_Usuario INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE usuario.EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch();
 
@@ -24,7 +24,6 @@ function logearUsuario($email, $clave) {
                     'success' => 'Inicio de sesión exitoso.',
                     'nombre' => $usuario['Nombre'],
                     'apellido1' => $usuario['Apellido1'],
-                    'apellido2' => $usuario['Apellido2'],
                     'email' => $usuario['EMAIL_Usuario'],
                     'nombre_centro' => $usuario['nombre_centro'] // Incluir el nombre del centro en la respuesta
                 ));
@@ -53,23 +52,16 @@ function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativ
         // Si el correo está registrado en la base de datos
         if ($existeCorreo) {
             return json_encode(array('error' => 'El correo ya está registrado.'));
-
-        // Si el correo no existe en la base de datos
         } else {
             // Insertar el usuario en la tabla usuario
-            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido1, Apellido2, EMAIL_Usuario) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$nombre, $apellidos, '', $email]);
+            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido1, Rol, EMAIL_Usuario) VALUES (?, ?, 'TUTOR', ?)");
+            $stmt->execute([$nombre, $apellidos, $email]);
             $id_usuario = $conn->lastInsertId(); // Obtener el ID del usuario recién insertado
 
-            // Insertar el hash de la contraseña en la tabla notas
+            // Insertar la nota del usuario en la tabla notas
             $hashed_clave = password_hash($clave, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO notas (Media_Aritmetica) VALUES (?)");
-            $stmt->execute([$hashed_clave]);
-            $id_nota = $conn->lastInsertId(); // Obtener el ID de la nota recién insertada
-
-            // Relacionar las tablas mediante la tabla intermedia usuario_notas
-            $stmt = $conn->prepare("INSERT INTO usuario_notas (ID_Usuario, ID_Notas) VALUES (?, ?)");
-            $stmt->execute([$id_usuario, $id_nota]);
+            $stmt = $conn->prepare("INSERT INTO notas (ID_Usuario, Media_Aritmetica) VALUES (?, ?)");
+            $stmt->execute([$id_usuario, $hashed_clave]);
 
             // Insertar la relación entre el usuario y el centro formativo en la tabla usuario_centro
             $stmt = $conn->prepare("INSERT INTO usuario_centro (ID_Usuario, ID_Centro_Formativo) VALUES (?, ?)");

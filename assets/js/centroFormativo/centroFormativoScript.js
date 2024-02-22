@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo a funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=login';
+                        window.location.href = 'index.php?pages=landing';
                     });
                 }
             })
