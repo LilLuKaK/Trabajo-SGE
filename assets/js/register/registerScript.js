@@ -27,12 +27,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.getElementById('email');
     const claveInput = document.getElementById('clave');
     const claveRepetidaInput = document.getElementById('claveRepetida');
+    const centroSelect = document.getElementById('centro');
 
     const nombreError = document.getElementById('nombre-error');
     const apellidosError = document.getElementById('apellidos-error');
     const emailError = document.getElementById('email-error');
     const claveError = document.getElementById('clave-error');
     const claveRepetidaError = document.getElementById('claveRepetida-error');
+    const centroSelectError = document.getElementById('centro-error');
 
     const enviarButton = document.getElementById('buttonEnviar');
     
@@ -124,13 +126,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function validarCentro() {
+        if (centroSelect.value == '') {
+            centroSelectError.textContent = 'Debes seleccionar un centro de la lista.';
+            centroSelectError.style.fontSize ='13px';
+            return false;
+        }else {
+            centroSelectError.textContent = '';
+            return true;
+        }
+    }
+
     function validarInput(inputFunc, errorDiv) {
         inputFunc();
         habilitarBoton();
     }
 
     function habilitarBoton() {
-        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida());
+        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida() && validarCentro());
     }
 
     nombreInput.addEventListener('input', function () {
@@ -153,10 +166,14 @@ document.addEventListener('DOMContentLoaded', function () {
         validarInput(validarClaveRepetida, claveRepetidaError);
     });
 
+    centroSelect.addEventListener('input', function () {
+        validarInput(validarCentro, centroSelectError);
+    });
+
     enviarButton.addEventListener('click', function (event) {
         event.preventDefault();
 
-        if (validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida()) {
+        if (validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida() && validarCentro()) {
             const formData = new FormData(document.getElementById('registroForm'));
 
             fetch('./controlador/userController.php', {
@@ -178,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo a funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=login';
+                        window.location.href = 'index.php?pages=landing';
                     });
                 }
             })

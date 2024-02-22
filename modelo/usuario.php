@@ -6,13 +6,13 @@ function logearUsuario($email, $clave) {
     $conn = ConexionBD::conectar();
 
     if ($conn) {
-        // Consulta a la base de datos
-        $stmt = $conn->prepare("SELECT * FROM usuario WHERE EMAIL_Usuario = ?");
+        // Consulta a la base de datos para obtener el usuario por su email
+        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas WHERE usuario.EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch();
 
         if ($usuario) {
-            // Verifica si la contraseña pertenece a ese mail
+            // Verifica si la contraseña pertenece a ese usuario
             if (password_verify($clave, $usuario['clave'])) {
                 session_start();
                 $_SESSION['nombre'] = $usuario['Nombre'];
@@ -39,23 +39,74 @@ function logearUsuario($email, $clave) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarTutor($nombre, $apellidos, $email, $clave) {
+function logearUsuario1($email, $clave) {
     $conn = ConexionBD::conectar();
 
-    // Si a conexion a la base de datos es correcta
+    if ($conn) {
+        // Consulta a la base de datos para obtener el usuario por su email y la contraseña hasheada
+        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave_hash FROM usuario INNER JOIN usuario_notas ON usuario.ID_Usuario = usuario_notas.ID_Usuario INNER JOIN notas ON usuario_notas.ID_Notas = notas.ID_Notas WHERE usuario.EMAIL_Usuario = ?");
+        $stmt->execute([$email]);
+        $usuario = $stmt->fetch();
+
+        if ($usuario) {
+            // Verifica si la contraseña ingresada por el usuario coincide con la contraseña hasheada en la base de datos
+            if (password_verify($clave, $usuario['clave_hash'])) {
+                session_start();
+                $_SESSION['nombre'] = $usuario['Nombre'];
+                $_SESSION['email'] = $usuario['EMAIL_Usuario'];
+
+                // Devolver todos los datos del usuario
+                return json_encode(array(
+                    'success' => 'Inicio de sesión exitoso.',
+                    'nombre' => $usuario['Nombre'],
+                    'apellido1' => $usuario['Apellido1'],
+                    'apellido2' => $usuario['Apellido2'],
+                    'email' => $usuario['EMAIL_Usuario']
+                ));
+            } else {
+                return json_encode(array('error' => 'Contraseña incorrecta.'));
+            }
+        } else {
+            return json_encode(array('error' => 'Correo desconocido.'));
+        }
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
+function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativo) {
+    $conn = ConexionBD::conectar();
+
+    // Si la conexión a la base de datos es correcta
     if ($conn) {
         $stmt = $conn->prepare("SELECT EMAIL_Usuario FROM usuario WHERE EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $existeCorreo = $stmt->fetch();
         
-        // Si el correo esta registrado en la base de datos
+        // Si el correo está registrado en la base de datos
         if ($existeCorreo) {
             return json_encode(array('error' => 'El correo ya está registrado.'));
 
         // Si el correo no existe en la base de datos
-        }else{
-            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellidos, EMAIL_Usuario, clave) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$nombre, $apellidos, $email, password_hash($clave, PASSWORD_DEFAULT)]);
+        } else {
+            // Insertar el usuario en la tabla usuario
+            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido1, Apellido2, EMAIL_Usuario) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$nombre, $apellidos, '', $email]);
+            $id_usuario = $conn->lastInsertId(); // Obtener el ID del usuario recién insertado
+
+            // Insertar el hash de la contraseña en la tabla notas
+            $hashed_clave = password_hash($clave, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO notas (Media_Aritmetica) VALUES (?)");
+            $stmt->execute([$hashed_clave]);
+            $id_nota = $conn->lastInsertId(); // Obtener el ID de la nota recién insertada
+
+            // Relacionar las tablas mediante la tabla intermedia usuario_notas
+            $stmt = $conn->prepare("INSERT INTO usuario_notas (ID_Usuario, ID_Notas) VALUES (?, ?)");
+            $stmt->execute([$id_usuario, $id_nota]);
+
+            // Insertar la relación entre el usuario y el centro formativo en la tabla usuario_centro
+            $stmt = $conn->prepare("INSERT INTO usuario_centro (ID_Usuario, ID_Centro_Formativo) VALUES (?, ?)");
+            $stmt->execute([$id_usuario, $id_centro_formativo]);
     
             return json_encode(array('success' => 'Usuario registrado con éxito.'));
         }
