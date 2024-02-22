@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo a funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=landing';
+                        window.location.href = 'index.php?pages=crearCentro';
                     });
                 }
             })

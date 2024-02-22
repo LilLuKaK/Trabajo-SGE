@@ -27,10 +27,9 @@
             <span class="material-icons-sharp">insights</span>
             <h3>Crear Centro(provisional)</h3>
         </a>
-        <a href="#">
+        <a href="index.php?pages=crearAlumno" <?php if ($activeLink === 'crearAlumno') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">mail_outline</span>
-            <h3>Ejemplo 4</h3>
-            <span class="message-count">26</span>
+            <h3>Crear Alumno(provisional)</h3>
         </a>
         <a href="#">
             <span class="material-icons-sharp">inventory</span>
@@ -47,6 +46,7 @@
         <a href="#">
             <span class="material-icons-sharp">add</span>
             <h3>Ejemplo 8</h3>
+            <span class="message-count">26</span>
         </a>
         <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>

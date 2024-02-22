@@ -56,6 +56,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
+    }else if(isset($_POST["registrarAlumno"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombre = limpiaString($_POST["nombre"]);
+        $apellidos = limpiaString($_POST["apellidos"]);
+        $email = limpiaString($_POST["email"]);
+        $clave = limpiaString($_POST["clave"]);
+        $id_centro_educativo = limpiaString($_POST["centro"]);
+
+        $registroLimpio = array(
+            'nombre' => $nombre, 
+            'apellidos' => $apellidos,
+            'email' => $email,
+            'clave' => $clave
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarAlumno($nombre, $apellidos, $email, $clave, $id_centro_educativo);
+
+        echo $respuesta;
+
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();

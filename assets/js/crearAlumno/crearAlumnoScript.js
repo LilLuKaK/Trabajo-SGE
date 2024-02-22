@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo a funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=register';
+                        window.location.href = 'index.php?pages=crearAlumno';
                     });
                 }
             })
