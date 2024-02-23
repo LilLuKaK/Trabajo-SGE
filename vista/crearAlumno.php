@@ -133,6 +133,7 @@
                     </form>
                 </article>
                 <article class="sign-in__logo">
+                    <div><img src="./assets/images/login-register/undraw_exams_re_4ios.svg" alt=""></div>
                 </article>
             </section>
         </div>

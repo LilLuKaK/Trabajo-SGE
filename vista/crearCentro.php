@@ -56,6 +56,7 @@
                     </form>
                 </article>
                 <article class="sign-in__logo">
+                    <div><img src="./assets/images/login-register/undraw_educator_re_ju47.svg" alt=""></div>
                 </article>
             </section>
         </div>
