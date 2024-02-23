@@ -67,12 +67,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $EMAIL_Alumno = limpiaString($_POST["EMAIL_Alumno"]);
         $Direccion = limpiaString($_POST["Direccion"]);
         $Codigo_Postal = limpiaString($_POST["Codigo_Postal"]);
+        $id_centro_educativo = limpiaString($_POST["centro"]); // Obtener el ID del centro educativo seleccionado
         $id_ciclo_formativo = limpiaString($_POST["ciclo"]);
         $activo = $_POST["activo"]; // Obtener el valor del radio button de activo
         $validez = $_POST["validez"]; // Obtener el valor del radio button de validez
     
         // Llama a la función para registrar el alumno
-        $respuesta = registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez);
+        $respuesta = registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez);
     
         echo $respuesta;
 

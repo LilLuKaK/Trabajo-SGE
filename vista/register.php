@@ -37,7 +37,7 @@
                                 <option value='' selected disabled>-- Selecciona el centro --</option>
                                 <?php
                                 // Incluir la consulta de los centros
-                                include './../modelo/centro_formativo.phps';
+                                include './../modelo/centro_formativo.php';
                                 ?>
                             </select>
                             <div id="centro-error"></div>

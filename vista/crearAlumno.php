@@ -87,6 +87,17 @@
                             <div id="Codigo_Postal-error"></div>
                         </div>
                         <div class="form__control">
+                            <label for="fullname">Centro</label>
+                            <select name="centro" id="centro">
+                                <option value='' selected disabled>-- Selecciona el centro --</option>
+                                <?php
+                                // Incluir la consulta de los centros
+                                include './../modelo/centro_formativo.php';
+                                ?>
+                            </select>
+                            <div id="centro-error"></div>
+                        </div>
+                        <div class="form__control">
                             <label for="ciclo">Ciclo</label>
                             <select name="ciclo" id="ciclo">
                                 <option value='' selected disabled>-- Selecciona el ciclo --</option>
@@ -123,6 +134,12 @@
             </section>
         </div>
     </div>
+    <script>
+        document.getElementById('ciclo').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex].value;
+            document.getElementById('cicloSeleccionado').value = selectedOption;
+        });
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>

@@ -99,7 +99,7 @@ function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
+function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
     $conn = ConexionBD::conectar();
 
     if ($conn) {
@@ -111,6 +111,10 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
         // Insertar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
         $stmt = $conn->prepare("INSERT INTO ciclo_alumno (ID_Ciclo_Formativo, ID_Alumno) VALUES (?, ?)");
         $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+
+        // Insertar la asociación entre el alumno y el centro educativo en la tabla centro_alumno
+        $stmt = $conn->prepare("INSERT INTO centro_alumno (ID_Centro_Formativo, ID_Alumno) VALUES (?, ?)");
+        $stmt->execute([$id_centro_educativo, $id_alumno]);
 
         return json_encode(array('success' => 'Alumno registrado con éxito.'));
     }
