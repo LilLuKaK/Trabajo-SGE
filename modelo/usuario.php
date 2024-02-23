@@ -99,35 +99,20 @@ function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarAlumno($nombre, $apellidos, $email, $clave, $id_centro_formativo) {
+function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
     $conn = ConexionBD::conectar();
 
-    // Si la conexión a la base de datos es correcta
     if ($conn) {
-        $stmt = $conn->prepare("SELECT EMAIL_Usuario FROM usuario WHERE EMAIL_Usuario = ?");
-        $stmt->execute([$email]);
-        $existeCorreo = $stmt->fetch();
-        
-        // Si el correo está registrado en la base de datos
-        if ($existeCorreo) {
-            return json_encode(array('error' => 'El correo ya está registrado.'));
-        } else {
-            // Insertar el usuario en la tabla usuario
-            $stmt = $conn->prepare("INSERT INTO usuario (Nombre, Apellido1, Rol, EMAIL_Usuario) VALUES (?, ?, 'ALUMNO', ?)");
-            $stmt->execute([$nombre, $apellidos, $email]);
-            $id_usuario = $conn->lastInsertId(); // Obtener el ID del usuario recién insertado
+        // Insertar el alumno en la tabla alumnos
+        $stmt = $conn->prepare("INSERT INTO alumnos (Nombre, Apellido1, DNI, N_Seg_social, Curriculum_Vitae, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal, Activo, Validez) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez]);
+        $id_alumno = $conn->lastInsertId(); // Obtener el ID del alumno recién insertado
 
-            // Insertar la nota del usuario en la tabla notas
-            $hashed_clave = password_hash($clave, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO notas (ID_Usuario, Media_Aritmetica) VALUES (?, ?)");
-            $stmt->execute([$id_usuario, $hashed_clave]);
+        // Insertar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
+        $stmt = $conn->prepare("INSERT INTO ciclo_alumno (ID_Ciclo_Formativo, ID_Alumno) VALUES (?, ?)");
+        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
 
-            // Insertar la relación entre el usuario y el centro formativo en la tabla usuario_centro
-            $stmt = $conn->prepare("INSERT INTO usuario_centro (ID_Usuario, ID_Centro_Formativo) VALUES (?, ?)");
-            $stmt->execute([$id_usuario, $id_centro_formativo]);
-    
-            return json_encode(array('success' => 'Usuario registrado con éxito.'));
-        }
+        return json_encode(array('success' => 'Alumno registrado con éxito.'));
     }
 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));

@@ -24,17 +24,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const nombreInput = document.getElementById('nombre');
     const apellidosInput = document.getElementById('apellidos');
-    const emailInput = document.getElementById('email');
-    const claveInput = document.getElementById('clave');
-    const claveRepetidaInput = document.getElementById('claveRepetida');
-    const centroSelect = document.getElementById('centro');
+    const dniInput = document.getElementById('dni');
+    const ssInput = document.getElementById('N_Seg_social');
+    const cvInput = document.getElementById('Curriculum_Vitae');
+    const telefonoInput = document.getElementById('TELF_Alumno');
+    const emailInput = document.getElementById('EMAIL_Alumno');
+    const direccionInput = document.getElementById('Direccion');
+    const cpInput = document.getElementById('Codigo_Postal');
+    const cicloSelect = document.getElementById('ciclo');
 
     const nombreError = document.getElementById('nombre-error');
     const apellidosError = document.getElementById('apellidos-error');
-    const emailError = document.getElementById('email-error');
-    const claveError = document.getElementById('clave-error');
-    const claveRepetidaError = document.getElementById('claveRepetida-error');
-    const centroSelectError = document.getElementById('centro-error');
+    const dniError = document.getElementById('dni-error');
+    const ssError = document.getElementById('N_Seg_social-error');
+    const cvError = document.getElementById('Curriculum_Vitae-error');
+    const telefonoError = document.getElementById('TELF_Alumno-error');
+    const emailError = document.getElementById('EMAIL_Alumno-error');
+    const direccionError = document.getElementById('Direccion-error');
+    const cpError = document.getElementById('Codigo_Postal-error');
+    const cicloSelectError = document.getElementById('ciclo-error');
 
     const enviarButton = document.getElementById('buttonEnviar');
     
@@ -57,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validarApellidos() {
-        const contenedorApellidos = document.getElementById('contenedorApellidos');
         const apellidosPattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
         if (apellidosInput.value.trim() === "") {
             apellidosError.textContent = '';
@@ -69,6 +76,96 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         } else {
             apellidosError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarDni() {
+        const dniPattern = /^([0-9]){8}([A-Z]){1}?$/;
+        if (dniInput.value.trim() === "") {
+            dniError.textContent = '';
+            return false;
+        } else if (!dniPattern.test(dniInput.value)) {
+            dniError.textContent = 'Formato incorrecto. Debe seguir el patrón de dni correcto.';
+            dniError.style.color ='red';
+            dniError.style.fontSize ='13px';
+            return false;
+        } else {
+            dniError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarSS() {
+        const ssPattern = /^([0-9]){9}?$/;
+        if (ssInput.value.trim() === "") {
+            ssError.textContent = '';
+            return false;
+        } else if (!ssPattern.test(ssInput.value)) {
+            ssError.textContent = 'Formato incorrecto. Debe seguir el patrón de numero de seguridad social correcto.';
+            ssError.style.color ='red';
+            ssError.style.fontSize ='13px';
+            return false;
+        } else {
+            ssError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarCV() {
+        if (cvInput.value.trim() === "") {
+            cvError.textContent = '';
+            return false;
+        } else {
+            cvError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarTelefono() {
+        const telefonoPattern = /^([0-9]){9}?$/;
+        if (telefonoInput.value.trim() === "") {
+            telefonoError.textContent = '';
+            return false;
+        } else if (!telefonoPattern.test(telefonoInput.value)) {
+            telefonoError.textContent = 'Formato incorrecto. Debe seguir el patrón de numero de telefono.';
+            telefonoError.style.color ='red';
+            telefonoError.style.fontSize ='13px';
+            return false;
+        } else {
+            telefonoError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarDireccion() {
+        const direccionPattern = /(.){5,100}/;
+        if (direccionInput.value.trim() === "") {
+            direccionError.textContent = '';
+            return false;
+        } else if (!direccionPattern.test(direccionInput.value)) {
+            direccionError.textContent = 'Formato incorrecto. Debe seguir el patrón de direccion.';
+            direccionError.style.color ='red';
+            direccionError.style.fontSize ='13px';
+            return false;
+        } else {
+            direccionError.textContent = '';
+            return true;
+        }
+    }
+
+    function validarCP() {
+        const cpPattern = /^(28[0-9]{3})?$/;
+        if (cpInput.value.trim() === "") {
+            cpError.textContent = '';
+            return false;
+        } else if (!cpPattern.test(cpInput.value)) {
+            cpError.textContent = 'Formato incorrecto. Debe seguir el patrón de código postal 28000.';
+            cpError.style.color ='red';
+            cpError.style.fontSize ='13px';
+            return false;
+        } else {
+            cpError.textContent = '';
             return true;
         }
     }
@@ -89,50 +186,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarClave() {
-        const clavePattern = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/;
-        if (claveInput.value.trim() === "") {
-            claveError.textContent = '';
-            return false;
-        } else if (!clavePattern.test(claveInput.value)) {
-            claveError.textContent = 'Debe tener mayúsculas, minúsculas, números y caracteres especiales';
-            claveError.style.color ='red';
-            claveError.style.fontSize ='13px';
-            return false;
-        } else {
-            claveError.textContent = '';
-            return true;
-        }
-    }
-
-    function validarClaveRepetida() {
-        const claveRepetidaPattern = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/;
-        if (claveRepetidaInput.value.trim() === "") {
-            claveRepetidaError.textContent = '';
-            return false;
-        } else if (claveRepetidaInput.value != claveInput.value){
-            claveRepetidaError.textContent = 'Las contraseñas no coinciden, deben ser iguales.';
-            claveRepetidaError.style.color ='red';
-            claveRepetidaError.style.fontSize ='13px';
-            return false;
-        } else if (!claveRepetidaPattern.test(claveRepetidaInput.value)) {
-            claveRepetidaError.textContent = 'Debe tener mayúsculas, minúsculas, números y caracteres especiales.';
-            claveRepetidaError.style.color ='red';
-            claveRepetidaError.style.fontSize ='13px';
+    function validarCiclo() {
+        if (cicloSelect.value == '') {
+            cicloSelectError.textContent = 'Debes seleccionar un ciclo de la lista.';
+            cicloSelectError.style.fontSize ='13px';
             return false;
         }else {
-            claveRepetidaError.textContent = '';
-            return true;
-        }
-    }
-
-    function validarCentro() {
-        if (centroSelect.value == '') {
-            centroSelectError.textContent = 'Debes seleccionar un centro de la lista.';
-            centroSelectError.style.fontSize ='13px';
-            return false;
-        }else {
-            centroSelectError.textContent = '';
+            cicloSelectError.textContent = '';
             return true;
         }
     }
@@ -143,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function habilitarBoton() {
-        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida() && validarCentro());
+        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarCP() && validarCV() && validarDni() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo());
     }
 
     nombreInput.addEventListener('input', function () {
@@ -154,26 +214,42 @@ document.addEventListener('DOMContentLoaded', function () {
         validarInput(validarApellidos, apellidosError);
     });
 
+    dniInput.addEventListener('input', function () {
+        validarInput(validarDni, dniError);
+    });
+
+    ssInput.addEventListener('input', function () {
+        validarInput(validarSS, ssError);
+    });
+
+    cpInput.addEventListener('input', function () {
+        validarInput(validarCP, cpError);
+    });
+
+    cvInput.addEventListener('input', function () {
+        validarInput(validarCV, cvError);
+    });
+
+    telefonoInput.addEventListener('input', function () {
+        validarInput(validarTelefono, telefonoError);
+    });
+
+    direccionInput.addEventListener('input', function () {
+        validarInput(validarDireccion, direccionError);
+    });
+
     emailInput.addEventListener('input', function () {
         validarInput(validarEmail, emailError);
     });
 
-    claveInput.addEventListener('input', function () {
-        validarInput(validarClave, claveError);
-    });
-
-    claveRepetidaInput.addEventListener('input', function () {
-        validarInput(validarClaveRepetida, claveRepetidaError);
-    });
-
-    centroSelect.addEventListener('input', function () {
-        validarInput(validarCentro, centroSelectError);
+    cicloSelect.addEventListener('input', function () {
+        validarInput(validarCiclo, cicloSelectError);
     });
 
     enviarButton.addEventListener('click', function (event) {
         event.preventDefault();
 
-        if (validarNombre() && validarApellidos() && validarEmail() && validarClave() && validarClaveRepetida() && validarCentro()) {
+        if (validarNombre() && validarApellidos() && validarCP() && validarDni() && validarCV() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo()) {
             const formData = new FormData(document.getElementById('registroForm'));
 
             fetch('./controlador/userController.php', {
@@ -212,21 +288,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------
 
-document.addEventListener('DOMContentLoaded', function () {
-    const claveInput = document.getElementById('clave');
-    const togglePasswordIcon = document.getElementById('togglePassword');
-
-    togglePasswordIcon.addEventListener('click', function () {
-        if (claveInput.type === 'password') {
-            claveInput.type = 'text';
-            togglePasswordIcon.classList.remove('fa-eye-slash');
-            togglePasswordIcon.classList.add('fa-eye');
-        } else {
-            claveInput.type = 'password';
-            togglePasswordIcon.classList.remove('fa-eye');
-            togglePasswordIcon.classList.add('fa-eye-slash');
-        }
-    });
+document.getElementById('ciclo').addEventListener('change', function() {
+    var selectedOption = this.options[this.selectedIndex].value;
+    document.getElementById('cicloSeleccionado').value = selectedOption;
 });

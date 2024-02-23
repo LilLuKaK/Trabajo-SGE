@@ -57,23 +57,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $respuesta;
 
     }else if(isset($_POST["registrarAlumno"])){
-        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        // Obtener los datos del formulario
         $nombre = limpiaString($_POST["nombre"]);
         $apellidos = limpiaString($_POST["apellidos"]);
-        $email = limpiaString($_POST["email"]);
-        $clave = limpiaString($_POST["clave"]);
-        $id_centro_educativo = limpiaString($_POST["centro"]);
-
-        $registroLimpio = array(
-            'nombre' => $nombre, 
-            'apellidos' => $apellidos,
-            'email' => $email,
-            'clave' => $clave
-        );
-
-        // Llama a la función para registrar el centro y obtén la respuesta
-        $respuesta = registrarAlumno($nombre, $apellidos, $email, $clave, $id_centro_educativo);
-
+        $dni = limpiaString($_POST["dni"]);
+        $N_Seg_social = limpiaString($_POST["N_Seg_social"]);
+        $Curriculum_Vitae = limpiaString($_POST["Curriculum_Vitae"]);
+        $TELF_Alumno = limpiaString($_POST["TELF_Alumno"]);
+        $EMAIL_Alumno = limpiaString($_POST["EMAIL_Alumno"]);
+        $Direccion = limpiaString($_POST["Direccion"]);
+        $Codigo_Postal = limpiaString($_POST["Codigo_Postal"]);
+        $id_ciclo_formativo = limpiaString($_POST["ciclo"]);
+        $activo = $_POST["activo"]; // Obtener el valor del radio button de activo
+        $validez = $_POST["validez"]; // Obtener el valor del radio button de validez
+    
+        // Llama a la función para registrar el alumno
+        $respuesta = registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez);
+    
         echo $respuesta;
 
     }else if(isset($_POST["cerrarSesion"])){

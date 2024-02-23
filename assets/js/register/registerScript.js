@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //------------------------------------------------------------------------------------------
 
-document.addEventListener('DOMContentLoaded', function () {
+/*document.addEventListener('DOMContentLoaded', function () {
     const claveInput = document.getElementById('clave');
     const togglePasswordIcon = document.getElementById('togglePassword');
 
@@ -229,4 +229,4 @@ document.addEventListener('DOMContentLoaded', function () {
             togglePasswordIcon.classList.add('fa-eye-slash');
         }
     });
-});
+});*/

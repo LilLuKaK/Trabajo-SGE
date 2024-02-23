@@ -24,7 +24,7 @@
                         <div class="form__control">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
-                            <d id="nombre-error"></d
+                            <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="apellidos">Apellido/s</label>
@@ -87,26 +87,32 @@
                             <div id="Codigo_Postal-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="fullname">Centro</label>
-                            <select name="centro" id="centro">
-                                <option value='' selected disabled>-- Selecciona el centro --</option>
+                            <label for="ciclo">Ciclo</label>
+                            <select name="ciclo" id="ciclo">
+                                <option value='' selected disabled>-- Selecciona el ciclo --</option>
                                 <?php
-                                // Incluir la consulta de los centros
-                                include './../modelo/centro_formativo.php';
+                                // Incluir la conexión y consulta a la base de datos
+                                include './modelo/conexion.php';
+
+                                // Realizar la consulta para obtener los nombres de los ciclos formativos
+                                $conn = ConexionBD::conectar();
+
+                                if ($conn) {
+                                    $stmt = $conn->query("SELECT * FROM ciclos_formativos");
+
+                                    // Verificar si se encontraron resultados
+                                    if ($stmt->rowCount() > 0) {
+                                        // Iterar sobre los resultados y mostrar las opciones del select
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
+                                    }
+                                }
                                 ?>
                             </select>
-                            <div id="centro-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="fullname">Centro</label>
-                            <select name="centro" id="centro">
-                                <option value='' selected disabled>-- Selecciona el centro --</option>
-                                <?php
-                                // Incluir la consulta de los centros
-                                include './../modelo/centro_formativo.php';
-                                ?>
-                            </select>
-                            <div id="centro-error"></div>
+                            <div id="ciclo-error"></div>
                         </div>
                         <input type="hidden" name="registrarAlumno" value="registrarAlumno">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
@@ -118,7 +124,7 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/register/registerScript.js"></script>
+    <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
