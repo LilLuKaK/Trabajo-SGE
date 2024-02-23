@@ -24,7 +24,7 @@
                         <div class="form__control">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
-                            <div id="nombre-error"></div>
+                            <d id="nombre-error"></d
                         </div>
                         <div class="form__control">
                             <label for="apellidos">Apellido/s</label>
