@@ -31,9 +31,9 @@
             <span class="material-icons-sharp">mail_outline</span>
             <h3>Crear Alumno(provisional)</h3>
         </a>
-        <a href="index.php?pages=alumnos" <?php if ($activeLink === 'alumnos') echo 'class="active"'; ?>>
+        <a href="#">
             <span class="material-icons-sharp">inventory</span>
-            <h3>Alumnos</h3>
+            <h3>Ejemplo 5</h3>
         </a>
         <a href="#">
             <span class="material-icons-sharp">report_gmailerrorred</span>
