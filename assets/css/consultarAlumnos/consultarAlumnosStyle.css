@@ -1,0 +1,323 @@
+.right {
+    margin-top: 4rem;
+}
+
+.right .top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.right .top p{
+    font-weight: bold;
+    font-size: 23px;
+}
+
+.right .top h2{
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.middle{
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    background-color: var(--c-bg-tertiary);
+    margin-bottom: 80px;
+}
+
+.middle::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+}
+
+tbody {
+    overflow-y: auto;
+    width: 100%;
+    height: 300px;
+}
+
+/* Estilo para las celdas de encabezado */
+th {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Estilo para las celdas de datos */
+td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+
+td span:hover{
+    color: var(--color-primary);
+    -webkit-transition: color 0.4s linear;
+    -ms-transition: color 0.4s linear;
+    transition: color 0.4s linear;
+}
+
+
+th:first-child{
+    border-top-left-radius: 7px;
+}
+
+th:nth-last-child(1){
+    border-top-right-radius: 7px;
+}
+
+td:first-child {
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent; 
+}
+
+td:last-child {
+    border-right: 1px solid transparent; 
+}
+
+tr:last-child td{
+    border-bottom: 1px solid transparent;
+}
+
+.search{
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--color-dark);
+    -webkit-transition: background-color 0.5s linear;
+    -ms-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+}
+
+button:hover{
+    background-color: black;
+    -webkit-transition: background-color 0.5s linear;
+    -ms-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+}
+
+.delete, .edit{
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 5px
+}
+
+.delete{
+    margin-right: 2px;
+    background-color: var(--color-danger);
+    -webkit-transition: background-color 0.5s linear;
+    -ms-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+     
+}
+
+.delete:hover{
+    background-color: #AC555C;
+    -webkit-transition: background-color 0.4s linear;
+    -ms-transition: background-color 0.4s linear;
+    transition: background-color 0.4s linear;
+}
+
+.edit{
+    background-color: var(--color-success);
+    -webkit-transition: background-color 0.5s linear;
+    -ms-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+}
+
+.edit:hover{
+    background-color: #35A27D;
+    -webkit-transition: background-color 0.4s linear;
+    -ms-transition: background-color 0.4s linear;
+    transition: background-color 0.4s linear;
+}
+
+button .material-symbols-sharp:first-child {
+    vertical-align: middle;
+    color: white;
+}
+
+td .material-symbols-sharp{
+    color: black;
+    -webkit-transition: color 0.4s linear;
+    -ms-transition: color 0.4s linear;
+    transition: color 0.4s linear;
+}
+
+.data tbody tr td:first-child{
+    border-right: 1px solid transparent;
+}
+
+.forms{
+    width: 100%;
+    height: 390px;
+    border-top: 3px solid var(--color-primary);
+    padding-top: 15px;
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form__control{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.forms h2{
+    font-size: 15px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+
+label{
+    font-weight: 500;
+    color: var(--color-black);
+}
+
+.input input:not([type="checkbox"]) {
+    width: 50%;
+    border: 1px solid #d2d0dd;
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+}
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 70px;
+    height: 28px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-success);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+input:checked + .slider {
+    background-color: var(--color-danger);
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--color-danger);
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(40px);
+    -ms-transform: translateX(40px);
+    transform: translateX(40px);
+}
+  
+  /* Rounded sliders */
+.slider.round {
+    border-radius: 20px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.new{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 170px;
+    height: 35px;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: var(--color-dark);
+    -webkit-transition: background-color 0.5s linear;
+    -ms-transition: background-color 0.5s linear;
+    transition: background-color 0.5s linear;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.new label{
+    color: white;
+    cursor: pointer;
+}
+
+.new span{
+    color: white;
+}
+
+.si{
+    color: var(--color-success);
+}
+
+.no{
+    color: var(--color-danger);
+}
+
+.ciclos{
+    width: 25%;
+    border: 1px solid #d2d0dd;
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    background-repeat: no-repeat;
+    background-position: right center; 
+    padding-right: 20px;
+}
+
+.expand{
+    transform: translateX(-150%);
+}
+
+#last {
+    transform: translateX(-87%);
+}

@@ -15,8 +15,8 @@ if(isset($_GET['pages'])) {
         case 'crearAlumno':
             require_once 'vista/crearAlumno.php';
             break;
-        case 'alumnos':
-            require_once 'vista/alumnos.php';
+        case 'consultarAlumnos':
+            require_once 'vista/consultarAlumnos.php';
             break;
         case 'landing':
             require_once 'vista/landingPage.php';

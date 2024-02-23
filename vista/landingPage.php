@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/landingPage/landingStyle.css" />
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
 </head>
@@ -92,9 +91,9 @@
                                 <button class="tag">In 2 days</button>
                             </div>
                             <div class="month-selector">
-                                <button class="arrow"><i class="material-icons">chevron_left</i></button>
+                                <button class="arrow"><span class="material-symbols-sharp">arrow_back_ios</span></button>
                                 <span class="month-name">December 2020</span>
-                                <button class="arrow"><i class="material-icons">chevron_right</i></button>
+                                <button class="arrow"><span class="material-symbols-sharp">arrow_forward_ios</span></button>
                             </div>
                         </div>
                         <div class="datepicker-calendar">
@@ -234,7 +233,7 @@
             </div>
             <!-- FIN DE LOW -->
             <footer>
-                <p style="float: right;">Diseñado por <a href="https://www.linkedin.com/in/lucas-bravo-parra/" target="_blank">Lucas Bravo</a></p>
+                <p style="float: left;">Diseñado por <a href="https://www.linkedin.com/in/lucas-bravo-parra/" target="_blank">Lucas Bravo</a>, <a href="https://www.linkedin.com/in/malena-munoz/" target="_blank">Malena Muñoz</a></p>
             </footer>
         </div>
     </div>

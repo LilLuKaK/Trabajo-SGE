@@ -1,4 +1,6 @@
 <aside>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <div class="top">
         <div class="logo">
             <img src="./assets/images/common/logo.png" />
@@ -12,41 +14,41 @@
     
     <div class="sidebar">
         <a href="index.php?pages=landing" <?php if ($activeLink === 'landing') echo 'class="active"'; ?>>
-            <span class="material-icons-sharp">dashboard</span>
+            <span class="material-symbols-sharp">home</span>
             <h3>Inicio</h3>
         </a>
         <a href="index.php?pages=login">
-            <span class="material-icons-sharp">person_outline</span>
+            <span class="material-symbols-sharp">login</span>
             <h3>Login(provisional)</h3>
         </a>
         <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
-            <span class="material-icons-sharp">receipt_long</span>
+            <span class="material-symbols-sharp">history_edu</span>
             <h3>Registro(provisional)</h3>
         </a>
         <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
-            <span class="material-icons-sharp">insights</span>
+            <span class="material-symbols-sharp">school</span>
             <h3>Crear Centro(provisional)</h3>
         </a>
         <a href="index.php?pages=crearAlumno" <?php if ($activeLink === 'crearAlumno') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">mail_outline</span>
             <h3>Crear Alumno(provisional)</h3>
         </a>
-        <a href="#">
-            <span class="material-icons-sharp">inventory</span>
-            <h3>Ejemplo 5</h3>
+        <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
+            <span class="material-symbols-sharp">inbox</span>
+            <h3>Consultar alumnos(provisional)</h3>
+            <!--<span class="message-count">26</span>-->
         </a>
         <a href="#">
-            <span class="material-icons-sharp">report_gmailerrorred</span>
+            <span class="material-symbols-sharp">browse_gallery</span>
             <h3>Ejemplo 6</h3>
         </a>
         <a href="#">
-            <span class="material-icons-sharp">settings</span>
+            <span class="material-symbols-sharp">settings</span>
             <h3>Ejemplo 7</h3>
         </a>
         <a href="#">
-            <span class="material-icons-sharp">add</span>
+            <span class="material-symbols-sharp">settings_accessibility</span>
             <h3>Ejemplo 8</h3>
-            <span class="message-count">26</span>
         </a>
         <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>
