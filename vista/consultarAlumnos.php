@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
-    <link rel="stylesheet" href="./assets/css/consultarAlumnos/consultarAlumnosStyle.css">
+    <link rel="stylesheet" href="./assets/css/alumnos/consultarAlumnosStyle.css">
 </head>
 <body>
     <div class="container">

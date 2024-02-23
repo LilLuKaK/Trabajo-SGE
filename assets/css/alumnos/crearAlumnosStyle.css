@@ -1,0 +1,12 @@
+.sign-in__details{
+    height: 89vh;
+    overflow-y: scroll;
+}
+
+#label{
+    position: sticky;
+    top: 0;
+    background-color: var(--color-background);
+    width: 100%;
+    height: 70px;
+}

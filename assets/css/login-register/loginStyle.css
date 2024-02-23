@@ -73,8 +73,7 @@ a, a:active, a:visited {
 .btn.primary {
     background: var(--color-primary);
     color: var(--color-white);
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.2rem;
 }
 
 .btn:hover {
@@ -88,7 +87,6 @@ a, a:active, a:visited {
 
 /* SIGN IN */
 .sign-in {
-    background: var(--color-white);
     width: 100%;
     display: flex;
     grid-template-columns: 1fr 1fr;
@@ -189,6 +187,13 @@ input:not([type="checkbox"]) {
 
 input::placeholder {
     color: var(--color-body-bg);
+}
+
+select{
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-body-bg);
+    border-radius: 0.5rem;
 }
 
 label {

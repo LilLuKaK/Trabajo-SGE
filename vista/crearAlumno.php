@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
+    <link rel="stylesheet" href="assets/css/alumnos/crearAlumnosStyle.css" />
 </head>
 <body>
     <div class="container">
@@ -18,8 +19,10 @@
         <div class="contenedorRegistro">
             <section class="sign-in">
                 <article class="sign-in__details">
-                    <h1>Crear Alumno</h1>
-                    <p>Complete el siguiente formulario para crear un alumno</p>
+                    <div id="label">
+                        <h1>Crear Alumno</h1>
+                        <p>Complete el siguiente formulario para crear un alumno</p>
+                    </div>
                     <form class="sign-in__form" id="registroForm">
                         <div class="form__control">
                             <label for="nombre">Nombre</label>
