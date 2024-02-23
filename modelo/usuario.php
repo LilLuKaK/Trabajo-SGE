@@ -7,7 +7,7 @@ function logearUsuario($email, $clave) {
 
     if ($conn) {
         // Consulta a la base de datos para obtener el usuario por su email
-        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave, centro_formativo.Nombre AS nombre_centro FROM usuario INNER JOIN notas ON usuario.ID_Usuario = notas.ID_Usuario INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE usuario.EMAIL_Usuario = ?");
+        $stmt = $conn->prepare("SELECT usuario.*, notas.Media_Aritmetica AS clave, centro_formativo.ID_Centro_Formativo AS id_centro, centro_formativo.Nombre AS nombre_centro FROM usuario INNER JOIN notas ON usuario.ID_Usuario = notas.ID_Usuario INNER JOIN usuario_centro ON usuario.ID_Usuario = usuario_centro.ID_Usuario INNER JOIN centro_formativo ON usuario_centro.ID_Centro_Formativo = centro_formativo.ID_Centro_Formativo WHERE usuario.EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $usuario = $stmt->fetch();
 
@@ -18,6 +18,7 @@ function logearUsuario($email, $clave) {
                 $_SESSION['nombre'] = $usuario['Nombre'];
                 $_SESSION['email'] = $usuario['EMAIL_Usuario'];
                 $_SESSION['nombre_centro'] = $usuario['nombre_centro']; // Guardar el nombre del centro en la sesión
+                $_SESSION['id_centro'] = $usuario['id_centro']; // Guardar el ID del centro en la sesión
 
                 // Devolver todos los datos del usuario
                 return json_encode(array(
@@ -161,4 +162,3 @@ function limpiaString($cadena){
     $string = str_ireplace("==", "", $string);
     return $string;
 }
-

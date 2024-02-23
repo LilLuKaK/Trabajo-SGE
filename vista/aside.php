@@ -35,7 +35,7 @@
         </a>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">inbox</span>
-            <h3>Consultar alumnos(provisional)</h3>
+            <h3>Alumnos</h3>
             <!--<span class="message-count">26</span>-->
         </a>
         <a href="#">

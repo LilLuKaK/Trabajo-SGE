@@ -58,7 +58,7 @@
                 <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
             </div>
             <!-- TABLA DE CONNSULTAS -->
-           <div class="middle">
+            <div class="middle">
                 <table class="data">
                     <thead>
                         <tr>
@@ -79,178 +79,51 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button class="delete"><span class="material-symbols-sharp">delete</span></button>
-                                <button class="edit"><span class="material-symbols-sharp">edit</span></button>
-                            </td>
-                            <td>1</td>
-                            <td>Juan</td>
-                            <td>Gómez</td>
-                            <td>12345678A</td>
-                            <td>DAM</td>
-                            <td>123-45-6789</td>
-                            <td><span class="material-symbols-sharp">download</span></td>
-                            <td>No</td>
-                            <td>Sí</td>
-                            <td>123456789</td>
-                            <td>juan@example.com</td>
-                            <td>Calle Principal 123</td>
-                            <td>28001</td>
-                        </tr>
-                     </tbody>
+                    <?php
+                    // Incluir el archivo de conexión a la base de datos
+                    include_once './modelo/conexion.php';
+
+                    $id_centro_educativo = $_SESSION['id_centro'];
+                    // Suponiendo que ya tienes el ID del centro educativo en una variable $id_centro_educativo
+                    // Realiza la consulta para obtener los alumnos del centro educativo y el nombre del ciclo formativo de cada uno
+                    $conn = ConexionBD::conectar();
+                    $stmt = $conn->prepare("SELECT alumnos.*, ciclos_formativos.Nombre_Ciclo FROM alumnos 
+                                        INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
+                                        INNER JOIN ciclos_formativos ON ciclo_alumno.ID_Ciclo_Formativo = ciclos_formativos.ID_Ciclo_Formativo 
+                                        INNER JOIN centro_alumno ON alumnos.ID_Alumno = centro_alumno.ID_Alumno 
+                                        WHERE centro_alumno.ID_Centro_Formativo = ?");
+                    $stmt->execute([$id_centro_educativo]);
+
+                    // Comprueba si se encontraron resultados
+                    if ($stmt->rowCount() > 0) {
+                        // Itera sobre los resultados y muestra los datos en la tabla
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<tr>";
+                            echo "<td>";
+                            echo "<button class='delete'><span class='material-symbols-sharp'>delete</span></button>";
+                            echo "<button class='edit'><span class='material-symbols-sharp'>edit</span></button>";
+                            echo "</td>";
+                            echo "<td>" . $row['ID_Alumno'] . "</td>";
+                            echo "<td>" . $row['Nombre'] . "</td>";
+                            echo "<td>" . $row['Apellido1'] . "</td>";
+                            echo "<td>" . $row['DNI'] . "</td>";
+                            echo "<td>" . $row['Nombre_Ciclo'] . "</td>"; // Nombre del ciclo formativo
+                            echo "<td>" . $row['N_Seg_social'] . "</td>";
+                            echo "<td><span class='material-symbols-sharp'>download</span></td>";
+                            echo "<td>" . ($row['Validez'] == 1 ? 'Sí' : 'No') . "</td>";
+                            echo "<td>" . ($row['Activo'] == 1 ? 'Sí' : 'No') . "</td>";
+                            echo "<td>" . $row['TELF_Alumno'] . "</td>";
+                            echo "<td>" . $row['EMAIL_Alumno'] . "</td>";
+                            echo "<td>" . $row['Direccion'] . "</td>";
+                            echo "<td>" . $row['Codigo_Postal'] . "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        // Si no se encontraron alumnos asociados al centro educativo, muestra un mensaje indicando que no hay resultados
+                        echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
+                    }
+                    ?>
+                    </tbody>
                 </table>
             </div>
             <div id="new">
