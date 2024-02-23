@@ -29,14 +29,14 @@
             <span class="material-symbols-sharp">school</span>
             <h3>Crear Centro(provisional)</h3>
         </a>
-        <a href="index.php?pages=crearAlumno" <?php if ($activeLink === 'crearAlumno') echo 'class="active"'; ?>>
-            <span class="material-icons-sharp">mail_outline</span>
-            <h3>Crear Alumno(provisional)</h3>
-        </a>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">inbox</span>
             <h3>Alumnos</h3>
             <!--<span class="message-count">26</span>-->
+        </a>
+        <a href="#">
+            <span class="material-icons-sharp">mail_outline</span>
+            <h3>Ejemplo 5</h3>
         </a>
         <a href="#">
             <span class="material-symbols-sharp">browse_gallery</span>

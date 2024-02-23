@@ -12,7 +12,7 @@
     <div class="container">
         
         <?php
-        $activeLink = 'crearAlumno';
+        $activeLink = 'consultarAlumnos';
         include 'aside.php';
         ?>
 

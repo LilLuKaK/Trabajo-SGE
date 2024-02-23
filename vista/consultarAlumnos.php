@@ -133,7 +133,7 @@
             </div>
             <div class="forms">
                 <h2>Para insertar un nuevo alumno, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
-                <button class="new"><label>Insertar alumno</label><span class="material-symbols-sharp">person_add</span></button>
+                <a href="index.php?pages=crearAlumno"><button class="new"><label>Insertar alumno</label><span class="material-symbols-sharp">person_add</span></button></a>
             </div>
         </div>
     </div>

@@ -62,6 +62,7 @@
                     </form>
                 </article>
                 <article class="sign-in__logo">
+                    <div><img src="./assets/images/login-register/undraw_teacher_re_sico.svg" alt=""></div>
                 </article>
             </section>
         </div>
