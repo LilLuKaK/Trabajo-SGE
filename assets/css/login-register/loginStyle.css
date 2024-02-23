@@ -30,7 +30,12 @@ body {
     place-items: center;
 }
 
+.container{
+    height: 100vh;
+}
+
 .contenedorRegistro {
+    height: 100vh;
     width: 100%;
 	display: flex;
 	align-items: center;
@@ -84,16 +89,16 @@ a, a:active, a:visited {
 /* SIGN IN */
 .sign-in {
     background: var(--color-white);
-    width: 60rem;
-    display: grid;
+    width: 100%;
+    display: flex;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    border-radius: 1rem;
     overflow: hidden;
 }
 
 .sign-in__details {
-    padding: 2rem 4rem;
+    padding: 0 3rem 0 4rem;
+    width: 70%;
 }
 
 .sign-in__form {
@@ -213,10 +218,12 @@ button:last-child {
 }
 
 .sign-in__logo {
+    height: 89vh;
+    width: 30%;
     display: grid;
     place-content: center;
     background: url('./assets/bg_texture.png'), var(--color-primary);
-    height: 100%;
+    border-radius: 10px;
 }
 
 .sign-in__logo div {
