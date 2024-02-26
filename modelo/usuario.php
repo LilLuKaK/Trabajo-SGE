@@ -123,12 +123,16 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-//*********************Filtrar busqueda por nombre Alumno ************************* */
+/*********************Filtrar busqueda por nombre Alumno ************************* */
 
 function busquedaNombre($nombre){
     $conn = ConexionBD::conectar();
     if($conn){
-        $stmt = $conn->prepare("SELECT * FROM alumnos where nombre LIKE :nombre");
+        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
+                                FROM alumnos a
+                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
+                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
+                                WHERE a.Nombre LIKE :nombre");
         $stmt->execute(array(
             ':nombre' => '%'.$nombre.'%'
         ));
@@ -144,7 +148,11 @@ function busquedaNombre($nombre){
 function busquedaDni($dni){
     $conn = ConexionBD::conectar();
     if($conn){
-        $stmt = $conn->prepare("SELECT * FROM alumnos where DNI LIKE :dni");
+        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
+                                FROM alumnos a
+                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
+                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
+                                WHERE a.DNI LIKE :dni");
         $stmt->execute(array(
             ':dni' => '%'.$dni.'%'
         ));
@@ -161,7 +169,11 @@ function validez($validez, $activo = true) {
     $conn = ConexionBD::conectar();
     if ($conn) {
         // Ajusta la consulta SQL según el estado de activo (searchBoton)
-        $sql = "SELECT * FROM alumnos WHERE Validez = :validez";
+        $sql = "SELECT a.*, cf.Nombre_Ciclo 
+                FROM alumnos a
+                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
+                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
+                WHERE a.Validez = :validez";
         if (!$activo) {
             // Si está desactivado (searchBoton = 0), buscar solo alumnos con validez inactiva (Validez = 0)
             $sql .= " AND Validez = 0";
@@ -180,13 +192,16 @@ function validez($validez, $activo = true) {
     }
 }
 
-
 function buscarPorCiclo($ciclo){
     $conn = ConexionBD::conectar();
     if($conn){
-        $stmt = $conn->prepare("SELECT * FROM alumnos WHERE Ciclo_formativo = :ciclo");
+        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo
+                                FROM alumnos a 
+                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno 
+                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo 
+                                WHERE cf.Nombre_Ciclo = :Nombre_Ciclo");
         $stmt->execute(array(
-            ':ciclo' => $ciclo
+            ':Nombre_Ciclo' => $ciclo
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -196,7 +211,6 @@ function buscarPorCiclo($ciclo){
         return json_encode(array('success' => 'No se encontraron resultados'));
     }
 }
-
 
 function cerrarSesion() {
     session_start();

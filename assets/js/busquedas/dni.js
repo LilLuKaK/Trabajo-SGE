@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     const fila = document.createElement('tr');
                     const {ID_Alumno, Nombre, Apellido1, Apellido2, DNI, N_Seg_social, Curriculum_Vitae,
                         Fecha_Ultima_Activo, Activo, Validez, TELF_Alumno, EMAIL_Alumno, Direccion,
-                        Codigo_Postal, Ciclo_formativo} = alumno;
+                        Codigo_Postal, Nombre_Ciclo} = alumno;
                     fila.innerHTML = `
                         
                         <tbody>
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
                             <td>${Nombre}</td>
                             <td>${Apellido1}</td>
                             <td>${DNI}</td>
-                            <td>${Ciclo_formativo}</td>
+                            <td>${Nombre_Ciclo}</td>
                             <td>${N_Seg_social}</td>
                             <td><span class='material-symbols-sharp'>download</span></td>
                             <td>${Activo == 1 ? 'Sí' : 'No'}</td>
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     tabla.appendChild(fila);
                 });
             }
-           
+        
         })
         .catch(error => console.error('Error:', error));
     });
