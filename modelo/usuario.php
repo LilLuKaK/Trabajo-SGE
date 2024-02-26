@@ -123,6 +123,81 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+//*********************Filtrar busqueda por nombre Alumno ************************* */
+
+function busquedaNombre($nombre){
+    $conn = ConexionBD::conectar();
+    if($conn){
+        $stmt = $conn->prepare("SELECT * FROM alumnos where nombre LIKE :nombre");
+        $stmt->execute(array(
+            ':nombre' => '%'.$nombre.'%'
+        ));
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($resultado);
+    }else{
+        return json_encode(array('success' => 'No se encontraron resultados'));
+    }
+}
+
+function busquedaDni($dni){
+    $conn = ConexionBD::conectar();
+    if($conn){
+        $stmt = $conn->prepare("SELECT * FROM alumnos where DNI LIKE :dni");
+        $stmt->execute(array(
+            ':dni' => '%'.$dni.'%'
+        ));
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($resultado);
+    }else{
+        return json_encode(array('success' => 'No se encontraron resultados'));
+    }
+}
+
+function validez($validez, $activo = true) {
+    $conn = ConexionBD::conectar();
+    if ($conn) {
+        // Ajusta la consulta SQL según el estado de activo (searchBoton)
+        $sql = "SELECT * FROM alumnos WHERE Validez = :validez";
+        if (!$activo) {
+            // Si está desactivado (searchBoton = 0), buscar solo alumnos con validez inactiva (Validez = 0)
+            $sql .= " AND Validez = 0";
+        }
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(array(
+            ':validez' => $validez
+        ));
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($resultado);
+    } else {
+        return json_encode(array('success' => 'No se encontraron resultados'));
+    }
+}
+
+
+function buscarPorCiclo($ciclo){
+    $conn = ConexionBD::conectar();
+    if($conn){
+        $stmt = $conn->prepare("SELECT * FROM alumnos WHERE Ciclo_formativo = :ciclo");
+        $stmt->execute(array(
+            ':ciclo' => $ciclo
+        ));
+
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($resultado);
+    } else {
+        return json_encode(array('success' => 'No se encontraron resultados'));
+    }
+}
+
+
 function cerrarSesion() {
     session_start();
     session_unset();

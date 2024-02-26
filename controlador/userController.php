@@ -77,9 +77,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         echo $respuesta;
 
+    }elseif(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+        $nombre = limpiaString($_POST['nombre']);
+        $respuesta = busquedaNombre($nombre);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarDni']) && $_POST['buscarDni'] == true){
+        $dni = limpiaString($_POST['dni']);
+        $respuesta = busquedaDni($dni);
+        echo $respuesta;
+
+    }elseif(isset($_POST['searchBoton'])){
+        $validez = limpiaString($_POST['searchBoton']);
+        $activo = ($validez == 0) ? false : true;
+        $respuesta = validez($validez, $activo);
+        echo $respuesta;
+
+    }if(isset($_POST['buscarFP'])){
+        $ciclo = limpiaString($_POST['ciclo']);
+        $respuesta = buscarPorCiclo($ciclo);
+        echo $respuesta;
+        
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();
     } 
+    
 
 }
