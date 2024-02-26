@@ -78,24 +78,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $respuesta;
 
     }elseif(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+        session_start();
+        $id_centro_educativo = $_SESSION['id_centro'];
         $nombre = limpiaString($_POST['nombre']);
-        $respuesta = busquedaNombre($nombre);
+        $respuesta = busquedaNombre($nombre, $id_centro_educativo);
         echo $respuesta;
 
     }elseif(isset($_POST['buscarDni']) && $_POST['buscarDni'] == true){
+        session_start();
+        $id_centro_educativo = $_SESSION['id_centro'];
         $dni = limpiaString($_POST['dni']);
-        $respuesta = busquedaDni($dni);
+        $respuesta = busquedaDni($dni, $id_centro_educativo);
         echo $respuesta;
 
     }elseif(isset($_POST['searchBoton'])){
+        session_start();
+        $id_centro_educativo = $_SESSION['id_centro'];
         $validez = limpiaString($_POST['searchBoton']);
         $activo = ($validez == 0) ? false : true;
-        $respuesta = validez($validez, $activo);
+        $respuesta = validez($validez, $activo, $id_centro_educativo);
         echo $respuesta;
 
     }if(isset($_POST['buscarFP'])){
+        session_start();
+        $id_centro_educativo = $_SESSION['id_centro'];
         $ciclo = limpiaString($_POST['ciclo']);
-        $respuesta = buscarPorCiclo($ciclo);
+        $respuesta = buscarPorCiclo($ciclo, $id_centro_educativo);
         echo $respuesta;
         
     }else if(isset($_POST["cerrarSesion"])){

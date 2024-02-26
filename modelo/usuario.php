@@ -125,16 +125,18 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
 
 /*********************Filtrar busqueda por nombre Alumno ************************* */
 
-function busquedaNombre($nombre){
+function busquedaNombre($nombre, $id_centro_educativo){
     $conn = ConexionBD::conectar();
     if($conn){
         $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
                                 FROM alumnos a
                                 INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
                                 INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                                WHERE a.Nombre LIKE :nombre");
+                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
+                                WHERE a.Nombre LIKE :nombre AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
         $stmt->execute(array(
-            ':nombre' => '%'.$nombre.'%'
+            ':nombre' => '%'.$nombre.'%',
+            ':id_centro_educativo' => $id_centro_educativo
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -145,16 +147,18 @@ function busquedaNombre($nombre){
     }
 }
 
-function busquedaDni($dni){
+function busquedaDni($dni, $id_centro_educativo){
     $conn = ConexionBD::conectar();
     if($conn){
         $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
                                 FROM alumnos a
                                 INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
                                 INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                                WHERE a.DNI LIKE :dni");
+                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
+                                WHERE a.DNI LIKE :dni AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
         $stmt->execute(array(
-            ':dni' => '%'.$dni.'%'
+            ':dni' => '%'.$dni.'%',
+            ':id_centro_educativo' => $id_centro_educativo
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -165,7 +169,7 @@ function busquedaDni($dni){
     }
 }
 
-function validez($validez, $activo = true) {
+function validez($validez, $activo = true, $id_centro_educativo) {
     $conn = ConexionBD::conectar();
     if ($conn) {
         // Ajusta la consulta SQL según el estado de activo (searchBoton)
@@ -173,7 +177,8 @@ function validez($validez, $activo = true) {
                 FROM alumnos a
                 INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
                 INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                WHERE a.Validez = :validez";
+                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
+                WHERE a.Validez = :validez AND cen_al.ID_Centro_Formativo = :id_centro_educativo";
         if (!$activo) {
             // Si está desactivado (searchBoton = 0), buscar solo alumnos con validez inactiva (Validez = 0)
             $sql .= " AND Validez = 0";
@@ -181,7 +186,8 @@ function validez($validez, $activo = true) {
         
         $stmt = $conn->prepare($sql);
         $stmt->execute(array(
-            ':validez' => $validez
+            ':validez' => $validez,
+            ':id_centro_educativo' => $id_centro_educativo
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -192,16 +198,18 @@ function validez($validez, $activo = true) {
     }
 }
 
-function buscarPorCiclo($ciclo){
+function buscarPorCiclo($ciclo, $id_centro_educativo){
     $conn = ConexionBD::conectar();
     if($conn){
-        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo
-                                FROM alumnos a 
-                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno 
-                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo 
-                                WHERE cf.Nombre_Ciclo = :Nombre_Ciclo");
+        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
+                                FROM alumnos a
+                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
+                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
+                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
+                                WHERE cf.Nombre_Ciclo = :Nombre_Ciclo AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
         $stmt->execute(array(
-            ':Nombre_Ciclo' => $ciclo
+            ':Nombre_Ciclo' => $ciclo,
+            ':id_centro_educativo' => $id_centro_educativo
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
