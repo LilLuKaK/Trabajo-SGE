@@ -178,6 +178,10 @@ td .material-symbols-sharp{
     flex-direction: column;
 }
 
+.forms:last-child{
+    margin-bottom: 100px;
+}
+
 .form__control{
     display: flex;
     flex-direction: column;
