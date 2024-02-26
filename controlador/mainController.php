@@ -21,6 +21,12 @@ if(isset($_GET['pages'])) {
         case 'landing':
             require_once 'vista/landingPage.php';
             break;
+        case 'consultarCiclo':
+            require_once 'vista/consultarCiclo.php';
+            break;
+        case 'crearCiclo':
+                require_once 'vista/crearCiclo.php';
+                break;
         default:
             require_once 'vista/landingPage.php';
             break;

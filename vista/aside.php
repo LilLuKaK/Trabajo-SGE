@@ -34,12 +34,12 @@
             <h3>Alumnos</h3>
             <!--<span class="message-count">26</span>-->
         </a>
-        <a href="#">
-            <span class="material-icons-sharp">mail_outline</span>
-            <h3>Ejemplo 5</h3>
+        <a href="index.php?pages=consultarCiclo" <?php if ($activeLink === 'consultarCiclo') echo 'class="active"'; ?>>
+            <span class="material-icons-sharp">browse_gallery</span>
+            <h3>Ciclos Formativos</h3>
         </a>
         <a href="#">
-            <span class="material-symbols-sharp">browse_gallery</span>
+            <span class="material-symbols-sharp">mail_outline</span>
             <h3>Ejemplo 6</h3>
         </a>
         <a href="#">
