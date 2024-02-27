@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailInput = document.getElementById('EMAIL_Alumno');
     const direccionInput = document.getElementById('Direccion');
     const cpInput = document.getElementById('Codigo_Postal');
-    const centroSelect = document.getElementById('centro');
     const cicloSelect = document.getElementById('ciclo');
 
     const nombreError = document.getElementById('nombre-error');
@@ -43,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailError = document.getElementById('EMAIL_Alumno-error');
     const direccionError = document.getElementById('Direccion-error');
     const cpError = document.getElementById('Codigo_Postal-error');
-    const centroSelectError = document.getElementById('centro-error');
     const cicloSelectError = document.getElementById('ciclo-error');
 
     const enviarButton = document.getElementById('buttonEnviar');
@@ -188,17 +186,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarCentro() {
-        if (centroSelect.value == '') {
-            centroSelectError.textContent = 'Debes seleccionar un centro de la lista.';
-            centroSelectError.style.fontSize ='13px';
-            return false;
-        }else {
-            centroSelectError.textContent = '';
-            return true;
-        }
-    }
-
     function validarCiclo() {
         if (cicloSelect.value == '') {
             cicloSelectError.textContent = 'Debes seleccionar un ciclo de la lista.';
@@ -216,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function habilitarBoton() {
-        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarCP() && validarCV() && validarDni() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCentro() && validarCiclo());
+        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarCP() && validarCV() && validarDni() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo());
     }
 
     nombreInput.addEventListener('input', function () {
@@ -255,10 +242,6 @@ document.addEventListener('DOMContentLoaded', function () {
         validarInput(validarEmail, emailError);
     });
 
-    centroSelect.addEventListener('input', function () {
-        validarInput(validarCentro, centroSelectError);
-    });
-
     cicloSelect.addEventListener('input', function () {
         validarInput(validarCiclo, cicloSelectError);
     });
@@ -266,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
     enviarButton.addEventListener('click', function (event) {
         event.preventDefault();
 
-        if (validarNombre() && validarApellidos() && validarCP() && validarDni() && validarCV() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCentro() && validarCiclo()) {
+        if (validarNombre() && validarApellidos() && validarCP() && validarDni() && validarCV() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo()) {
             const formData = new FormData(document.getElementById('registroForm'));
 
             fetch('./controlador/userController.php', {

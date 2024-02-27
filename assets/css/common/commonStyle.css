@@ -4,7 +4,7 @@
 :root {
     --color-primary: #689599;
     --color-danger: #ff7782;
-    --color-success: #41f1b6;
+    --color-success: #34ae85;
     --color-warning: #ffbb55;
     --color-white: #fff;
     --color-info-dark: #7d8da1;
@@ -147,6 +147,8 @@ b {
 /* ================== SIDEBAR ==================== */
 aside {
     height: 100vh;
+    position: sticky;
+    top: 0;
 }
 
 aside .top {
