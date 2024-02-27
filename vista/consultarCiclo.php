@@ -10,7 +10,7 @@
     <div class="container">
 
         <?php
-        $activeLink = 'crearCentro';
+        $activeLink = 'consultarCiclo';
         include 'aside.php';
         ?>
 
@@ -30,28 +30,6 @@
                 </div> 
                 <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
             </div>
-
-                            <!-- 
-                            La consulta SQL ha de ser: 
-                            Consulta que se ha de repetir por cada uno de los Ciclos Formativos
-                            SELECT COUNT(*)
-                            FROM ciclo_alumno
-                            WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
-                                                    FROM ciclos_formativos
-                                                    WHERE Nombre_Ciclo='DAM');
-                                                    SELECT COUNT(*)
-                            FROM ciclo_alumno
-
-
-
-                            WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
-                                                    FROM ciclos_formativos
-                                                    WHERE Nombre_Ciclo='DAM')
-                            AND ID_Alumno = (SELECT ID_Alumno
-                                            FROM alumnos
-                                            WHERE alumnos.Validez =1);
-                            -->               
-
             <div class="middle">
                 <table class="data">
                     <thead>
@@ -65,7 +43,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- añadir el <?php
+                        
+
+                            <!-- 
+                            La consulta SQL ha de ser: 
+                            Consulta que se ha de repetir por cada uno de los Ciclos Formativos
+
+                            SELECT COUNT(*)
+                            FROM ciclo_alumno
+                            WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
+                                                    FROM ciclos_formativos
+                                                    WHERE Nombre_Ciclo='DAM');
+                                                    SELECT COUNT(*)
+                            FROM ciclo_alumno;
+
+
+
+                           
+                            Alumnos por clase que están trabajando:
+
+                            SELECT COUNT(DISTINCT a.Nombre, a.Activo)
+                            FROM Alumnos a
+                            JOIN ciclo_alumno ac ON a.ID_Alumno = ac.ID_Alumno
+                            JOIN ciclos_formativos c ON ac.ID_Ciclo_Formativo = c.ID_Ciclo_Formativo
+                            WHERE a.Activo = 1 AND c.Nombre_Ciclo = 'DAM';
+
+                            
+                            Alumnos por clase que están aprobados y pueden trabajar (no están trabajando):
+
+                            SELECT COUNT(DISTINCT a.Nombre, a.Activo)
+                            FROM Alumnos a
+                            JOIN ciclo_alumno ac ON a.ID_Alumno = ac.ID_Alumno
+                            JOIN ciclos_formativos c ON ac.ID_Ciclo_Formativo = c.ID_Ciclo_Formativo
+                            WHERE a.Activo = 0 AND c.Nombre_Ciclo = 'DAM' AND a.Validez = 1;
+
+                            Alumnos por clase que no están aprobados:
+
+                            SELECT COUNT(DISTINCT a.Nombre, a.Activo)
+                            FROM Alumnos a
+                            JOIN ciclo_alumno ac ON a.ID_Alumno = ac.ID_Alumno
+                            JOIN ciclos_formativos c ON ac.ID_Ciclo_Formativo = c.ID_Ciclo_Formativo
+                            WHERE a.Validez = 0;
+
+                            añadir el <?php
 
                         ?> -->
                     </tbody>
