@@ -30,7 +30,7 @@
     overflow-x: auto;
     background-color: var(--c-bg-tertiary);
     margin-bottom: 80px;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 .middle::-webkit-scrollbar-thumb {
@@ -188,19 +188,19 @@ td .material-symbols-sharp{
     gap: 0.5rem;
 }
 
+
 .input{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: 12px;
 }
 
 .forms h2{
     font-size: 15px;
     font-weight: normal;
-    margin-top: 10px;
 }
-
 
 label{
     font-weight: 500;
@@ -302,6 +302,14 @@ input:checked + .slider:before {
 
 .new span{
     color: white;
+}
+
+.new:first-child{
+    color: red;
+}
+
+#all{
+    margin-bottom: 20px;
 }
 
 .si{

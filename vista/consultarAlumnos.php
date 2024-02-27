@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
-    <link rel="stylesheet" href="./assets/css/alumnos/consultarAlumnosStyle.css">
+    <link rel="stylesheet" href="./assets/css/consult/consultStyle.css">
 </head>
 <body>
     <div class="container">
@@ -79,6 +79,7 @@
                             <input type="hidden" value="buscarFP">
                         </div>
                     </div>
+                    <a href="index.php?pages=consultarAlumnos"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
                     <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
                 </div>
                 <!-- TABLA DE CONNSULTAS -->

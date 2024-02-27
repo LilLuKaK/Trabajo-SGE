@@ -34,9 +34,9 @@
             <h3>Alumnos</h3>
             <!--<span class="message-count">26</span>-->
         </a>
-        <a href="#">
+        <a href="index.php?pages=consultarEmpresa" <?php if ($activeLink === 'consultarEmpresa') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">mail_outline</span>
-            <h3>Ejemplo 5</h3>
+            <h3>Empresa</h3>
         </a>
         <a href="#">
             <span class="material-symbols-sharp">browse_gallery</span>
