@@ -3,12 +3,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
-    <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
+    <link rel="stylesheet" href="./assets/css/consult/consultStyle.css">
 </head>
 <body>
     <div class="container">
+
         <?php
         $activeLink = 'crearCentro';
         include 'aside.php';
@@ -23,59 +23,54 @@
                 <div class="form__control">
                     <label for="ciclo">Ciclo</label>
                     <div class="input">
-                    <input type="text" id="ciclo" name="ciclo" placeholder="Introduce el nombre del Ciclo"></input>
-                    <button id="buscarCiclo" class="search" name="buscarCiclo"><span class="material-symbols-sharp">manage_search</span></button>
-                    <input type="hidden" value="buscarCiclo">
+                        <input type="text" id="ciclo" name="ciclo" placeholder="Introduce el nombre del Ciclo"></input>
+                        <button id="buscarCiclo" class="search" name="buscarCiclo"><span class="material-symbols-sharp">manage_search</span></button>
+                        <input type="hidden" value="buscarCiclo">
+                    </div>
                 </div> 
-
-<!-- 
-La consulta SQL ha de ser: 
-Consulta que se ha de repetir por cada uno de los Ciclos Formativos
-SELECT COUNT(*)
-FROM ciclo_alumno
-WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
-                        FROM ciclos_formativos
-                         WHERE Nombre_Ciclo='DAM');
-                          SELECT COUNT(*)
-FROM ciclo_alumno
-
-
-
-WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
-                          FROM ciclos_formativos
-                          WHERE Nombre_Ciclo='DAM')
-AND ID_Alumno = (SELECT ID_Alumno
-                FROM alumnos
-                WHERE alumnos.Validez =1);
--->               
-                <div class="middle">
-                    <table class="data">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
-                                <th>DNI</th>
-                                <th>Ciclo</th>
-                                <th>SS</th>
-                                <th>CV</th>
-                                <th>Validez</th>
-                                <th>Activo</th>
-                                <th>Teléfono</th>
-                                <th>Correo</th>
-                                <th>Dirección</th>
-                                <th>CP</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-    <!-- añadir el <?php
-
-    ?> -->
-                        </tbody>
-                    </table> 
-                </div>         
+                <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
             </div>
+
+                            <!-- 
+                            La consulta SQL ha de ser: 
+                            Consulta que se ha de repetir por cada uno de los Ciclos Formativos
+                            SELECT COUNT(*)
+                            FROM ciclo_alumno
+                            WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
+                                                    FROM ciclos_formativos
+                                                    WHERE Nombre_Ciclo='DAM');
+                                                    SELECT COUNT(*)
+                            FROM ciclo_alumno
+
+
+
+                            WHERE ID_Ciclo_Formativo=(SELECT ID_Ciclo_Formativo 
+                                                    FROM ciclos_formativos
+                                                    WHERE Nombre_Ciclo='DAM')
+                            AND ID_Alumno = (SELECT ID_Alumno
+                                            FROM alumnos
+                                            WHERE alumnos.Validez =1);
+                            -->               
+
+            <div class="middle">
+                <table class="data">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>ID</th>
+                            <th>Nombre Ciclo</th>
+                            <th>Numero total de alumnos</th>
+                            <th>Alumnos con prácticas</th>
+                            <th>Alumnos sin practicas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- añadir el <?php
+
+                        ?> -->
+                    </tbody>
+                </table> 
+            </div>         
             <div id="new">
                 <div class="top">
                 <p>Insertar Ciclo formativo</p>
@@ -88,7 +83,7 @@ AND ID_Alumno = (SELECT ID_Alumno
             </div>
         </div>
     </div>
-<script src="./assets/js/common/commonScript.js"></script>
+    <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
