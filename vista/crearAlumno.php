@@ -91,13 +91,14 @@
                         </div>
                         <div class="form__control">
                             <label for="fullname">Centro</label>
-                            <select name="centro" id="centro">
+                            <input type="hidden" name="centro" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
+                            <input type="text" value="<?php echo ($_SESSION['nombre_centro']); ?>" readonly>
+                            <!--<select name="centro" id="centro">
                                 <option value='' selected disabled>-- Selecciona el centro --</option>
                                 <?php
-                                // Incluir la consulta de los centros
                                 include './../modelo/centro_formativo.php';
                                 ?>
-                            </select>
+                            </select>-->
                             <div id="centro-error"></div>
                         </div>
                         <div class="form__control">
@@ -139,10 +140,10 @@
         </div>
     </div>
     <script>
-        document.getElementById('ciclo').addEventListener('change', function() {
+        /*document.getElementById('ciclo').addEventListener('change', function() {
             var selectedOption = this.options[this.selectedIndex].value;
             document.getElementById('cicloSeleccionado').value = selectedOption;
-        });
+        });*/
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>

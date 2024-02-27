@@ -73,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function(){
                             <td>${Nombre_Ciclo}</td>
                             <td>${N_Seg_social}</td>
                             <td><span class='material-symbols-sharp'>download</span></td>
-                            <td>${Activo == 1 ? 'Sí' : 'No'}</td>
                             <td>${Validez == 1 ? 'Sí' : 'No'}</td>
+                            <td>${Activo == 1 ? 'Sí' : 'No'}</td>
                             <td>${TELF_Alumno}</td>
                             <td>${EMAIL_Alumno}</td>
                             <td>${Direccion}</td>
