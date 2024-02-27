@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
-    <link rel="stylesheet" href="assets/css/alumnos/crearAlumnosStyle.css" />
+    <link rel="stylesheet" href="assets/css/login-register/extendedLogin.css" />
 </head>
 <body>
     <div class="container">
@@ -21,7 +21,7 @@
                 <article class="sign-in__details">
                     <div id="label">
                         <h1>Editar Alumno</h1>
-                        <p>Complete el siguiente formulario para Editar el alumno</p>
+                        <p>Complete el siguiente formulario para Editar un alumno</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
                         <div class="form__control">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form__control">
                             <label for="dni">DNI</label>
-                            <input type="text" id="dni" name="dni" placeholder="Introduce el dni">
+                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
                             <div id="dni-error"></div>
                         </div>
                         <div class="form__control">
@@ -129,9 +129,9 @@
                             </select>
                             <div id="ciclo-error"></div>
                         </div>
-                        <input type="hidden" name="editarAlumno" value="editarAlumno">
-                        <input type="submit" class="btn primary" value="Guardar" name="editarAlumno" id="buttonEnviar">
-                        <input type="submit" class="btn primary" value="Cancelar" name="editarAlumno" id="buttonEnviar">
+                        <input type="hidden" name="registrarAlumno" value="registrarAlumno">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Cancelar" name="registrarAlumno" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
