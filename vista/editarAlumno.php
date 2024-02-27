@@ -130,7 +130,8 @@
                             <div id="ciclo-error"></div>
                         </div>
                         <input type="hidden" name="editarAlumno" value="editarAlumno">
-                        <input type="submit" class="btn primary" value="Registrar" name="editarAlumno" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Guardar" name="editarAlumno" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Cancelar" name="editarAlumno" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
