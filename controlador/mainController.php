@@ -21,6 +21,9 @@ if(isset($_GET['pages'])) {
         case 'landing':
             require_once 'vista/landingPage.php';
             break;
+        case 'editarAlumno':
+            require_once 'vista/editarAlumno.php';
+            break;
         default:
             require_once 'vista/landingPage.php';
             break;
