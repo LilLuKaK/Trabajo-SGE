@@ -26,16 +26,16 @@
             <h3>Registro(provisional)</h3>
         </a>
         <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">school</span>
+            <span class="material-symbols-sharp">inbox</span>
             <h3>Crear Centro(provisional)</h3>
         </a>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">inbox</span>
+            <span class="material-symbols-sharp">school</span>
             <h3>Alumnos</h3>
             <!--<span class="message-count">26</span>-->
         </a>
-        <a href="index.php?pages=consultarEmpresa" <?php if ($activeLink === 'consultarEmpresa') echo 'class="active"'; ?>>
-            <span class="material-icons-sharp">mail_outline</span>
+        <a href="index.php?pages=consultarEmpresas" <?php if ($activeLink === 'consultarEmpresas') echo 'class="active"'; ?>>
+            <span class="material-symbols-sharp">work</span>
             <h3>Empresa</h3>
         </a>
         <a href="#">

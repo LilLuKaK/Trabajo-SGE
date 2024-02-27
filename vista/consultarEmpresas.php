@@ -10,21 +10,21 @@
     <div class="container">
         
         <?php
-        $activeLink = 'consultarEmpresa';
+        $activeLink = 'consultarEmpresas';
         include 'aside.php';
         ?>
 
         <div class="right">
             <div class="scroll">
                 <div class="top">
-                    <p>Consulta de empresa</p>
+                    <h1>Consulta de empresa</h1>
                     <h2>Aquí podrás consultar, modificar y eliminar empresas.</h2>
                 </div>
                 <div class="forms">
                     <div class="form__control">
                         <label for="nombre">Nombre</label>
                         <div class="input">
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre de la empresa"></input>
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el Nombre de la Empresa"></input>
                             <button id="buscarEmpresa" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarEmpresa">
                         </div>
@@ -32,7 +32,7 @@
                     <div class="form__control">
                         <label for="CIF">CIF</label>
                         <div class="input">
-                            <input type="text" id="CIF" name="CIF" placeholder="Introduce el CIF de la empresa"></input>
+                            <input type="text" id="CIF" name="CIF" placeholder="Introduce el CIF de la Empresa"></input>
                             <button id="buscarCIF" class="search" name="buscarCIF"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarCIF">
                         </div>
@@ -40,20 +40,20 @@
                     <div class="form__control">
                         <label for="duenyo">Dueño</label>
                         <div class="input">
-                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el dueño de la empresa"></input>
+                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el Dueño de la Empresa"></input>
                             <button id="buscarDuenyo" class="search" name="buscarDuenyo"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarDuenyo">
                         </div>
                     </div>
                     <div class="form__control">
-                        <label for="firmante">Firmante del convenio</label>
+                        <label for="firmante">Firmante del Convenio</label>
                         <div class="input">
-                            <input type="text" id="firmante" name="firmante" placeholder="Introduce el firmante del convenio de la empresa"></input>
+                            <input type="text" id="firmante" name="firmante" placeholder="Introduce el Firmante del Convenio de la Empresa"></input>
                             <button id="buscarFirmante" class="search" name="buscarFirmante"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarFirmante">
                         </div>
                     </div>
-                    <a href="index.php?pages=consultarEmpresa"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
+                    <a href="index.php?pages=consultarEmpresas"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
                     <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
                 </div>
                 <!-- TABLA DE CONNSULTAS -->
@@ -124,12 +124,12 @@
                 </div>
                 <div id="new">
                     <div class="top">
-                        <p>Insertar empresa</p>
+                        <h1>Insertar empresa</h1>
                         <h2>Añadir una empresa a la base de datos.</h2>
                 </div>
                 <div class="forms">
                     <h2>Para insertar una nueva empresa, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
-                    <a href="index.php?pages=crearAlumno"><button class="new"><label>Insertar empresa</label><span class="material-symbols-sharp">person_add</span></button></a>
+                    <a href="index.php?pages=crearEmpresa"><button class="new"><label>Insertar empresa</label><span class="material-symbols-sharp">person_add</span></button></a>
                 </div>
             </div>
         </div>
