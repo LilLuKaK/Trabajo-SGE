@@ -35,12 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function validarCif() {
-        const cifPattern = /^([0-9]){8}([A-Z]){1}?$/;
+        const cifPattern = /^([A-Z]){1}([0-9]){8}?$/;
         if (cifInput.value.trim() === "") {
             cifError.textContent = '';
             return false;
         } else if (!cifPattern.test(cifInput.value)) {
-            cifError.textContent = 'Formato incorrecto. Debe seguir el patrón de códidigo postal 28000.';
+            cifError.textContent = 'Formato incorrecto. Debe seguir el patrón de CIF A12345678.';
             cifError.style.color ='red';
             cifError.style.fontSize ='13px';
             return false;
