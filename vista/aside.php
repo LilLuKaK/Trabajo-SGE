@@ -37,6 +37,7 @@
         <a href="index.php?pages=consultarCiclo" <?php if ($activeLink === 'consultarCiclo') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">browse_gallery</span>
             <h3>Ciclos Formativos</h3>
+        </a>
         <a href="index.php?pages=consultarEmpresa" <?php if ($activeLink === 'consultarEmpresa') echo 'class="active"'; ?>>
             <span class="material-icons-sharp">mail_outline</span>
             <h3>Empresa</h3>
