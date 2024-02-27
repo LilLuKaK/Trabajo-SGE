@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
-    <link rel="stylesheet" href="assets/css/alumnos/crearAlumnosStyle.css" />
+    <link rel="stylesheet" href="assets/css/login-register/extendedLogin.css" />
 </head>
 <body>
     <div class="container">
@@ -36,7 +36,7 @@
                         </div>
                         <div class="form__control">
                             <label for="dni">DNI</label>
-                            <input type="text" id="dni" name="dni" placeholder="Introduce el dni">
+                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
                             <div id="dni-error"></div>
                         </div>
                         <div class="form__control">

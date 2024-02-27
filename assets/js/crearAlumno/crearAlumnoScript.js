@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
             nombreError.textContent = '';
             return false;
         } else if (!nombrePattern.test(nombreInput.value)) {
-            nombreError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. CFP Juan XXIII';
+            nombreError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. John.';
             nombreError.style.color ='red';
             nombreError.style.fontSize ='13px';
             return false;
