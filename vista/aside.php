@@ -42,10 +42,6 @@
             <h3>Empresa</h3>
         </a>
         <a href="#">
-            <span class="material-symbols-sharp">mail_outline</span>
-            <h3>Ejemplo 6</h3>
-        </a>
-        <a href="#">
             <span class="material-symbols-sharp">settings</span>
             <h3>Ejemplo 7</h3>
         </a>
