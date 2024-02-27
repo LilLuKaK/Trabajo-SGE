@@ -106,7 +106,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = buscarPorCiclo($ciclo, $id_centro_educativo);
         echo $respuesta;
         
-    }else if(isset($_POST["cerrarSesion"])){
+    }else if(isset($_POST["editarAlumno"])){
+        // Obtener los datos del formulario
+        $nombre = limpiaString($_POST["nombre"]);
+        $apellidos = limpiaString($_POST["apellidos"]);
+        $dni = limpiaString($_POST["dni"]);
+        $N_Seg_social = limpiaString($_POST["N_Seg_social"]);
+        $Curriculum_Vitae = limpiaString($_POST["Curriculum_Vitae"]);
+        $TELF_Alumno = limpiaString($_POST["TELF_Alumno"]);
+        $EMAIL_Alumno = limpiaString($_POST["EMAIL_Alumno"]);
+        $Direccion = limpiaString($_POST["Direccion"]);
+        $Codigo_Postal = limpiaString($_POST["Codigo_Postal"]);
+        $id_centro_educativo = limpiaString($_POST["centro"]); // Obtener el ID del centro educativo seleccionado
+        $id_ciclo_formativo = limpiaString($_POST["ciclo"]);
+        $activo = $_POST["activo"]; // Obtener el valor del radio button de activo
+        $validez = $_POST["validez"]; // Obtener el valor del radio button de validez
+
+        $id_Alumno = $_POST['id'];
+    
+        // Llama a la función para registrar el alumno
+        $respuesta = actualizarAlumno($id_Alumno,$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez);
+    
+        echo $respuesta;
+
+    }
+    else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();
     } 

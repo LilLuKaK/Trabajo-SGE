@@ -125,8 +125,9 @@
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td>";
-                                echo "<button class='delete'><span class='material-symbols-sharp'>delete</span></button>";
-                                echo "<button class='edit'><span class='material-symbols-sharp'>edit</span></button>";
+                                echo "<button class='delete' name='deleteAlumno' data-id='" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>delete</span></button>";
+                                echo "<a href='index.php?pages=editarAlumno'><button class='edit' name='" . $row['ID_Alumno'] . "' id='editarAlumno'><span class='material-symbols-sharp'>edit</span></button></a>";
+                                echo "<input id='editAlumno' type='hidden' value='" . $row['ID_Alumno'] . "'>";
                                 echo "</td>";
                                 echo "<td>" . $row['ID_Alumno'] . "</td>";
                                 echo "<td>" . $row['Nombre'] . "</td>";
@@ -164,6 +165,7 @@
         </div>
     </div>
     </div>
+    <script src="./assets/js/Editar_Borrar/editar.js"></script>
     <script src="./assets/js/busquedas/validez.js"></script>
     <script src="./assets/js/busquedas/cicloFP.js"></script>
     <script src="./assets/js/busquedas/dni.js"></script>
