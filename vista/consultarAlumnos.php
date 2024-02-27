@@ -17,14 +17,14 @@
         <div class="right">
             <div class="scroll">
                 <div class="top">
-                    <p>Consulta de alumnos</p>
+                    <h1>Consulta de alumnos</h1>
                     <h2>Aquí podrás consultar, modificar y eliminar alumnos.</h2>
                 </div>
                 <div class="forms">
                     <div class="form__control">
                         <label for="nombre">Nombre</label>
                         <div class="input">
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre del alumno"></input>
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el Nombre del Alumno"></input>
                             <button id="buscarAlumno" class="search" name="buscarAlumno"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarAlumno">
                         </div>
@@ -32,7 +32,7 @@
                     <div class="form__control">
                         <label for="dni">DNI</label>
                         <div class="input">
-                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI del alumno"></input>
+                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI del Alumno"></input>
                             <button id="buscarDni" class="search" name="buscarDni"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarDni">
                         </div>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="form__control">
-                        <label for="dni">Ciclo formativo</label>
+                        <label for="dni">Ciclo Formativo</label>
                         <div class="input">
                             <select name="ciclos" id="ciclos" class="ciclos" sizeof="3">
                                 <?php
@@ -125,8 +125,9 @@
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
                                 echo "<td>";
-                                echo "<button class='delete'><span class='material-symbols-sharp'>delete</span></button>";
-                                echo "<button class='edit'><span class='material-symbols-sharp'>edit</span></button>";
+                                echo "<button class='delete' name='deleteAlumno' data-id='" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>delete</span></button>";
+                                echo "<a href='index.php?pages=editarAlumno'><button class='edit' name='" . $row['ID_Alumno'] . "' id='editarAlumno'><span class='material-symbols-sharp'>edit</span></button></a>";
+                                echo "<input id='editAlumno' type='hidden' value='" . $row['ID_Alumno'] . "'>";
                                 echo "</td>";
                                 echo "<td>" . $row['ID_Alumno'] . "</td>";
                                 echo "<td>" . $row['Nombre'] . "</td>";
@@ -153,7 +154,7 @@
                 </div>
                 <div id="new">
                     <div class="top">
-                        <p>Insertar alumno</p>
+                        <h1>Insertar alumno</h1>
                         <h2>Añadir un alumno a la base de datos.</h2>
                 </div>
                 <div class="forms">
@@ -164,6 +165,7 @@
         </div>
     </div>
     </div>
+    <script src="./assets/js/Editar_Borrar/editar.js"></script>
     <script src="./assets/js/busquedas/validez.js"></script>
     <script src="./assets/js/busquedas/cicloFP.js"></script>
     <script src="./assets/js/busquedas/dni.js"></script>

@@ -123,7 +123,7 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-/*********************Filtrar busqueda por nombre Alumno ************************* */
+/********************* Filtros de Busqueda ************************* */
 
 function busquedaNombre($nombre, $id_centro_educativo){
     $conn = ConexionBD::conectar();
@@ -219,6 +219,34 @@ function buscarPorCiclo($ciclo, $id_centro_educativo){
         return json_encode(array('success' => 'No se encontraron resultados'));
     }
 }
+
+
+/********************* Editar Borrar ************************* */
+
+function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+    $conn = ConexionBD::conectar();
+
+    if ($conn) {
+        // Actualizar el alumno en la tabla alumnos
+        $stmt = $conn->prepare("UPDATE alumnos SET Nombre=?, Apellido1=?, DNI=?, N_Seg_social=?, Curriculum_Vitae=?, TELF_Alumno=?, EMAIL_Alumno=?, Direccion=?, Codigo_Postal=?, Activo=?, Validez=? WHERE ID_Alumno=?");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
+
+        // Actualizar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
+        $stmt = $conn->prepare("UPDATE ciclo_alumno SET ID_Ciclo_Formativo=? WHERE ID_Alumno=?");
+        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+
+        // Actualizar la asociación entre el alumno y el centro educativo en la tabla centro_alumno
+        $stmt = $conn->prepare("UPDATE centro_alumno SET ID_Centro_Formativo=? WHERE ID_Alumno=?");
+        $stmt->execute([$id_centro_educativo, $id_alumno]);
+
+        return json_encode(array('success' => 'Alumno actualizado con éxito.'));
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
+
+
 
 function cerrarSesion() {
     session_start();

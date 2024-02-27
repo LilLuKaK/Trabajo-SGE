@@ -28,27 +28,27 @@
                         </div>
                         <div class="form__control" id="contenedorDif">
                             <label for="cif">CIF</label>
-                            <input type="text" id="cif" name="cif" placeholder="Introduce el cif">
+                            <input type="text" id="cif" name="cif" placeholder="Introduce el CIF del Centro Educativo">
                             <div id="cif-error"></div>
                         </div>
                         <div class="form__control" id="contenedorDuenyo">
                             <label for="duenyo">Dueño</label>
-                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el dueño">
+                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el Dueño del Centro">
                             <div id="duenyo-error"></div>
                         </div>
                         <div class="form__control" id="contenedorDireccion">
                             <label for="direccion">Direccion</label>
-                            <input type="text" id="direccion" name="direccion" placeholder="Introduce la direccion">
+                            <input type="text" id="direccion" name="direccion" placeholder="Introduce la Dirección del Centro">
                             <div id="direccion-error"></div>
                         </div>
                         <div class="form__control" id="contenedorTelefono">
                             <label for="telefono">Telefono</label>
-                            <input type="text" id="telefono" name="telefono" placeholder="Introduce el telefono">
+                            <input type="text" id="telefono" name="telefono" placeholder="Introduce el Teléfono del Centro">
                             <div id="telefono-error"></div>
                         </div>
                         <div class="form__control" id="contenedorEmail">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico">
+                            <input type="email" id="email" name="email" placeholder="Introduce el Correo Electrónico del Centro">
                             <div id="email-error"></div>
                         </div>
                         <input type="hidden" name="registrarCentro" value="registrarCentro">
