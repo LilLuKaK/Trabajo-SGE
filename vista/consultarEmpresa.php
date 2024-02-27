@@ -102,14 +102,14 @@
                                 echo "<button class='edit'><span class='material-symbols-sharp'>edit</span></button>";
                                 echo "</td>";
                                 echo "<td>" . $row['ID_Control_Empresa'] . "</td>";
-                                echo "<td>" . $row['ce.Nombre'] . "</td>";
+                                echo "<td>" . $row['Nombre_Empresa'] . "</td>";
                                 echo "<td>" . $row['CIF'] . "</td>";
                                 echo "<td>" . $row['Duenyo'] . "</td>";
                                 echo "<td>" . $row['Firmante_Convenio'] . "</td>"; // Nombre del ciclo formativo
                                 echo "<td>" . $row['Direccion'] . "</td>";
                                 echo "<td>" . $row['EMAIL_Empresa'] . "</td>";
                                 echo "<td>" . $row['TELF_Empresa'] . "</td>";
-                                echo "<td>" . $row['cea.Nombre'] . "</td>";
+                                echo "<td>" . $row['Nombre_Contacto'] . "</td>";
                                 echo "<td>" . $row['EMAIL_Contacto_Empresa'] . "</td>";
                                 echo "<td>" . $row['TELF_Contacto_Empresa'] . "</td>";
                                 echo "</tr>";
