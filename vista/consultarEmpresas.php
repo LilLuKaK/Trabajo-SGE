@@ -17,7 +17,7 @@
         <div class="right">
             <div class="scroll">
                 <div class="top">
-                    <h1>Consulta de empresa</h1>
+                    <h1>Consulta de empresas</h1>
                     <h2>Aquí podrás consultar, modificar y eliminar empresas.</h2>
                 </div>
                 <div class="forms">
