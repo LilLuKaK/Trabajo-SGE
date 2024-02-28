@@ -32,6 +32,7 @@
                         
                         <input type="hidden" name="registrarCiclo" value="registrarCiclo">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarCiclo" id="buttonEnviar">
+                        <a href="index.php?pages=consultarCiclo" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">

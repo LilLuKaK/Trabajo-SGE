@@ -61,6 +61,7 @@
                         </div>
                         <input type="hidden" name="registrarEmpresa" value="registrarEmpresa">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
+                        <a href="index.php?pages=consultarEmpresas" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">
