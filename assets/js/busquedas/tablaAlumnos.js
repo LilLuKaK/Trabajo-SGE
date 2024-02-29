@@ -1,13 +1,9 @@
 document.addEventListener('DOMContentLoaded', function(){
     const url = './controlador/userController.php';
     const tabla = document.querySelector('#tablaAlumnos');
-
-    const buscar = document.querySelector('#buscarAlumno');
-
+    const buscarAlumno = document.querySelector('#buscarAlumno');
     const buscarDni = document.querySelector('#buscarDni');
-
     const botonBuscarValidez = document.querySelector('#searchBtn');
-
     const botonBuscar = document.querySelector('#last');
     const selectCiclos = document.querySelector('#ciclos');
 
@@ -29,14 +25,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 });
 
                 // Habilitar la edición de los campos "Validez" y "Activo"
-                const checkboxValidez = fila.querySelector('.validez-checkbox');
-                const checkboxActivo = fila.querySelector('.activo-checkbox');
-                if (checkboxValidez) {
-                    checkboxValidez.removeAttribute('disabled');
-                }
-                if (checkboxActivo) {
-                    checkboxActivo.removeAttribute('disabled');
-                }
+                fila.querySelectorAll('.validez-checkbox, .activo-checkbox').forEach(checkbox => {
+                    checkbox.removeAttribute('disabled');
+                });
             });
         });
 
@@ -53,90 +44,50 @@ document.addEventListener('DOMContentLoaded', function(){
                 });
 
                 // Deshabilitar la edición de los campos "Validez" y "Activo"
-                const checkboxValidez = fila.querySelector('.validez-checkbox');
-                const checkboxActivo = fila.querySelector('.activo-checkbox');
-                if (checkboxValidez) {
-                    checkboxValidez.setAttribute('disabled', 'disabled');
-                }
-                if (checkboxActivo) {
-                    checkboxActivo.setAttribute('disabled', 'disabled');
-                }
+                fila.querySelectorAll('.validez-checkbox, .activo-checkbox').forEach(checkbox => {
+                    checkbox.setAttribute('disabled', 'disabled');
+                });
             });
         });
     }
 
-    buscar.addEventListener('click', function(){
-        const input = document.querySelector('#nombre').value;
-        const nombre = input;
-
-        fetch(url,{
+    // Función para realizar la búsqueda y actualizar la tabla
+    function buscarYActualizar(parametros) {
+        fetch(url, {
             method: 'POST',
-            body: new URLSearchParams({
-                buscarAlumno: true,
-                nombre: nombre
-            })
+            body: new URLSearchParams(parametros)
         })
         .then(response => response.json())
-        .then(data =>{
+        .then(data => {
             // Actualizar la tabla con los resultados de la búsqueda
             actualizarTabla(data);
         })
         .catch(error => console.error('Error:', error));
+    }
+
+    // Evento de clic para buscar por nombre de alumno
+    buscarAlumno.addEventListener('click', function(){
+        const nombre = document.querySelector('#nombre').value;
+        buscarYActualizar({ buscarAlumno: true, nombre: nombre });
     });
 
+    // Evento de clic para buscar por DNI
     buscarDni.addEventListener('click', function(){
-        const input = document.querySelector('#dni').value;
-        const dni = input;
-
-        fetch(url,{
-            method: 'POST',
-            body: new URLSearchParams({
-                buscarDni: true,
-                dni: dni
-            })
-        })
-        .then(response => response.json())
-        .then(data =>{
-            // Actualizar la tabla con los resultados de la búsqueda
-            actualizarTabla(data);
-        })
-        .catch(error => console.error('Error:', error));
+        const dni = document.querySelector('#dni').value;
+        buscarYActualizar({ buscarDni: true, dni: dni });
     });
 
+    // Evento de clic para buscar por validez
     botonBuscarValidez.addEventListener('click', function(){
         const slider = document.querySelector('#slider');
         const valorSlider = slider.checked ? 0 : 1;
-        
-        fetch(url,{
-            method: 'POST',
-            body: new URLSearchParams({
-                searchBoton: valorSlider
-            })
-        })
-        .then(response => response.json())
-        .then(data =>{
-            // Actualizar la tabla con los resultados de la búsqueda
-            actualizarTabla(data);
-        })
-        .catch(error => console.error('Error:', error));
+        buscarYActualizar({ searchBoton: valorSlider });
     });
 
+    // Evento de clic para buscar por ciclo
     botonBuscar.addEventListener('click', function(){
         const cicloSeleccionado = selectCiclos.value;
-        
-        fetch(url,{
-            method: 'POST',
-            body: new URLSearchParams({
-                buscarFP: true,
-                ciclo: cicloSeleccionado
-            })
-        })
-        .then(response => response.json())
-        .then(data =>{
-            // Actualizar la tabla con los resultados de la búsqueda
-            actualizarTabla(data);
-        })
-        .catch(error => console.error('Error:', error));
+        buscarYActualizar({ buscarFP: true, ciclo: cicloSeleccionado });
     });
 
     // Función para actualizar la tabla con los resultados de la búsqueda
@@ -167,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function(){
         `;
         tabla.insertAdjacentHTML('beforeend', encabezado);
 
-        // Verificar si hay resultado
+        // Verificar si hay resultados
         if(data.length === 0){
             const mensaje = document.createElement('tr');
             mensaje.innerHTML = `<td colspan="14">No se encontraron resultados para la búsqueda.</td>`;

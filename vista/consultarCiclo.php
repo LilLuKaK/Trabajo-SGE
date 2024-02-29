@@ -27,14 +27,13 @@
                         <button id="buscarCiclo" class="search" name="buscarCiclo"><span class="material-symbols-sharp">manage_search</span></button>
                         <input type="hidden" value="buscarCiclo">
                     </div>
-                </div> 
+                </div>
                 <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
             </div>
             <div class="middle">
-                <table class="tablaCiclos">
+                <table class="data" id="tablaCiclos">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>ID</th>
                             <th>Nombre Ciclo</th>
                             <th>Numero total de alumnos</th>
@@ -86,9 +85,6 @@
                             // Itera sobre los resultados y muestra los datos en la tabla
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
-                                    echo "<td class='button-container'>";
-                                        echo "<input id='editAlumno_" . $row['ID_Ciclo_Formativo'] . "' type='hidden' value='" . $row['ID_Ciclo_Formativo'] . "'>";
-                                    echo "</td>";
                                     echo "<td style='font-family: 800; font-size:15px;' >" . $row['ID_Ciclo_Formativo'] . "</td>"; // Hacer editable
                                     echo "<td><input type='text' value='" . $row['Nombre_Ciclo'] . "' readonly class='compact-input'></td>"; // Hacer editable
                                     echo "<td><input type='text' value='" . $row['Total_Alumnos_Matriculados'] . "' readonly class='compact-input'></td>"; // Hacer editable
@@ -125,6 +121,7 @@
         </div>
     </div>
     <script src="./assets/js/common/commonScript.js"></script>
+    <script src="./assets/js/busquedas/tablaCiclo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>

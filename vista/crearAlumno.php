@@ -140,12 +140,6 @@
             </section>
         </div>
     </div>
-    <script>
-        /*document.getElementById('ciclo').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex].value;
-            document.getElementById('cicloSeleccionado').value = selectedOption;
-        });*/
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>

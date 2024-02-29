@@ -77,6 +77,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         echo $respuesta;
 
+    }else if(isset($_POST["registrarCiclo"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombreCiclo = limpiaString($_POST["nombreCiclo"]);
+
+        $registroLimpio = array(
+            'nombreCiclo' => $nombreCiclo
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarCiclo($nombreCiclo);
+
+        echo $respuesta;
+
     }elseif(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['nombre']);
@@ -107,6 +120,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $parametro2 = $_SESSION['id_centro'];
         $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE cf.Nombre_Ciclo = :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
         $respuesta = busquedaGeneral($consulta, $parametro1, $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarCiclo'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['ciclo']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT cf.ID_Ciclo_Formativo, cf.Nombre_Ciclo, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Total_Alumnos_Matriculados, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN alumnos a ON ca.ID_Alumno = a.ID_Alumno JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE a.Activo = 1 AND ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Alumnos_Activos, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN alumnos a ON ca.ID_Alumno = a.ID_Alumno JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE (a.Activo = 0 OR a.Validez = 0) AND ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Alumnos_Inactivos FROM ciclos_formativos cf WHERE EXISTS (SELECT 1 FROM centro_formativo WHERE ID_Centro_Formativo = :parametro2) AND cf.Nombre_Ciclo LIKE :parametro1";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
     }else if(isset($_POST["editarAlumno"])){
