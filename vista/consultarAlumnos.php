@@ -5,53 +5,6 @@
     <title>Registrar</title>
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
     <link rel="stylesheet" href="./assets/css/consult/consultStyle.css">
-    <style>
-        button {
-            cursor: pointer;
-        }
-
-        .save {
-            background-color: #d5c218;
-            color: white;
-            border: none;
-            height: 34px;
-            padding: 4px 5px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 1px 2px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        
-        .save:hover {
-            background-color: #55a049;
-        }
-
-        .compact-input {
-            width: 100px; /* Ancho deseado */
-            height: 14px; /* Alto deseado */
-        }
-
-        .button-container button{
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        .button-container {
-            display: flex;
-        }
-        .button-container button {
-            margin-right: 5px; /* Ajusta el margen entre los botones */
-        }
-
-        .editando {
-            background-color: #eee5e5;
-        }
-
-
-    </style>
 </head>
 <body>
     <div class="container">
