@@ -129,7 +129,12 @@
                 </div>
                 <div class="forms">
                     <h2>Para insertar una nueva empresa, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
-                    <a href="index.php?pages=crearEmpresa"><button class="new"><label>Insertar empresa</label><span class="material-symbols-sharp">person_add</span></button></a>
+                    <a href="index.php?pages=crearEmpresa">
+                        <button class="new">
+                            <label>Insertar empresa</label>
+                            <span class="material-symbols-sharp">domain_add</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>

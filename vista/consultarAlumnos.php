@@ -124,26 +124,30 @@
                             // Itera sobre los resultados y muestra los datos en la tabla
                             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                 echo "<tr>";
-                                echo "<td>";
+                                echo "<td class='button-container'>";
                                 echo "<button class='delete' name='deleteAlumno' data-id='" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>delete</span></button>";
-                                echo "<a href='index.php?pages=editarAlumno'><button class='edit' name='" . $row['ID_Alumno'] . "' id='editarAlumno'><span class='material-symbols-sharp'>edit</span></button></a>";
-                                echo "<input id='editAlumno' type='hidden' value='" . $row['ID_Alumno'] . "'>";
+                                echo "<button class='edit' name='" . $row['ID_Alumno'] . "' id='editaAlumno_" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>edit</span></button>";
+                                echo "<button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>";
+                                echo "<input id='editAlumno_" . $row['ID_Alumno'] . "' type='hidden' value='" . $row['ID_Alumno'] . "'>";
                                 echo "</td>";
-                                echo "<td>" . $row['ID_Alumno'] . "</td>";
-                                echo "<td>" . $row['Nombre'] . "</td>";
-                                echo "<td>" . $row['Apellido1'] . "</td>";
-                                echo "<td>" . $row['DNI'] . "</td>";
-                                echo "<td>" . $row['Nombre_Ciclo'] . "</td>"; // Nombre del ciclo formativo
-                                echo "<td>" . $row['N_Seg_social'] . "</td>";
+                                echo "<td style='font-family: 800; font-size:15px;' >" . $row['ID_Alumno'] . "</td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['Nombre'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['Apellido1'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['DNI'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['Nombre_Ciclo'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['N_Seg_social'] . "' readonly class='compact-input'></td>"; // Hacer editable
                                 echo "<td><span class='material-symbols-sharp'>download</span></td>";
-                                echo "<td>" . ($row['Validez'] == 1 ? 'Sí' : 'No') . "</td>";
-                                echo "<td>" . ($row['Activo'] == 1 ? 'Sí' : 'No') . "</td>";
-                                echo "<td>" . $row['TELF_Alumno'] . "</td>";
-                                echo "<td>" . $row['EMAIL_Alumno'] . "</td>";
-                                echo "<td>" . $row['Direccion'] . "</td>";
-                                echo "<td>" . $row['Codigo_Postal'] . "</td>";
+                                echo "<td><input type='text' value='" . ($row['Validez'] == 1 ? 'Sí' : 'No') . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . ($row['Activo'] == 1 ? 'Sí' : 'No') . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['TELF_Alumno'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['EMAIL_Alumno'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['Direccion'] . "' readonly class='compact-input'></td>"; // Hacer editable
+                                echo "<td><input type='text' value='" . $row['Codigo_Postal'] . "' readonly class='compact-input'></td>"; // Hacer editable
                                 echo "</tr>";
                             }
+                            
+                            
+                            
                         } else {
                             // Si no se encontraron alumnos asociados al centro educativo, muestra un mensaje indicando que no hay resultados
                             echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
@@ -165,13 +169,10 @@
         </div>
     </div>
     </div>
-    <script src="./assets/js/Editar_Borrar/editar.js"></script>
-    <script src="./assets/js/busquedas/validez.js"></script>
-    <script src="./assets/js/busquedas/cicloFP.js"></script>
-    <script src="./assets/js/busquedas/dni.js"></script>
-    <script src="./assets/js/busquedas/nombre.js"></script>
+    <script src="./assets/js/busquedas/tablaAlumnos.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./assets/js/Editar_Borrar/editar.js"></script>
 </body>
 </html>
