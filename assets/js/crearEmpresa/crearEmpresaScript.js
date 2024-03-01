@@ -23,38 +23,32 @@ $(document).ready(function() {
 document.addEventListener('DOMContentLoaded', function () {
 
     const nombreInput = document.getElementById('nombre');
-    const apellidosInput = document.getElementById('apellidos');
-    const dniInput = document.getElementById('dni');
-    const ssInput = document.getElementById('N_Seg_social');
-    const cvInput = document.getElementById('Curriculum_Vitae');
-    const telefonoInput = document.getElementById('TELF_Alumno');
-    const emailInput = document.getElementById('EMAIL_Alumno');
-    const direccionInput = document.getElementById('Direccion');
-    const cpInput = document.getElementById('Codigo_Postal');
-    const cicloSelect = document.getElementById('ciclo');
+    const cifInput = document.getElementById('cif');
+    const duenyoInput = document.getElementById('duenyo');
+    const firmanteInput = document.getElementById('firmante');
+    const direccionInput = document.getElementById('direccion');
+    const telefonoInput = document.getElementById('telefono');
+    const emailInput = document.getElementById('email');
 
     const nombreError = document.getElementById('nombre-error');
-    const apellidosError = document.getElementById('apellidos-error');
-    const dniError = document.getElementById('dni-error');
-    const ssError = document.getElementById('N_Seg_social-error');
-    const cvError = document.getElementById('Curriculum_Vitae-error');
-    const telefonoError = document.getElementById('TELF_Alumno-error');
-    const emailError = document.getElementById('EMAIL_Alumno-error');
-    const direccionError = document.getElementById('Direccion-error');
-    const cpError = document.getElementById('Codigo_Postal-error');
-    const cicloSelectError = document.getElementById('ciclo-error');
+    const cifError = document.getElementById('cif-error');
+    const duenyoError = document.getElementById('duenyo-error');
+    const firmanteError = document.getElementById('firmante-error');
+    const direccionError = document.getElementById('direccion-error');
+    const telefonoError = document.getElementById('telefono-error');
+    const emailError = document.getElementById('email-error');
 
     const enviarButton = document.getElementById('buttonEnviar');
     
 
 
     function validarNombre() {
-        const nombrePattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
+        const nombrePattern = /^[a-zA-Z0-9\sáéíóúüñÁÉÍÓÚÜÑ.,-]{0,50}$/;
         if (nombreInput.value.trim() === "") {
             nombreError.textContent = '';
             return false;
         } else if (!nombrePattern.test(nombreInput.value)) {
-            nombreError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. John.';
+            nombreError.textContent = 'Formato incorrecto. No puede superar los 50 carácteres.';
             nombreError.style.color ='red';
             nombreError.style.fontSize ='13px';
             return false;
@@ -64,60 +58,34 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarApellidos() {
-        const apellidosPattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
-        if (apellidosInput.value.trim() === "") {
-            apellidosError.textContent = '';
+    function validarDuenyo() {
+        const nombrePattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
+        if (duenyoInput.value.trim() === "") {
+            duenyoError.textContent = '';
             return false;
-        } else if (!apellidosPattern.test(apellidosInput.value)) {
-            apellidosError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. Doe';
-            apellidosError.style.color ='red';
-            apellidosError.style.fontSize ='13px';
+        } else if (!nombrePattern.test(duenyoInput.value)) {
+            duenyoError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. John.';
+            duenyoError.style.color ='red';
+            duenyoError.style.fontSize ='13px';
             return false;
         } else {
-            apellidosError.textContent = '';
+            duenyoError.textContent = '';
             return true;
         }
     }
 
-    function validarDni() {
-        const dniPattern = /^([0-9]){8}([A-Z]){1}?$/;
-        if (dniInput.value.trim() === "") {
-            dniError.textContent = '';
+    function validarFirmante() {
+        const nombrePattern = /(^[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ]{1}[a-záéíóúñ]+)?$/;
+        if (firmanteInput.value.trim() === "") {
+            firmanteError.textContent = '';
             return false;
-        } else if (!dniPattern.test(dniInput.value)) {
-            dniError.textContent = 'Formato incorrecto. Debe seguir el patrón de DNI correcto.';
-            dniError.style.color ='red';
-            dniError.style.fontSize ='13px';
-            return false;
-        } else {
-            dniError.textContent = '';
-            return true;
-        }
-    }
-
-    function validarSS() {
-        const ssPattern = /^([0-9]){9}?$/;
-        if (ssInput.value.trim() === "") {
-            ssError.textContent = '';
-            return false;
-        } else if (!ssPattern.test(ssInput.value)) {
-            ssError.textContent = 'Formato incorrecto. Debe seguir el patrón de numero de seguridad social correcto.';
-            ssError.style.color ='red';
-            ssError.style.fontSize ='13px';
+        } else if (!nombrePattern.test(firmanteInput.value)) {
+            firmanteError.textContent = 'Formato incorrecto. Debe seguir el patrón Ej. John.';
+            firmanteError.style.color ='red';
+            firmanteError.style.fontSize ='13px';
             return false;
         } else {
-            ssError.textContent = '';
-            return true;
-        }
-    }
-
-    function validarCV() {
-        if (cvInput.value.trim() === "") {
-            cvError.textContent = '';
-            return false;
-        } else {
-            cvError.textContent = '';
+            firmanteError.textContent = '';
             return true;
         }
     }
@@ -154,22 +122,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarCP() {
-        const cpPattern = /^(28[0-9]{3})?$/;
-        if (cpInput.value.trim() === "") {
-            cpError.textContent = '';
-            return false;
-        } else if (!cpPattern.test(cpInput.value)) {
-            cpError.textContent = 'Formato incorrecto. Debe seguir el patrón de código postal 28000.';
-            cpError.style.color ='red';
-            cpError.style.fontSize ='13px';
-            return false;
-        } else {
-            cpError.textContent = '';
-            return true;
-        }
-    }
-
     function validarEmail() {
         const emailPattern = /(^\w+.?\w*)\@([a-z]+.?[a-z]*)\.([a-z]+)?$/;
         if (emailInput.value.trim() === "") {
@@ -186,13 +138,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function validarCiclo() {
-        if (cicloSelect.value == '') {
-            cicloSelectError.textContent = 'Debes seleccionar un ciclo de la lista.';
-            cicloSelectError.style.fontSize ='13px';
+    function validarCif() {
+        const cifPattern = /^[A-HJNPQRSUVW]{1}[0-9]{7}[0-9A-J]{1}$/;
+        if (cifInput.value.trim() === "") {
+            cifError.textContent = '';
             return false;
-        }else {
-            cicloSelectError.textContent = '';
+        } else if (!cifPattern.test(cifInput.value)) {
+            cifError.textContent = 'Formato incorrecto. Debe seguir el patrón de CIF correcto.';
+            cifError.style.color ='red';
+            cifError.style.fontSize ='13px';
+            return false;
+        } else {
+            cifError.textContent = '';
             return true;
         }
     }
@@ -203,31 +160,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function habilitarBoton() {
-        enviarButton.disabled = !(validarNombre() && validarApellidos() && validarCP() && validarCV() && validarDni() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo());
+        enviarButton.disabled = !(validarNombre() && validarDireccion() && validarTelefono() 
+        && validarEmail() && validarCif() && validarFirmante() && validarDuenyo());
     }
 
     nombreInput.addEventListener('input', function () {
         validarInput(validarNombre, nombreError);
     });
 
-    apellidosInput.addEventListener('input', function () {
-        validarInput(validarApellidos, apellidosError);
+    duenyoInput.addEventListener('input', function () {
+        validarInput(validarDuenyo, duenyoError);
     });
 
-    dniInput.addEventListener('input', function () {
-        validarInput(validarDni, dniError);
+    firmanteInput.addEventListener('input', function () {
+        validarInput(validarFirmante, firmanteError);
     });
 
-    ssInput.addEventListener('input', function () {
-        validarInput(validarSS, ssError);
-    });
-
-    cpInput.addEventListener('input', function () {
-        validarInput(validarCP, cpError);
-    });
-
-    cvInput.addEventListener('input', function () {
-        validarInput(validarCV, cvError);
+    cifInput.addEventListener('input', function () {
+        validarInput(validarCif, cifError);
     });
 
     telefonoInput.addEventListener('input', function () {
@@ -242,14 +192,11 @@ document.addEventListener('DOMContentLoaded', function () {
         validarInput(validarEmail, emailError);
     });
 
-    cicloSelect.addEventListener('input', function () {
-        validarInput(validarCiclo, cicloSelectError);
-    });
-
     enviarButton.addEventListener('click', function (event) {
         event.preventDefault();
 
-        if (validarNombre() && validarApellidos() && validarCP() && validarDni() && validarCV() && validarSS() && validarDireccion() && validarTelefono() && validarEmail() && validarCiclo()) {
+        if (validarNombre() && validarDireccion() && validarTelefono() 
+        && validarEmail() && validarCif() && validarFirmante() && validarDuenyo()) {
             const formData = new FormData(document.getElementById('registroForm'));
 
             fetch('./controlador/userController.php', {
@@ -271,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo ha funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=crearAlumno';
+                        window.location.href = 'index.php?pages=crearEmpresa';
                     });
                 }
             })

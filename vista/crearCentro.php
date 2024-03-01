@@ -52,7 +52,7 @@
                             <div id="email-error"></div>
                         </div>
                         <input type="hidden" name="registrarCentro" value="registrarCentro">
-                        <input type="submit" class="btn primary" value="Crear Centro" name="registrarCentro" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarCentro" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">

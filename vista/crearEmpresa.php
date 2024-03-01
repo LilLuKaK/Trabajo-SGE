@@ -32,7 +32,7 @@
                         <div class="form__control">
                             <label for="cif">CIF</label>
                             <input type="text" id="cif" name="cif" placeholder="Introduce el CIF de la Empresa">
-                            <div id="CIF-error"></div>
+                            <div id="cif-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="duenyo">Dueño</label>
@@ -55,9 +55,9 @@
                             <div id="email-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="telf">Telefono</label>
-                            <input type="text" id="telf" name="telf" placeholder="Introduce el Teléfono de la Empresa">
-                            <div id="telf-error"></div>
+                            <label for="telefono">Telefono</label>
+                            <input type="text" id="telefono" name="telefono" placeholder="Introduce el Teléfono de la Empresa">
+                            <div id="telefono-error"></div>
                         </div>
                         <input type="hidden" name="registrarEmpresa" value="registrarEmpresa">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
@@ -76,7 +76,7 @@
         });*/
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
+    <script src="./assets/js/crearEmpresa/crearEmpresaScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
