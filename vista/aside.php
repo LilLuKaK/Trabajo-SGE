@@ -42,9 +42,9 @@
             <span class="material-symbols-sharp">browse_gallery</span>
             <h3>Ciclos Formativos</h3>
         </a>
-        <a href="#">
+        <a href="index.php?pages=consultarConvenio" <?php if ($activeLink === 'consultarConvenio') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">settings</span>
-            <h3>Ejemplo 7</h3>
+            <h3>Convenios</h3>
         </a>
         <a href="#">
             <span class="material-symbols-sharp">settings_accessibility</span>
