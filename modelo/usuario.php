@@ -156,6 +156,74 @@ function busquedaGeneral($consulta, $parametro1, $parametro2){
     }
 }
 
+function busquedaEmpresa($parametro, $valor) {
+    $conn = ConexionBD::conectar();
+    if ($conn) {
+        switch ($parametro) {
+            case 'buscarEmpresa':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.CIF LIKE :valor OR ce.Nombre LIKE :valor";
+                break;
+            case 'buscarCIF':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.CIF LIKE :valor";
+                break;
+            case 'buscarDuenyo':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.Duenyo LIKE :valor";
+                break;
+            case 'buscarFirmante':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.Firmante_Convenio LIKE :valor";
+                break;
+            case 'buscarTodas':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa";
+                break;
+            case 'buscarTodas':
+                // Código para buscar todas las empresas
+                $stmt = $conn->prepare("SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
+                                    FROM control_empresas ce 
+                                    LEFT JOIN contacto_empresa cc ON ce.ID_Control_Empresa = cc.ID_Control_Empresa");
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return json_encode($resultado);
+                break;
+            default:
+                return json_encode(array('error' => 'Parámetro de búsqueda no válido'));
+        }
+
+        $stmt = $conn->prepare($sql);
+        // Agrega comodines al valor para buscar coincidencias parciales
+        $valor = '%' . $valor . '%';
+        $stmt->execute(array(':valor' => $valor));
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($resultado);
+    } else {
+        return json_encode(array('error' => 'No se pudo conectar a la base de datos'));
+    }
+}
+
+
+
+
+
+
 
 /********************* Editar Borrar ************************* */
 

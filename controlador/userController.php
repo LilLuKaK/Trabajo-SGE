@@ -153,8 +153,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         echo $respuesta;
 
-    }
-    else if(isset($_POST["cerrarSesion"])){
+    }else if(isset($_POST['parametro'])) {
+        $parametro = $_POST['parametro'];
+        $valor = isset($_POST['valor']) ? $_POST['valor'] : ''; // Verificar si se proporciona un valor
+        $resultados = busquedaEmpresa($parametro, $valor);
+        echo $resultados;
+        
+    }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();
     } 

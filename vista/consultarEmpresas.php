@@ -53,7 +53,9 @@
                             <input type="hidden" value="buscarFirmante">
                         </div>
                     </div>
-                    <a href="index.php?pages=consultarEmpresas"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
+                    <input type="hidden" name="buscaEmpresa" id="BuscaEmpresa">
+                    <button class="search new" id="all" name="buscarEmpresa"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button>
+                    <input type="hidden" value="buscarEmpresa">
                     <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
                 </div>
                 <!-- TABLA DE CONNSULTAS -->
@@ -140,10 +142,8 @@
         </div>
     </div>
     </div>
-    <script src="./assets/js/busquedas/validez.js"></script>
-    <script src="./assets/js/busquedas/cicloFP.js"></script>
-    <script src="./assets/js/busquedas/dni.js"></script>
-    <script src="./assets/js/busquedas/nombre.js"></script>
+
+    <script src="./assets/js/busquedasEmpresa/buscarTotal.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
