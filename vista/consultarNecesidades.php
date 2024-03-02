@@ -35,9 +35,9 @@
                                 * "AND ID_Centro_Formativo = (SELECT ID_Centro_Formativo
                                 *                       FROM usuario_centro
                                 *                        WHERE ID_Usuario = THIS_USER.ID_Usuario)"*/
-
+                                $id_centro_educativo = $_SESSION['id_centro'];
                                 if ($conn) {
-                                    $stmt = $conn->query("SELECT * FROM control_empresas");
+                                    $stmt = $conn->prepare("SELECT control_empresas.* FROM control_empresas, control_convenios WHERE control_convenios.ID_Centro_Formativo = ?  ");
 
                                     // Verificar si se encontraron resultados
                                     if ($stmt->rowCount() > 0) {
@@ -52,8 +52,8 @@
                                 ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
-                            <button id="last" class="search" name="buscarFP"><span class="material-symbols-sharp">manage_search</span></button>
-                            <input type="hidden" value="buscarFP">
+                            <button id="last" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
+                            <input type="hidden" value="buscarEmpresa">
                         </div>
                     </div>
 
@@ -90,10 +90,10 @@
                         // Suponiendo que ya tienes el ID del centro educativo en una variable $id_centro_educativo
                         // Realiza la consulta para obtener los alumnos del centro educativo y el nombre del ciclo formativo de cada uno
                         $conn = ConexionBD::conectar();
-                        $stmt = $conn->prepare("SELECT  control_empresas.Nombre,control_empresas.ID_Control_Empresa, control_convenios.ID_Ministerio, control_convenios.Fecha_Inicio
+                        $stmt = $conn->prepare("SELECT control_empresas.Nombre_Empresa,control_empresas.ID_Control_Empresa, control_convenios.ID_Ministerio, control_convenios.Fecha_Inicio
                                                 FROM control_empresas, control_convenios
                                                 WHERE control_convenios.ID_Control_Empresa = control_empresas.ID_Control_Empresa
-                                                AND control_convenios.ID_Centro_Formativo=1 = ?");
+                                                AND control_convenios.ID_Centro_Formativo = ?");
                         $stmt->execute([$id_centro_educativo]);
 
                         // Comprueba si se encontraron resultados
@@ -107,14 +107,15 @@
                                 echo "<input id='editAlumno' type='hidden' value='" . $row['ID_Alumno'] . "'>";
                                 echo "</td>";
                                 echo "<td>" . $row['Nombre de la Empresa'] . "</td>";
-                                echo "<td>" . $row['ID del Convenio'] . "</td>";
-                                echo "<td>" . $row['ID Ministerial'] . "</td>";                                
-                                echo "<td>" . $row['Fecha de Inicio'] . "</td>";
+                                echo "<td>" . $row['Número de Vacantes totales'] . "</td>";
+                                echo "<td>". $row['Número de Vacantes Libres'] . "</td>";
+                                echo "<td>". $row['Número de Vacantes Cubiertas'] . "</td>";
+                                echo "<td>" . $row['Año de la solicitud'] . "</td>";                                
                                 echo "</tr>";
                             }
                         } else {
                             // Si no se encontraron alumnos asociados al centro educativo, muestra un mensaje indicando que no hay resultados
-                            echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
+                            echo "<tr><td colspan='14'>No se encontraron necesidades asociadas a este centro educativo.</td></tr>";
                         }
                         ?>
                         </tbody>
@@ -122,12 +123,12 @@
                 </div>
                 <div id="new">
                     <div class="top">
-                        <h1>Insertar alumno</h1>
-                        <h2>Añadir un alumno a la base de datos.</h2>
+                        <h1>Insertar Nueva Necesidad</h1>
+                        <h2>Añadir una nueva necesidad a la base de datos.</h2>
                 </div>
                 <div class="forms">
-                    <h2>Para insertar un nuevo alumno, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
-                    <a href="index.php?pages=crearAlumno"><button class="new"><label>Insertar alumno</label><span class="material-symbols-sharp">person_add</span></button></a>
+                    <h2>Para insertar una nueva necesidad, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
+                    <a href="index.php?pages=crearAlumno"><button class="new"><label>Insertar necesidad</label><span class="material-symbols-outlined">switch_access_shortcut_add</span></button></a>
                 </div>
             </div>
         </div>
@@ -138,6 +139,7 @@
     <script src="./assets/js/busquedas/cicloFP.js"></script>
     <script src="./assets/js/busquedas/dni.js"></script>
     <script src="./assets/js/busquedas/nombre.js"></script>
+    <script src="./assets/js/busquedas/empresas.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
