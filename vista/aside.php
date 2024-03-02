@@ -38,7 +38,7 @@
         </a>
         <a href="index.php?pages=consultarEmpresas" <?php if ($activeLink === 'consultarEmpresas') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">work</span>
-            <h3>Empresa</h3>
+            <h3>Empresas</h3>
         </a>
         <a href="index.php?pages=consultarCiclo" <?php if ($activeLink === 'consultarCiclo') echo 'class="active"'; ?>>
             <span class="material-symbols-outlined">auto_stories</span>
