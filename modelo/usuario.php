@@ -104,9 +104,12 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     $conn = ConexionBD::conectar();
 
     if ($conn) {
+        // Obtener la fecha actual en formato YYYY-MM-DD
+        $fecha_actual = date('Y-m-d');
+
         // Insertar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("INSERT INTO alumnos (Nombre, Apellido1, DNI, N_Seg_social, Curriculum_Vitae, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal, Activo, Validez) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez]);
+        $stmt = $conn->prepare("INSERT INTO alumnos (Nombre, Apellido1, DNI, N_Seg_social, Curriculum_Vitae, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal, Activo, Validez, Fecha_Ultima_Activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $fecha_actual]);
         $id_alumno = $conn->lastInsertId(); // Obtener el ID del alumno recién insertado
 
         // Insertar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
@@ -123,99 +126,35 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+function registrarCiclo($nombreCiclo) {
+    $conn = ConexionBD::conectar();
+
+    if ($conn) {
+        // Insertar el alumno en la tabla alumnos
+        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo) VALUES (?)");
+        $stmt->execute([$nombreCiclo]);
+
+        return json_encode(array('success' => 'Ciclo registrado con éxito.'));
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
 /********************* Filtros de Busqueda ************************* */
 
-function busquedaNombre($nombre, $id_centro_educativo){
+function busquedaGeneral($consulta, $parametro1, $parametro2){
     $conn = ConexionBD::conectar();
     if($conn){
-        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
-                                FROM alumnos a
-                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
-                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
-                                WHERE a.Nombre LIKE :nombre AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
+        $stmt = $conn->prepare($consulta);
         $stmt->execute(array(
-            ':nombre' => '%'.$nombre.'%',
-            ':id_centro_educativo' => $id_centro_educativo
+            ':parametro1' => $parametro1,
+            ':parametro2' => $parametro2
         ));
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return json_encode($resultado);
     }else{
-        return json_encode(array('success' => 'No se encontraron resultados'));
-    }
-}
-
-function busquedaDni($dni, $id_centro_educativo){
-    $conn = ConexionBD::conectar();
-    if($conn){
-        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
-                                FROM alumnos a
-                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
-                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
-                                WHERE a.DNI LIKE :dni AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
-        $stmt->execute(array(
-            ':dni' => '%'.$dni.'%',
-            ':id_centro_educativo' => $id_centro_educativo
-        ));
-
-        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return json_encode($resultado);
-    }else{
-        return json_encode(array('success' => 'No se encontraron resultados'));
-    }
-}
-
-function validez($validez, $activo = true, $id_centro_educativo) {
-    $conn = ConexionBD::conectar();
-    if ($conn) {
-        // Ajusta la consulta SQL según el estado de activo (searchBoton)
-        $sql = "SELECT a.*, cf.Nombre_Ciclo 
-                FROM alumnos a
-                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
-                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
-                WHERE a.Validez = :validez AND cen_al.ID_Centro_Formativo = :id_centro_educativo";
-        if (!$activo) {
-            // Si está desactivado (searchBoton = 0), buscar solo alumnos con validez inactiva (Validez = 0)
-            $sql .= " AND Validez = 0";
-        }
-        
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(array(
-            ':validez' => $validez,
-            ':id_centro_educativo' => $id_centro_educativo
-        ));
-
-        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return json_encode($resultado);
-    } else {
-        return json_encode(array('success' => 'No se encontraron resultados'));
-    }
-}
-
-function buscarPorCiclo($ciclo, $id_centro_educativo){
-    $conn = ConexionBD::conectar();
-    if($conn){
-        $stmt = $conn->prepare("SELECT a.*, cf.Nombre_Ciclo 
-                                FROM alumnos a
-                                INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno
-                                INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo
-                                INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno
-                                WHERE cf.Nombre_Ciclo = :Nombre_Ciclo AND cen_al.ID_Centro_Formativo = :id_centro_educativo");
-        $stmt->execute(array(
-            ':Nombre_Ciclo' => $ciclo,
-            ':id_centro_educativo' => $id_centro_educativo
-        ));
-
-        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return json_encode($resultado);
-    } else {
         return json_encode(array('success' => 'No se encontraron resultados'));
     }
 }

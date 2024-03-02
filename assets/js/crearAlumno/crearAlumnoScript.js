@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         title: "Todo ha funcionado!",
                         text: data.success
                     }).then(() => {
-                        window.location.href = 'index.php?pages=crearAlumno';
+                        window.location.href = 'index.php?pages=consultarAlumno';
                     });
                 }
             })
@@ -290,3 +290,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //------------------------------------------------------------------------------------------------------------------------------------
 
+document.addEventListener("DOMContentLoaded", function () {
+    const siValidez = document.getElementById("siValidez");
+    const noValidez = document.getElementById("noValidez");
+    const siActivo = document.getElementById("siActivo");
+    const noActivo = document.getElementById("noActivo");
+
+    function validarValidez() {
+        if (noValidez.checked) {
+            noActivo.checked = true;
+            siActivo.disabled = true;
+            noActivo.disabled = true;
+        } else {
+            siActivo.disabled = false;
+            noActivo.disabled = false;
+        }
+    }
+
+    function validarActivo() {
+        if (siActivo.checked && noValidez.checked) {
+            siValidez.checked = true;
+        }
+    }
+
+    siValidez.addEventListener("change", validarValidez);
+    noValidez.addEventListener("change", validarValidez);
+    siActivo.addEventListener("change", validarActivo);
+});

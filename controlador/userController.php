@@ -77,35 +77,59 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         echo $respuesta;
 
+    }else if(isset($_POST["registrarCiclo"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombreCiclo = limpiaString($_POST["nombreCiclo"]);
+
+        $registroLimpio = array(
+            'nombreCiclo' => $nombreCiclo
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarCiclo($nombreCiclo);
+
+        echo $respuesta;
+
     }elseif(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
-        $id_centro_educativo = $_SESSION['id_centro'];
-        $nombre = limpiaString($_POST['nombre']);
-        $respuesta = busquedaNombre($nombre, $id_centro_educativo);
+        $parametro1 = limpiaString($_POST['nombre']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE a.Nombre LIKE :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
     }elseif(isset($_POST['buscarDni']) && $_POST['buscarDni'] == true){
         session_start();
-        $id_centro_educativo = $_SESSION['id_centro'];
-        $dni = limpiaString($_POST['dni']);
-        $respuesta = busquedaDni($dni, $id_centro_educativo);
+        $parametro1 = limpiaString($_POST['dni']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE a.DNI LIKE :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
     }elseif(isset($_POST['searchBoton'])){
         session_start();
-        $id_centro_educativo = $_SESSION['id_centro'];
-        $validez = limpiaString($_POST['searchBoton']);
-        $activo = ($validez == 0) ? false : true;
-        $respuesta = validez($validez, $activo, $id_centro_educativo);
+        $parametro1 = $_POST['searchBoton'];
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE a.Validez = :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, $parametro1, $parametro2);
         echo $respuesta;
 
-    }if(isset($_POST['buscarFP'])){
+    }elseif(isset($_POST['buscarFP'])){
         session_start();
-        $id_centro_educativo = $_SESSION['id_centro'];
-        $ciclo = limpiaString($_POST['ciclo']);
-        $respuesta = buscarPorCiclo($ciclo, $id_centro_educativo);
+        $parametro1 = limpiaString($_POST['ciclo']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE cf.Nombre_Ciclo = :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, $parametro1, $parametro2);
         echo $respuesta;
-        
+
+    }elseif(isset($_POST['buscarCiclo'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['ciclo']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT cf.ID_Ciclo_Formativo, cf.Nombre_Ciclo, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Total_Alumnos_Matriculados, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN alumnos a ON ca.ID_Alumno = a.ID_Alumno JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE a.Activo = 1 AND ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Alumnos_Activos, (SELECT COUNT(*) FROM ciclo_alumno ca JOIN alumnos a ON ca.ID_Alumno = a.ID_Alumno JOIN centro_alumno cea ON ca.ID_Alumno = cea.ID_Alumno WHERE (a.Activo = 0 OR a.Validez = 0) AND ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo AND cea.ID_Centro_Formativo = :parametro2) AS Alumnos_Inactivos FROM ciclos_formativos cf WHERE EXISTS (SELECT 1 FROM centro_formativo WHERE ID_Centro_Formativo = :parametro2) AND cf.Nombre_Ciclo LIKE :parametro1 AND EXISTS (SELECT * FROM alumnos a WHERE a.Fecha_Ultima_Activo >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR))";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
     }else if(isset($_POST["editarAlumno"])){
         // Obtener los datos del formulario
         $nombre = limpiaString($_POST["nombre"]);

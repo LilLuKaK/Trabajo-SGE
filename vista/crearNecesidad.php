@@ -12,7 +12,7 @@
     <div class="container">
         
         <?php
-        $activeLink = 'consultarAlumnos';
+        $activeLink = 'crearConvenio';
         include 'aside.php';
         ?>
 
@@ -24,9 +24,10 @@
                         <p>Complete el siguiente formulario para crear un alumno</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
+                        <!-- Aquí iría un combobox con las diferentes empresas-->
                         <div class="form__control">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
+                            <label for="nombre">Nombre de la empresaEmpresa</label>
+                            
                             <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
@@ -50,16 +51,6 @@
                             <div id="Curriculum_Vitae-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="validez">Validez</label>
-                            <div id="validez">
-                                <input type="radio" id="siValidez" name="validez" value="1">
-                                <label for="siValidez">Sí</label>
-                                <input type="radio" id="noValidez" name="validez" value="0">
-                                <label for="noValidez">No</label>
-                            </div>
-                            <div id="validez-error"></div>
-                        </div>
-                        <div class="form__control">
                             <label for="activo">Activo</label>
                             <div id="activo">
                                 <input type="radio" id="siActivo" name="activo" value="1">
@@ -68,6 +59,16 @@
                                 <label for="noActivo">No</label>
                             </div>
                             <div id="activo-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="validez">Validez</label>
+                            <div id="validez">
+                                <input type="radio" id="siValidez" name="validez" value="1">
+                                <label for="siValidez">Sí</label>
+                                <input type="radio" id="noValidez" name="validez" value="0">
+                                <label for="noValidez">No</label>
+                            </div>
+                            <div id="validez-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="TELF_Alumno">Telefono</label>
@@ -106,14 +107,31 @@
                             <select name="ciclo" id="ciclo">
                                 <option value='' selected disabled>-- Selecciona el ciclo --</option>
                                 <?php
-                                include './modelo/ciclo_formativo.php';
+                                // Incluir la conexión y consulta a la base de datos
+                                include './modelo/conexion.php';
+
+                                // Realizar la consulta para obtener los nombres de los ciclos formativos
+                                $conn = ConexionBD::conectar();
+
+                                if ($conn) {
+                                    $stmt = $conn->query("SELECT * FROM ciclos_formativos");
+
+                                    // Verificar si se encontraron resultados
+                                    if ($stmt->rowCount() > 0) {
+                                        // Iterar sobre los resultados y mostrar las opciones del select
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
+                                    }
+                                }
                                 ?>
                             </select>
                             <div id="ciclo-error"></div>
                         </div>
-                        <input type="hidden" name="registrarAlumno" value="registrarAlumno">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
-                        <a href="index.php?pages=consultarAlumnos" class="btn primary">Cancelar</a>
+                        <input type="hidden" name="registrarConvenio" value="registrarConvenio">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarConvenio" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
@@ -122,8 +140,14 @@
             </section>
         </div>
     </div>
+    <script>
+        /*document.getElementById('ciclo').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex].value;
+            document.getElementById('cicloSeleccionado').value = selectedOption;
+        });*/
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
+    <script src="./assets/js/crearConvenio/crearConvenioScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

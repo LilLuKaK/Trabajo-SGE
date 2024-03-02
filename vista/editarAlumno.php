@@ -23,7 +23,7 @@
                         <h1>Editar Alumno</h1>
                         <p>Complete el siguiente formulario para Editar un alumno</p>
                     </div>
-                    <form class="sign-in__form" id="registroForm">
+                    <form class="sign-in__form" id="editarAlumnoForm">
                         <div class="form__control">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
@@ -129,9 +129,9 @@
                             </select>
                             <div id="ciclo-error"></div>
                         </div>
-                        <input type="hidden" name="registrarAlumno" value="registrarAlumno">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
-                        <input type="submit" class="btn primary" value="Cancelar" name="registrarAlumno" id="buttonEnviar">
+                        <input type="hidden" name="EditarAlumno" value="EditarAlumno">
+                        <input type="submit" class="btn primary" value="Registrar" name="EditarAlumno" id="buttonEditar">
+                        <a href="index.php?pages=consultarAlumnos" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">
@@ -147,8 +147,8 @@
         });*/
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./assets/js/Editar_Borrar/editar.js"></script>
 </body>
 </html>

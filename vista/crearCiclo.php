@@ -25,32 +25,24 @@
                     </div>
                     <form class="sign-in__form" id="registroForm">
                         <div class="form__control">
-                            <label for="nombre">Nombre del Ciclo</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
-                            <div id="nombre-error"></div>
+                            <label for="nombreCiclo">Nombre del Ciclo</label>
+                            <input type="text" id="nombreCiclo" name="nombreCiclo" placeholder="Introduce el nombre completo">
+                            <div id="nombreCiclo-error"></div>
                         </div>
                         
                         <input type="hidden" name="registrarCiclo" value="registrarCiclo">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarCiclo" id="buttonEnviar">
+                        <a href="index.php?pages=consultarCiclo" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">
-                    <div><img src="./assets/images/login-register/undraw_exams_re_4ios.svg" alt=""></div>
+                    <div><img src="./assets/images/login-register/undraw_online_learning_re_qw08.svg" alt=""></div>
                 </article>
             </section>
         </div>
     </div>
-    <script>
-        /*document.getElementById('ciclo').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex].value;
-            document.getElementById('cicloSeleccionado').value = selectedOption;
-        });*/
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!--
-    Ajustar el script para que cree ciclos    
-    
-    <script src="./assets/js/crearAlumno/crearAlumnoScript.js"></script>!-->
+    <script src="./assets/js/crearCiclo/crearCicloScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
