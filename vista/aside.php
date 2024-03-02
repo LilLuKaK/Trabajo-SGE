@@ -25,11 +25,11 @@
         </a>
         <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">history_edu</span>
-            <h3>Registro(provisional)</h3>
+            <h3>Registrar Tutor</h3>
         </a>
         <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">inbox</span>
-            <h3>Crear Centro(provisional)</h3>
+            <span class="material-symbols-outlined">domain_add</span>
+            <h3>Crear Centro</h3>
         </a>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">school</span>
@@ -41,7 +41,7 @@
             <h3>Empresa</h3>
         </a>
         <a href="index.php?pages=consultarCiclo" <?php if ($activeLink === 'consultarCiclo') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">browse_gallery</span>
+            <span class="material-symbols-outlined">auto_stories</span>
             <h3>Ciclos Formativos</h3>
         </a>
         <a href="index.php?pages=consultarConvenio" <?php if ($activeLink === 'consultarConvenio') echo 'class="active"'; ?>>

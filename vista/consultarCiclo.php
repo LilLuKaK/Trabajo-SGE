@@ -75,7 +75,8 @@
                                                 FROM 
                                                     ciclos_formativos cf
                                                 WHERE
-                                                EXISTS (SELECT 1 FROM centro_formativo WHERE ID_Centro_Formativo = :id_centro);");
+                                                EXISTS (SELECT 1 FROM centro_formativo WHERE ID_Centro_Formativo = :id_centro);
+                                                AND EXISTS (SELECT * FROM alumnos a WHERE a.Fecha_Ultima_Activo >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR))");
                         $stmt->execute(array(
                             ':id_centro' => $id_centro_educativo
                         ));

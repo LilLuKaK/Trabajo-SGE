@@ -50,16 +50,6 @@
                             <div id="Curriculum_Vitae-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="activo">Activo</label>
-                            <div id="activo">
-                                <input type="radio" id="siActivo" name="activo" value="1">
-                                <label for="siActivo">Sí</label>
-                                <input type="radio" id="noActivo" name="activo" value="0">
-                                <label for="noActivo">No</label>
-                            </div>
-                            <div id="activo-error"></div>
-                        </div>
-                        <div class="form__control">
                             <label for="validez">Validez</label>
                             <div id="validez">
                                 <input type="radio" id="siValidez" name="validez" value="1">
@@ -68,6 +58,16 @@
                                 <label for="noValidez">No</label>
                             </div>
                             <div id="validez-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="activo">Activo</label>
+                            <div id="activo">
+                                <input type="radio" id="siActivo" name="activo" value="1">
+                                <label for="siActivo">Sí</label>
+                                <input type="radio" id="noActivo" name="activo" value="0">
+                                <label for="noActivo">No</label>
+                            </div>
+                            <div id="activo-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="TELF_Alumno">Telefono</label>

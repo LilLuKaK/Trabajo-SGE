@@ -104,9 +104,12 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     $conn = ConexionBD::conectar();
 
     if ($conn) {
+        // Obtener la fecha actual en formato YYYY-MM-DD
+        $fecha_actual = date('Y-m-d');
+
         // Insertar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("INSERT INTO alumnos (Nombre, Apellido1, DNI, N_Seg_social, Curriculum_Vitae, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal, Activo, Validez) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez]);
+        $stmt = $conn->prepare("INSERT INTO alumnos (Nombre, Apellido1, DNI, N_Seg_social, Curriculum_Vitae, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal, Activo, Validez, Fecha_Ultima_Activo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $fecha_actual]);
         $id_alumno = $conn->lastInsertId(); // Obtener el ID del alumno recién insertado
 
         // Insertar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
