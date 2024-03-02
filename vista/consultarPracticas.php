@@ -62,7 +62,7 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>ID Anexo</th>
+                                <th>Anexo</th>
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
                                 <th>Tutor del centro</th>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="forms">
                     <h2>Para insertar una nueva práctica, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
-                    <a href="index.php?pages=crearEmpresa">
+                    <a href="index.php?pages=crearPractica">
                         <button class="new">
                             <label>Insertar práctica</label>
                             <span class="material-symbols-sharp">domain_add</span>
