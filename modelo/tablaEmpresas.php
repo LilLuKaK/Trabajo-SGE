@@ -8,8 +8,7 @@ $id_centro_educativo = $_SESSION['id_centro'];
 $conn = ConexionBD::conectar();
 $stmt = $conn->prepare( "SELECT ce.*, cea.*
                 FROM control_empresas ce
-                JOIN contacto_control cc ON ce.ID_Control_Empresa = cc.ID_Control_Empresa
-                JOIN contacto_empresa cea ON cc.ID_Contacto_Empresa = cea.ID_Contacto_Empresa
+                JOIN contacto_empresa cea ON cea.ID_Control_Empresa = ce.ID_Control_Empresa
                 JOIN control_convenios ccon ON ce.ID_Control_Empresa = ccon.ID_Control_Empresa
                 WHERE ccon.ID_Centro_Formativo = ?");
 $stmt->execute([$id_centro_educativo]);

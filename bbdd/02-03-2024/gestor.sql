@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-03-2024 a las 19:42:52
+-- Tiempo de generación: 02-03-2024 a las 20:57:57
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `gestor`
 --
+CREATE DATABASE IF NOT EXISTS `gestor` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `gestor`;
 
 -- --------------------------------------------------------
 
@@ -259,14 +261,14 @@ CREATE TABLE `contacto_empresa` (
   `Nombre_Contacto` varchar(50) NOT NULL,
   `EMAIL_Contacto_Empresa` varchar(100) NOT NULL,
   `TELF_Contacto_Empresa` varchar(9) NOT NULL,
-  `ID_Empresa` int(11) NOT NULL
+  `ID_Control_Empresa` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `contacto_empresa`
 --
 
-INSERT INTO `contacto_empresa` (`ID_Contacto_Empresa`, `Nombre_Contacto`, `EMAIL_Contacto_Empresa`, `TELF_Contacto_Empresa`, `ID_Empresa`) VALUES
+INSERT INTO `contacto_empresa` (`ID_Contacto_Empresa`, `Nombre_Contacto`, `EMAIL_Contacto_Empresa`, `TELF_Contacto_Empresa`, `ID_Control_Empresa`) VALUES
 (1, 'Contacto_Nuevo', 'correo@gmail.com', '645789567', 1);
 
 -- --------------------------------------------------------
@@ -596,7 +598,7 @@ ALTER TABLE `ciclo_alumno`
 --
 ALTER TABLE `contacto_empresa`
   ADD PRIMARY KEY (`ID_Contacto_Empresa`),
-  ADD KEY `fk_ConEmp_Emp` (`ID_Empresa`);
+  ADD KEY `fk_ConEmp_Emp` (`ID_Control_Empresa`);
 
 --
 -- Indices de la tabla `control_convenios`
@@ -810,7 +812,7 @@ ALTER TABLE `ciclo_alumno`
 -- Filtros para la tabla `contacto_empresa`
 --
 ALTER TABLE `contacto_empresa`
-  ADD CONSTRAINT `fk_ConEmp_Emp` FOREIGN KEY (`ID_Empresa`) REFERENCES `contacto_empresa` (`ID_Contacto_Empresa`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_ConEmp_Emp` FOREIGN KEY (`ID_Control_Empresa`) REFERENCES `contacto_empresa` (`ID_Contacto_Empresa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `control_convenios`
