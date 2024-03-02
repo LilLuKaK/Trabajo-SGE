@@ -60,7 +60,7 @@
                             <div id="telefono-error"></div>
                         </div>
                         <input type="hidden" name="registrarEmpresa" value="registrarEmpresa">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarEmpresa" id="buttonEnviar">
                         <a href="index.php?pages=consultarEmpresas" class="btn primary">Cancelar</a>
                     </form>
                 </article>

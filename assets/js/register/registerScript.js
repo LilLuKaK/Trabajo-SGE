@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else if (data.success) {
                     Swal.fire({
                         icon: "success",
-                        title: "Todo a funcionado!",
+                        title: "Todo ha funcionado!",
                         text: data.success
                     }).then(() => {
                         window.location.href = 'index.php?pages=register';

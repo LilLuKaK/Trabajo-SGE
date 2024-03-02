@@ -90,7 +90,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
-    }elseif(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+    }else if(isset($_POST["registrarEmpresa"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombre = limpiaString($_POST["nombre"]);
+        $cif = limpiaString($_POST["cif"]);
+        $duenyo = limpiaString($_POST["duenyo"]);
+        $firmante = limpiaString($_POST["firmante"]);
+        $direccion = limpiaString($_POST["direccion"]);
+        $email = limpiaString($_POST["email"]);
+        $telefono = limpiaString($_POST["telefono"]);
+
+        $registroLimpio = array(
+            'nombre' => $nombre, 
+            'cif' => $cif,
+            'duenyo' => $duenyo,
+            'firmante' => $firmante,
+            'direccion' => $direccion,
+            'email' => $email,
+            'telefono' => $telefono
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono);
+
+        echo $respuesta;
+
+    }else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['nombre']);
         $parametro2 = $_SESSION['id_centro'];

@@ -100,6 +100,42 @@ function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono) {
+
+    session_start();
+    $id_centro_educativo = $_SESSION['id_centro'];
+    $fecha_actual = date('Y-m-d');
+    $conn = ConexionBD::conectar();
+
+    // Si a conexion a la base de datos es correcta
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT Nombre_Empresa FROM control_empresas WHERE Nombre_Empresa = ?");
+        $stmt->execute([$nombre]);
+        $existeEmpresa = $stmt->fetch();
+        
+        // Si la empresa esta registrado en la base de datos
+        if ($existeEmpresa) {
+            return json_encode(array('error' => 'La empresa ya está registrada.'));
+
+        // Si la empresa no existe en la base de datos
+        }else{
+            $stmt = $conn->prepare("INSERT INTO control_empresas (Nombre_Empresa, CIF, Duenyo, Firmante_Convenio, Direccion, EMAIL_Empresa, TELF_Empresa) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->execute([$nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono]);
+        }
+
+        $stmt = $conn->prepare("SELECT ce.ID_Control_Empresa FROM control_empresas ce WHERE ce.Nombre_Empresa = ?");
+        $stmt->execute([$nombre]);
+        $id_empresa = $stmt->fetchColumn();
+
+        $stmt = $conn->prepare("INSERT INTO control_convenios (ID_Control_Empresa, ID_Centro_Formativo, Fecha_Inicio) VALUES (?, ?, ?)");
+        $stmt->execute([$id_empresa, $id_centro_educativo, $fecha_actual]);
+
+        return json_encode(array('success' => 'Empresa registrada con éxito.'));
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
 function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
     $conn = ConexionBD::conectar();
 

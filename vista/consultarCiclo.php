@@ -16,7 +16,7 @@
 
         <div class="right">
             <div class="top">
-                <p>Consulta de Ciclos Formativos</p>
+                <h1>Consulta de Ciclos Formativos</h1>
                 <h2>Aquí puedes ver los cursos que oferta el Centro Formativo</h2>
             </div>
             <div class="forms">
