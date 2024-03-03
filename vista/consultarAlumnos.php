@@ -146,9 +146,9 @@
                                     echo "<tr class='fila-alumno' data-datos-alumno='" . htmlspecialchars($alumno_json, ENT_QUOTES, 'UTF-8') . "' data-id-alumno='" . $row['ID_Alumno'] . "'>";
                                     echo "<td class='button-container'>";
                                     echo "<button class='delete' name='deleteAlumno' data-id='" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>delete</span></button>";
-                                    echo "<button class='edit' name='" . $row['ID_Alumno'] . "' id='editaAlumno_" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>edit</span></button>";
+                                    echo "<a href='index.php?pages=editarAlumno'><button class='edit' name='" . $row['ID_Alumno'] . "' id='editaAlumno_" . $row['ID_Alumno'] . "'><span class='material-symbols-sharp'>edit</span></button></a>";
                                     echo "<button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>";
-                                    echo "<input id='editAlumno_" . $row['ID_Alumno'] . "' type='hidden' value='" . $row['ID_Alumno'] . "'>";
+                                    echo "<input id='editAlumno_" . $row['ID_Alumno'] . "' name='editaAlumno' type='hidden' value='" . $row['ID_Alumno'] . "'>";
                                     echo "</td>";
                                     echo "<td style='font-family: 800; font-size:15px;' >" . $row['ID_Alumno'] . "</td>"; // Hacer editable
                                     echo "<td><input type='text' value='" . $row['Nombre'] . "' readonly class='compact-input'></td>"; // Hacer editable
@@ -169,8 +169,7 @@
                                 // Si no se encontraron alumnos asociados al centro educativo, muestra un mensaje indicando que no hay resultados
                                 echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
                             }
-                            ?>
-                                include_once './modelo/tablaAlumnos.php';
+
                         ?>
                         </tbody>
                     </table>
@@ -188,12 +187,26 @@
         </div>
     </div>
     </div>
-    <!-- <script src="./assets/js/busquedas/tablaAlumnos.js"></script> -->
-    <script src="./assets/js/busquedas/dni.js"></script>
-    <script src="./assets/js/busquedas/nombre.js"></script>
+    <script src="./assets/js/busquedas/tablaAlumnos.js"></script>
+    <!-- <script src="./assets/js/busquedas/dni.js"></script> -->
+    <script>
+        // Aquí colocas el bloque de código que te proporcioné previamente
+        document.addEventListener('DOMContentLoaded', function(){
+            const botonesEdit = document.querySelectorAll('.edit'); // Seleccionar todos los botones de edición
+            
+            botonesEdit.forEach(boton => {
+                boton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const idAlumno = boton.getAttribute('name');
+                    window.location.href = `http://127.0.0.1/Trabajo-SGE/index.php?pages=editarAlumno&id=${idAlumno}`;
+                });
+            });
+        });
+    </script>
+    <!-- <script src="./assets/js/busquedas/nombre.js"></script> -->
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/Editar_Borrar/editar.js"></script>
+
 </body>
 </html>

@@ -2,7 +2,7 @@
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     include('./../modelo/usuario.php');
 
-    if(isset($_POST["login"])){
+     if(isset($_POST["login"])){
         // Nos llaman desde el formulario de login para que procesemos sus datos
         $email = limpiaString($_POST["email"]);
         $clave = limpiaString($_POST["clave"]);
@@ -127,42 +127,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Finalizar la ejecución del script PHP para evitar salida adicional
         exit();
     }
-    elseif(isset($_POST['buscarDni']) && $_POST['buscarDni'] == true){
+    else if(isset($_POST['buscarAlumnoPorDNI']) && $_POST['buscarAlumnoPorDNI'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['dni']);
         $parametro2 = $_SESSION['id_centro'];
-        $consulta = "SELECT a.*, cf.Nombre_Ciclo 
-                    FROM alumnos a 
-                    INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno 
-                    INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo 
-                    INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno 
-                    WHERE a.DNI LIKE :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
-        
-        // Llamamos a la función del modelo para realizar la búsqueda
-        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
-        
-        if ($respuesta === null) {
+    
+        // Consulta para obtener los datos del alumno y el ciclo formativo asociado por DNI
+        $consultaAlumno = "SELECT alumnos.*, ciclos_formativos.ID_Ciclo_Formativo, ciclos_formativos.Nombre_Ciclo 
+                            FROM alumnos 
+                            INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
+                            INNER JOIN ciclos_formativos ON ciclo_alumno.ID_Ciclo_Formativo = ciclos_formativos.ID_Ciclo_Formativo 
+                            INNER JOIN centro_alumno ON alumnos.ID_Alumno = centro_alumno.ID_Alumno
+                            WHERE alumnos.DNI = :parametro1 AND centro_alumno.ID_Centro_Formativo = :parametro2";
+    
+        // Llamamos a la función del modelo para obtener los datos del alumno y los ciclos formativos asociados
+        $datosAlumno = busquedaGeneral($consultaAlumno, $parametro1, $parametro2);
+    
+        if ($datosAlumno === null) {
             // No se encontraron resultados
             echo json_encode(['mensaje' => 'No se encontraron resultados']);
             exit();
         }
-        
+    
         // Consulta para obtener todos los ciclos formativos disponibles
         $consultaCiclos = "SELECT * FROM ciclos_formativos";
-        
+    
         // Llamamos a la función del modelo para obtener todos los ciclos formativos
         $ciclosFormativos = obtenerCiclosFormativos($consultaCiclos);
-        
+    
         // Devolvemos los datos del alumno y los ciclos formativos en un array
-        $respuesta['ciclosFormativos'] = $ciclosFormativos;
-        
+        $respuesta = array('datosAlumno' => $datosAlumno, 'ciclosFormativos' => $ciclosFormativos);
+    
         // Enviar la respuesta JSON al cliente
         echo json_encode($respuesta);
-        
+    
         // Finalizar la ejecución del script PHP para evitar salida adicional
         exit();
-        
-    }elseif(isset($_POST['searchBoton'])){
+
+    }else if(isset($_POST['searchBoton'])){
         session_start();
         $parametro1 = $_POST['searchBoton'];
         $parametro2 = $_SESSION['id_centro'];
@@ -186,30 +188,47 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
-    }else if (isset($_POST['editarAlumno'])) {
-    // Obtener los datos del formulario
-        $idAlumno = $_POST['id'];
+    }else if ($_POST['idAlumno']) {
+        // Obtener el ID del alumno de la solicitud POST
+        //  = intval($_POST['editAlumno']);
+        
+        $alumnoID = $_POST['idAlumno'];
+        
+        // Llamar a la función para obtener los datos del alumno por ID
+        $alumno = obtenerDatosAlumno($alumnoID);
+    
+        // Verificar si se encontraron los datos del alumno
+        if ($alumno) {
+            // Devolver los datos del alumno como respuesta JSON
+            echo json_encode($alumno);
+        } else {
+            // Si no se encontraron los datos del alumno, devolver un mensaje de error
+            echo json_encode(array('error' => 'No se encontraron datos del alumno con el ID proporcionado.'));
+        }
+    }elseif (isset($_POST['EditarAlumno'])) {
+        // Obtener los datos del formulario
+        $id_alumno = $_POST['id_alumno'];
         $nombre = $_POST['nombre'];
         $apellidos = $_POST['apellidos'];
         $dni = $_POST['dni'];
-        $id_ciclo_formativo = $_POST['ciclo'];
         $N_Seg_social = $_POST['N_Seg_social'];
+        $Curriculum_Vitae = $_POST['Curriculum_Vitae'];
+        $activo = $_POST['activo'];
+        $validez = $_POST['validez'];
         $TELF_Alumno = $_POST['TELF_Alumno'];
         $EMAIL_Alumno = $_POST['EMAIL_Alumno'];
         $Direccion = $_POST['Direccion'];
         $Codigo_Postal = $_POST['Codigo_Postal'];
+        $centro = $_POST['centro'];
+        $ciclo = $_POST['ciclo'];
         
-        // Inicializar los valores de "activo" y "validez" como false por defecto
-        $activo = isset($_POST['Activo']) ? ($_POST['Activo'] === 'true') : false;
-        $validez = isset($_POST['Validez']) ? ($_POST['Validez'] === 'true') : false;
-        
-        // Llama a la función para actualizar el alumno y obtener los ciclos formativos actualizados
-        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez);
-        
-        // Devuelve la respuesta JSON al cliente JavaScript
-        echo $respuesta;
-        exit;
+        // Llamar a la función en el modelo para actualizar el alumno
+        $resultado = actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $activo, $validez, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $centro, $ciclo);
+    
+        // Enviar respuesta JSON al frontend
+        echo json_encode($resultado);
     }
+       
     
     else if(isset($_POST['parametro'])) {
         $parametro = $_POST['parametro'];

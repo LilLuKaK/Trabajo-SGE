@@ -295,34 +295,100 @@ function busquedaEmpresa($parametro, $valor) {
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
-    // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
+function obtenerDatosAlumno($alumnoID) {
+    // Establecer conexión a la base de datos
     $conn = ConexionBD::conectar();
 
-    try {
-        // Comenzar una transacción
-        $conn->beginTransaction();
+    // Verificar si la conexión se estableció correctamente
+    if ($conn) {
+        // Realizar la consulta para obtener los datos del alumno por su ID
+        $sql = "SELECT alumnos.*, ciclos_formativos.ID_Ciclo_Formativo, ciclos_formativos.Nombre_Ciclo 
+                FROM alumnos 
+                INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
+                INNER JOIN ciclos_formativos ON ciclo_alumno.ID_Ciclo_Formativo = ciclos_formativos.ID_Ciclo_Formativo 
+                WHERE alumnos.ID_Alumno = ?";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$alumnoID]);
 
-        // Actualizar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("UPDATE alumnos 
-                        INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
-                        SET alumnos.Nombre=?, alumnos.Apellido1=?, alumnos.DNI=?, alumnos.N_Seg_social=?, alumnos.TELF_Alumno=?, alumnos.EMAIL_Alumno=?, alumnos.Direccion=?, alumnos.Codigo_Postal=?, ciclo_alumno.ID_Ciclo_Formativo=?, alumnos.Activo=?, alumnos.Validez=? 
-                        WHERE alumnos.ID_Alumno=?");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez, $id_alumno]);
-        // Confirmar la transacción
-        $conn->commit();
+        // Verificar si se encontraron resultados
+        if ($stmt->rowCount() > 0) {
+            // Obtener los datos del alumno
+            $alumno = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Obtener todos los ciclos formativos
-        $stmtCiclos = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
-        $ciclos = $stmtCiclos->fetchAll(PDO::FETCH_ASSOC);
-
-        // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
-        return json_encode(array('success' => 'Alumno actualizado con éxito.', 'ciclos' => $ciclos));
-    } catch(PDOException $e) {
-        // Rollback en caso de error
-        $conn->rollback();
-        return json_encode(array('error' => 'Error al actualizar el alumno: ' . $e->getMessage()));
+            return $alumno; // Devolver los datos del alumno
+        } else {
+            return null; // Si no se encontraron datos del alumno, devolver null
+        }
+    } else {
+        return null; // Si no se pudo establecer la conexión, devolver null
     }
+}
+
+
+// function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
+//     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
+//     $conn = ConexionBD::conectar();
+
+//     try {
+//         // Comenzar una transacción
+//         $conn->beginTransaction();
+
+//         // Actualizar el alumno en la tabla alumnos
+//         $stmt = $conn->prepare("UPDATE alumnos 
+//                         INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
+//                         SET alumnos.Nombre=?, alumnos.Apellido1=?, alumnos.DNI=?, alumnos.N_Seg_social=?, alumnos.TELF_Alumno=?, alumnos.EMAIL_Alumno=?, alumnos.Direccion=?, alumnos.Codigo_Postal=?, ciclo_alumno.ID_Ciclo_Formativo=?, alumnos.Activo=?, alumnos.Validez=? 
+//                         WHERE alumnos.ID_Alumno=?");
+//         $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez, $id_alumno]);
+//         // Confirmar la transacción
+//         $conn->commit();
+
+//         // Obtener todos los ciclos formativos
+//         $stmtCiclos = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
+//         $ciclos = $stmtCiclos->fetchAll(PDO::FETCH_ASSOC);
+
+//         // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
+//         return json_encode(array('success' => 'Alumno actualizado con éxito.', 'ciclos' => $ciclos));
+//     } catch(PDOException $e) {
+//         // Rollback en caso de error
+//         $conn->rollback();
+//         return json_encode(array('error' => 'Error al actualizar el alumno: ' . $e->getMessage()));
+//     }
+// }
+
+function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+    $conn = ConexionBD::conectar();
+
+    if ($conn) {
+        // Actualizar el alumno en la tabla alumnos
+        $stmt = $conn->prepare("UPDATE alumnos SET Nombre = ?, Apellido1 = ?, DNI = ?, N_Seg_social = ?, TELF_Alumno = ?, EMAIL_Alumno = ?, Direccion = ?, Codigo_Postal = ?, Activo = ?, Validez = ? WHERE ID_Alumno = ?");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
+
+        // Actualizar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
+        $stmt = $conn->prepare("UPDATE ciclo_alumno SET ID_Ciclo_Formativo = ? WHERE ID_Alumno = ?");
+        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+
+        // Actualizar la asociación entre el alumno y el centro educativo en la tabla centro_alumno
+        $stmt = $conn->prepare("UPDATE centro_alumno SET ID_Centro_Formativo = ? WHERE ID_Alumno = ?");
+        $stmt->execute([$id_centro_educativo, $id_alumno]);
+
+        // Obtener los datos actualizados del alumno
+        $sql = "SELECT * FROM alumnos WHERE ID_Alumno = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id_alumno]);
+        $alumno = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($alumno) {
+            // Si se encontraron los datos del alumno, devolverlos en formato JSON
+            return json_encode($alumno);
+        } else {
+            // Si no se encontraron los datos del alumno, devolver un mensaje de error
+            return json_encode(array('error' => 'No se encontraron datos del alumno con el ID proporcionado.'));
+        }
+    }
+
+    // Si hubo un error de conexión a la base de datos
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
 
