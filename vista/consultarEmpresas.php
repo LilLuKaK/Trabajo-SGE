@@ -22,9 +22,9 @@
                 </div>
                 <div class="forms">
                     <div class="form__control">
-                        <label for="nombre">Nombre</label>
+                        <label for="nombreEmpresa">Nombre</label>
                         <div class="input">
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre de la empresa"></input>
+                            <input type="text" id="nombreEmpresa" name="nombreEmpresa" placeholder="Introduce el nombre de la empresa"></input>
                             <button id="buscarEmpresa" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
                             <input type="hidden" value="buscarEmpresa">
                         </div>
@@ -102,8 +102,7 @@
         </div>
     </div>
     </div>
-
-    <script src="./assets/js/busquedasEmpresa/buscarTotal.js"></script>
+    <script src="./assets/js/busquedas/tablaEmpresa.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

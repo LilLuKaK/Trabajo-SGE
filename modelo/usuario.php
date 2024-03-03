@@ -127,6 +127,9 @@ function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email,
         $stmt->execute([$nombre]);
         $id_empresa = $stmt->fetchColumn();
 
+        $stmt = $conn->prepare("INSERT INTO contacto_empresa (Nombre_Contacto, EMAIL_Contacto_Empresa, TELF_Contacto_Empresa, ID_Control_Empresa) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$nombre, $email, $telefono, $id_empresa]);
+
         $stmt = $conn->prepare("INSERT INTO control_convenios (ID_Control_Empresa, ID_Centro_Formativo, Fecha_Inicio) VALUES (?, ?, ?)");
         $stmt->execute([$id_empresa, $id_centro_educativo, $fecha_actual]);
 
@@ -178,37 +181,22 @@ function registrarCiclo($nombreCiclo) {
 
 /********************* Filtros de Busqueda ************************* */
 
-function busquedaGeneral($consulta, $parametro1, $parametro2) {
+function busquedaGeneral($consulta, $parametro1, $parametro2){
     $conn = ConexionBD::conectar();
-    if ($conn) {
+    if($conn){
         $stmt = $conn->prepare($consulta);
         $stmt->execute(array(
             ':parametro1' => $parametro1,
             ':parametro2' => $parametro2
         ));
 
-        // Obtener datos del alumno
-        $datosAlumno = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Obtener el ciclo formativo asociado a cada alumno
-        foreach ($datosAlumno as &$alumno) {
-            $cicloConsulta = "SELECT cf.ID_Ciclo_Formativo, cf.Nombre_Ciclo 
-                              FROM ciclos_formativos cf 
-                              INNER JOIN ciclo_alumno ca ON cf.ID_Ciclo_Formativo = ca.ID_Ciclo_Formativo 
-                              WHERE ca.ID_Alumno = :idAlumno";
-            $stmtCiclo = $conn->prepare($cicloConsulta);
-            $stmtCiclo->execute(array(':idAlumno' => $alumno['ID_Alumno']));
-            $ciclo = $stmtCiclo->fetch(PDO::FETCH_ASSOC);
-            $alumno['Ciclo'] = $ciclo;
-        }
-
-        return $datosAlumno;
-    } else {
-        return null; // Devolver null si no se pudo conectar a la base de datos
+        return json_encode($resultado);
+    }else{
+        return json_encode(array('success' => 'No se encontraron resultados'));
     }
 }
-
-
 
 function obtenerCiclosFormativos($consultaCiclos) {
     $conn = ConexionBD::conectar();
@@ -225,73 +213,6 @@ function obtenerCiclosFormativos($consultaCiclos) {
         return false;
     }
 }
-
-
-
-function busquedaEmpresa($parametro, $valor) {
-    $conn = ConexionBD::conectar();
-    if ($conn) {
-        switch ($parametro) {
-            case 'buscarEmpresa':
-                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
-                        FROM control_empresas ce 
-                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
-                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
-                        WHERE ce.CIF LIKE :valor OR ce.Nombre LIKE :valor";
-                break;
-            case 'buscarCIF':
-                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
-                        FROM control_empresas ce 
-                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
-                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
-                        WHERE ce.CIF LIKE :valor";
-                break;
-            case 'buscarDuenyo':
-                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
-                        FROM control_empresas ce 
-                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
-                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
-                        WHERE ce.Duenyo LIKE :valor";
-                break;
-            case 'buscarFirmante':
-                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
-                        FROM control_empresas ce 
-                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
-                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
-                        WHERE ce.Firmante_Convenio LIKE :valor";
-                break;
-            case 'buscarTodas':
-                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
-                        FROM control_empresas ce 
-                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
-                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa";
-                break;
-            case 'buscarTodas':
-                // Código para buscar todas las empresas
-                $stmt = $conn->prepare("SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
-                                    FROM control_empresas ce 
-                                    LEFT JOIN contacto_empresa cc ON ce.ID_Control_Empresa = cc.ID_Control_Empresa");
-                $stmt->execute();
-                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                return json_encode($resultado);
-                break;
-            default:
-                return json_encode(array('error' => 'Parámetro de búsqueda no válido'));
-        }
-
-        $stmt = $conn->prepare($sql);
-        // Agrega comodines al valor para buscar coincidencias parciales
-        $valor = '%' . $valor . '%';
-        $stmt->execute(array(':valor' => $valor));
-        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        return json_encode($resultado);
-    } else {
-        return json_encode(array('error' => 'No se pudo conectar a la base de datos'));
-    }
-}
-
-
 
 /********************* Editar Borrar ************************* */
 

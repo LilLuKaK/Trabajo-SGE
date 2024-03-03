@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     }else if(isset($_POST["registrarCiclo"])){
         // Nos llaman desde el formulario de registrar para que procesemos sus datos
-        $nombreCiclo = limpiaString($_POST["nombreCiclo"]);
+        $nombreEmpresa = limpiaString($_POST["nombreCiclo"]);
 
         $registroLimpio = array(
             'nombreCiclo' => $nombreCiclo
@@ -87,6 +87,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         // Llama a la función para registrar el centro y obtén la respuesta
         $respuesta = registrarCiclo($nombreCiclo);
+
+        echo $respuesta;
+
+    }else if(isset($_POST["registrarEmpresa"])){
+        $nombre = limpiaString($_POST["nombre"]);
+        $cif = limpiaString($_POST["cif"]);
+        $duenyo = limpiaString($_POST["duenyo"]);
+        $firmante = limpiaString($_POST["firmante"]);
+        $direccion = limpiaString($_POST["direccion"]);
+        $email = limpiaString($_POST["email"]);
+        $telefono = limpiaString($_POST["telefono"]);
+
+        $respuesta = registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono);
 
         echo $respuesta;
 
@@ -186,6 +199,38 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
+    }elseif(isset($_POST['buscarEmpresa'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['nombreEmpresa']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT ce.*, cea.* FROM control_empresas ce JOIN contacto_empresa cea ON cea.ID_Control_Empresa = ce.ID_Control_Empresa JOIN control_convenios ccon ON ce.ID_Control_Empresa = ccon.ID_Control_Empresa WHERE ce.Nombre_Empresa LIKE :parametro1 AND ccon.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarCIF'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['CIF']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT ce.*, cea.* FROM control_empresas ce JOIN contacto_empresa cea ON cea.ID_Control_Empresa = ce.ID_Control_Empresa JOIN control_convenios ccon ON ce.ID_Control_Empresa = ccon.ID_Control_Empresa WHERE ce.CIF LIKE :parametro1 AND ccon.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarDuenyo'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['duenyo']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT ce.*, cea.* FROM control_empresas ce JOIN contacto_empresa cea ON cea.ID_Control_Empresa = ce.ID_Control_Empresa JOIN control_convenios ccon ON ce.ID_Control_Empresa = ccon.ID_Control_Empresa WHERE ce.Duenyo LIKE :parametro1 AND ccon.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarFirmante'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['firmante']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT ce.*, cea.* FROM control_empresas ce JOIN contacto_empresa cea ON cea.ID_Control_Empresa = ce.ID_Control_Empresa JOIN control_convenios ccon ON ce.ID_Control_Empresa = ccon.ID_Control_Empresa WHERE ce.Firmante_Convenio LIKE :parametro1 AND ccon.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
     }else if (isset($_POST['editarAlumno'])) {
     // Obtener los datos del formulario
         $idAlumno = $_POST['id'];
@@ -209,14 +254,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Devuelve la respuesta JSON al cliente JavaScript
         echo $respuesta;
         exit;
-    }
-    
-    else if(isset($_POST['parametro'])) {
-        $parametro = $_POST['parametro'];
-        $valor = isset($_POST['valor']) ? $_POST['valor'] : ''; // Verificar si se proporciona un valor
-        $resultados = busquedaEmpresa($parametro, $valor);
-        echo $resultados;
-        
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();
