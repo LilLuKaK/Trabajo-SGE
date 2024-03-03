@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const buscar = document.querySelector('#buscarDni');
-    const url = './controlador/userController.php';
+    const userControllerURL = './controlador/userController.php';
+    const buscar = document.querySelector('#buscarDni'); // Seleccionamos el botón de buscar por DNI
     const tabla = document.querySelector('#tablaAlumnos');
 
-    // Función para asignar eventos de clic a los botones de editar y guardar
     function asignarEventosEditarGuardar() {
+        // Función para asignar eventos de editar y guardar
         tabla.querySelectorAll('.edit').forEach(btnEdit => {
             btnEdit.addEventListener('click', function() {
                 const fila = btnEdit.closest('tr');
@@ -15,53 +15,160 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
                 
                 // Habilitar la edición de los campos de la fila
-                fila.querySelectorAll('input').forEach(input => {
+                fila.querySelectorAll('input, select').forEach(input => {
                     input.removeAttribute('readonly');
                     input.classList.add('editable');
                 });
 
-                // Habilitar la edición de los campos "Validez" y "Activo"
-                const checkboxValidez = fila.querySelector('.validez-checkbox');
-                const checkboxActivo = fila.querySelector('.activo-checkbox');
-                if (checkboxValidez) {
-                    checkboxValidez.removeAttribute('disabled');
+                // Habilitar el campo de selección de ciclo
+                const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                if (cicloSelect) {
+                    cicloSelect.removeAttribute('disabled');
                 }
-                if (checkboxActivo) {
-                    checkboxActivo.removeAttribute('disabled');
-                }
+
+                // Actualizar el campo de selección de ciclo
+                actualizarCampoCiclo(fila);
             });
         });
 
         tabla.querySelectorAll('.save').forEach(btnSave => {
             btnSave.addEventListener('click', function() {
                 const fila = btnSave.closest('tr');
-                fila.classList.remove('editando');
-                btnSave.style.display = 'none';
-                
-                // Deshabilitar la edición de los campos de la fila
-                fila.querySelectorAll('input').forEach(input => {
-                    input.setAttribute('readonly', 'readonly');
-                    input.classList.remove('editable');
-                });
+                const idAlumno = fila.querySelector('input[type="hidden"]').value;
+                const nombre = fila.querySelector('input[name="nombre"]').value;
+                const apellidos = fila.querySelector('input[name="apellidos"]').value;
+                const dni = fila.querySelector('input[name="dni"]').value;
 
-                // Deshabilitar la edición de los campos "Validez" y "Activo"
-                const checkboxValidez = fila.querySelector('.validez-checkbox');
-                const checkboxActivo = fila.querySelector('.activo-checkbox');
-                if (checkboxValidez) {
-                    checkboxValidez.setAttribute('disabled', 'disabled');
-                }
-                if (checkboxActivo) {
-                    checkboxActivo.setAttribute('disabled', 'disabled');
-                }
+                const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                const idCiclo = cicloSelect ? cicloSelect.value : '';
+
+                const N_Seg_social = fila.querySelector('input[name="N_Seg_social"]').value;
+
+                const validezCheckbox = fila.querySelector('input[name="Validez"]:checked');
+                const validez = validezCheckbox ? (validezCheckbox.value === 'Sí' ? 1 : 0) : 0;
+
+                const activoCheckbox = fila.querySelector('input[name="Activo"]:checked');
+                const activo = activoCheckbox ? (activoCheckbox.value === 'Sí' ? 1 : 0) : 0;
+
+                // Corrección: Obtener el valor del campo TELF_Alumno
+                const TELF_Alumno = fila.querySelector('input[name="TELF_Alumno"]').value;
+                const EMAIL_Alumno = fila.querySelector('input[name="EMAIL_Alumno"]').value;
+                const Direccion = fila.querySelector('input[name="Direccion"]').value;
+                const Codigo_Postal = fila.querySelector('input[name="Codigo_Postal"]').value;
+
+
+                
+               
+                // Enviar una solicitud AJAX para guardar los datos actualizados
+                fetch(userControllerURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({
+                        editarAlumno: true,
+                        id: idAlumno,
+                        nombre: nombre,
+                        apellidos: apellidos,
+                        dni: dni,
+                        ciclo: idCiclo,
+                        validez: validez,
+                        activo: activo,
+                        TELF_Alumno: TELF_Alumno, // Corrección aquí
+                        EMAIL_Alumno: EMAIL_Alumno,
+                        Direccion: Direccion,
+                        Codigo_Postal: Codigo_Postal,
+                        N_Seg_social: N_Seg_social
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Verifica la estructura de la respuesta JSON
+                    
+                    if (data && data.success) {
+                        // Deshabilitar la edición y actualizar la interfaz
+                        fila.querySelectorAll('input, select').forEach(input => {
+                            input.setAttribute('readonly', 'readonly');
+                            input.classList.remove('editable');
+                        });
+                        btnSave.style.display = 'none';
+                        fila.classList.remove('editando');
+                
+                        // Actualizar las opciones del select de ciclos formativos
+                        if (data.ciclos) {
+                            const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                            cicloSelect.innerHTML = '';
+                            data.ciclos.forEach(ciclo => {
+                                const option = document.createElement('option');
+                                option.value = ciclo.ID_Ciclo_Formativo;
+                                option.text = ciclo.Nombre_Ciclo;
+                                cicloSelect.appendChild(option);
+                            });
+                
+                            actualizarCampoCiclo(fila);
+                        }
+
+                        // Mostrar SweetAlert de guardado exitoso
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Guardado exitoso',
+                            text: 'Los cambios han sido guardados correctamente.',
+                            confirmButtonText: 'Aceptar'
+                        });
+
+                    } else {
+                        console.error('Error al actualizar el alumno:', data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al procesar la solicitud:', error);
+                });
             });
         });
     }
 
+    // Función para actualizar el campo de selección de ciclo
+    function actualizarCampoCiclo(fila) {
+        const datosAlumnoJSON = fila.dataset.datosAlumno ? JSON.parse(fila.dataset.datosAlumno) : null;
+        if (datosAlumnoJSON) {
+            const cicloSelect = fila.querySelector('select[name="ciclo"]');
+            if (cicloSelect) {
+                cicloSelect.innerHTML = '';
+    
+                // Agregar el ciclo asociado al alumno
+                const cicloAsociado = datosAlumnoJSON.Ciclo;
+                if (cicloAsociado) {
+                    const optionAsociado = document.createElement('option');
+                    optionAsociado.value = cicloAsociado.ID_Ciclo_Formativo;
+                    optionAsociado.text = cicloAsociado.Nombre_Ciclo;
+                    cicloSelect.appendChild(optionAsociado);
+                }
+    
+                // Agregar los demás ciclos disponibles
+                const ciclosArray = Object.values(datosAlumnoJSON.Ciclo);
+                ciclosArray.forEach(ciclo => {
+                    if (ciclo.ID_Ciclo_Formativo !== cicloAsociado.ID_Ciclo_Formativo) {
+                        const option = document.createElement('option');
+                        option.value = ciclo.ID_Ciclo_Formativo;
+                        option.text = ciclo.Nombre_Ciclo;
+                        cicloSelect.appendChild(option);
+                    }
+                });
+    
+                // Establecer el valor seleccionado como el ciclo asociado al alumno
+                cicloSelect.value = cicloAsociado.ID_Ciclo_Formativo;
+            }
+        } else {
+            console.error('No se encontraron datos válidos del alumno.');
+        }
+    }
+
+    // Evento de clic para el botón de buscar por DNI
     buscar.addEventListener('click', function(){
-        const input = document.querySelector('#dni').value;
+        const input = document.querySelector('#dni').value; // Obtenemos el valor del input de DNI
         const dni = input;
 
-        fetch(url,{
+        fetch(userControllerURL, {
             method: 'POST',
             body: new URLSearchParams({
                 buscarDni: true,
@@ -69,13 +176,11 @@ document.addEventListener('DOMContentLoaded', function(){
             })
         })
         .then(response => response.json())
-        .then(data =>{
-
-            // Limpiamos la tabla
-            tabla.innerHTML= "";
+        .then(data => {
+            // Limpiamos la tabla antes de agregar nuevos resultados
+            tabla.innerHTML = "";
 
             // Agregamos la estructura del encabezado de la tabla
-
             const encabezado = `
                 <thead>
                     <tr>
@@ -96,51 +201,49 @@ document.addEventListener('DOMContentLoaded', function(){
                     </tr>
                 </thead>
             `;
-
             tabla.insertAdjacentHTML('beforeend', encabezado);
 
-            // Verificar si hay resultado
-            if(data.length === 0){
+            // Verificamos si hay resultados
+            if(data.length === 0) {
                 const mensaje = document.createElement('tr');
-                mensaje.innerHTML = `<td colspan="14">No se encontraron resultados para la busqueda.</td>`;
+                mensaje.innerHTML = `<td colspan="14">No se encontraron resultados para la búsqueda.</td>`;
                 tabla.appendChild(mensaje);
             } else {
-                // Iterar sobre los datos devueltos y agregarlos a la tabla
+                // Iteramos sobre los datos devueltos y los agregamos a la tabla
                 data.forEach(alumno => {
                     const {ID_Alumno, Nombre, Apellido1, Apellido2, DNI, N_Seg_social, Curriculum_Vitae,
                         Fecha_Ultima_Activo, Activo, Validez, TELF_Alumno, EMAIL_Alumno, Direccion,
                         Codigo_Postal, Nombre_Ciclo} = alumno;
                     const fila = `
-                        <tr class="fila-alumno">
-                        <td class='button-container'>
-                        <button class='delete'><span class='material-symbols-sharp'>delete</span></button>
-                        <button class='edit'><span class='material-symbols-sharp'>edit</span></button>
-                        <button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>
-                        </td>
-                        <td>${ID_Alumno}</td>
-                        <td><input type='text' value='${Nombre}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Apellido1}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${DNI}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Nombre_Ciclo}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${N_Seg_social}' readonly class='compact-input'></td>
-                        <td><span class='material-symbols-sharp'>download</span></td>
-                        <td><input type='text' value='${Validez == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Activo == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${TELF_Alumno}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${EMAIL_Alumno}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Direccion}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Codigo_Postal}' readonly class='compact-input'></td>
+                        <tr class="fila-alumno" data-datos-alumno='${JSON.stringify(alumno)}'>
+                            <td class='button-container'>
+                                <button class='delete'><span class='material-symbols-sharp'>delete</span></button>
+                                <button class='edit'><span class='material-symbols-sharp'>edit</span></button>
+                                <button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>
+                            </td>
+                            <td><input type='hidden' name='id' value='${ID_Alumno}'><span>${ID_Alumno}</span></td>
+                            <td><input type='text' name='nombre' value='${Nombre}' readonly></td>
+                            <td><input type='text' name='apellidos' value='${Apellido1}' readonly></td>
+                            <td><input type='text' name='dni' value='${DNI}' readonly></td>
+                            <td><select name='ciclo' disabled><option value='${ID_Ciclo_Formativo}'>${Nombre_Ciclo}</option></select></td>
+                            <td><input type='text' name='N_Seg_social' value='${N_Seg_social}' readonly></td>
+                            <td><span class='material-symbols-sharp'>download</span></td>
+                            <td><input type='text' name='Validez' value='${Validez == 1 ? 'Sí' : 'No'}' readonly></td>
+                            <td><input type='text' name='Activo' value='${Activo == 1 ? 'Sí' : 'No'}' readonly></td>
+                            <td><input type='text' name='TELF_Alumno' value='${TELF_Alumno}' readonly></td>
+                            <td><input type='text' name='EMAIL_Alumno' value='${EMAIL_Alumno}' readonly></td>
+                            <td><input type='text' name='Direccion' value='${Direccion}' readonly></td>
+                            <td><input type='text' name='Codigo_Postal' value='${Codigo_Postal}' readonly></td>
+                            <td><input type='hidden' name='editarAlumno' value='true'></td> <!-- Campo oculto para identificar la acción -->
                         </tr>
                     `;
                     tabla.insertAdjacentHTML('beforeend', fila);
                 });
 
-                // Asignar eventos de clic a los botones de editar y guardar
+                // Asignamos eventos de editar y guardar
                 asignarEventosEditarGuardar();
             }
-        
         })
         .catch(error => console.error('Error:', error));
     });
-
 });
