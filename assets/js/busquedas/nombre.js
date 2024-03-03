@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', function(){
-    const url = './controlador/userController.php';
+    const userControllerURL = './controlador/userController.php';
     const buscar = document.querySelector('#buscarAlumno');
-    const tabla = document.querySelector('#tablaAlumnos');
-    let filtroActual = ''; // Estado para almacenar el filtro actual
+    const tabla = document.querySelector('#tablaALumnos');
+    let filtroActual = '';
 
-    // Función para asignar eventos de clic a los botones de editar y guardar
     function asignarEventosEditarGuardar() {
         tabla.querySelectorAll('.edit').forEach(btnEdit => {
             btnEdit.addEventListener('click', function() {
@@ -16,20 +15,19 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
                 
                 // Habilitar la edición de los campos de la fila
-                fila.querySelectorAll('input').forEach(input => {
+                fila.querySelectorAll('input, select').forEach(input => {
                     input.removeAttribute('readonly');
                     input.classList.add('editable');
                 });
 
-                // Habilitar la edición de los campos "Validez" y "Activo"
-                const checkboxValidez = fila.querySelector('.validez-checkbox');
-                const checkboxActivo = fila.querySelector('.activo-checkbox');
-                if (checkboxValidez) {
-                    checkboxValidez.removeAttribute('disabled');
+                // Habilitar el campo de selección de ciclo
+                const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                if (cicloSelect) {
+                    cicloSelect.removeAttribute('disabled');
                 }
-                if (checkboxActivo) {
-                    checkboxActivo.removeAttribute('disabled');
-                }
+
+                // Actualizar el campo de selección de ciclo
+                actualizarCampoCiclo(fila);
             });
         });
 
@@ -39,23 +37,30 @@ document.addEventListener('DOMContentLoaded', function(){
                 const idAlumno = fila.querySelector('input[type="hidden"]').value;
                 const nombre = fila.querySelector('input[name="nombre"]').value;
                 const apellidos = fila.querySelector('input[name="apellidos"]').value;
-                const dni = fila.querySelector('td:nth-child(5) input').value;
-                const cicloSelect = fila.querySelector('#ciclo');
-                const ciclo = cicloSelect ? cicloSelect.value : null;
-                const seguridaSocialInput = fila.querySelector('#N_Seg_social');
-                const seguridaSocial = seguridaSocialInput ? seguridaSocialInput.value : null;
+                const dni = fila.querySelector('input[name="dni"]').value;
 
-                const validez = fila.querySelector('input[name="validez"]:checked').value; // Obtener el valor del radio "Validez" seleccionado
-                const activo = fila.querySelector('input[name="activo"]:checked').value; // Obtener el valor del radio "Activo" seleccionado
-                const telefono = fila.querySelector('input[name="TELF_Alumno"]').value;
-                const correo = fila.querySelector('input[name="EMAIL_Alumno"]').value;
-                const direccion = fila.querySelector('input[name="Direccion"]').value;
-                const codigoPostal = fila.querySelector('input[name="Codigo_Postal"]').value;
-                        
+                const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                const idCiclo = cicloSelect ? cicloSelect.value : '';
+
+                const N_Seg_social = fila.querySelector('input[name="N_Seg_social"]').value;
+
+                const validezCheckbox = fila.querySelector('input[name="Validez"]:checked');
+                const validez = validezCheckbox ? (validezCheckbox.value === 'Sí' ? 1 : 0) : 0;
+
+                const activoCheckbox = fila.querySelector('input[name="Activo"]:checked');
+                const activo = activoCheckbox ? (activoCheckbox.value === 'Sí' ? 1 : 0) : 0;
+
+                // Corrección: Obtener el valor del campo TELF_Alumno
+                const TELF_Alumno = fila.querySelector('input[name="TELF_Alumno"]').value;
+                const EMAIL_Alumno = fila.querySelector('input[name="EMAIL_Alumno"]').value;
+                const Direccion = fila.querySelector('input[name="Direccion"]').value;
+                const Codigo_Postal = fila.querySelector('input[name="Codigo_Postal"]').value;
 
 
+                
+               
                 // Enviar una solicitud AJAX para guardar los datos actualizados
-                fetch(url, {
+                fetch(userControllerURL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
@@ -66,53 +71,102 @@ document.addEventListener('DOMContentLoaded', function(){
                         nombre: nombre,
                         apellidos: apellidos,
                         dni: dni,
-                        ciclo: ciclo,
-                        seguridaSocial: seguridaSocial,
+                        ciclo: idCiclo,
                         validez: validez,
                         activo: activo,
-                        telefono: telefono,
-                        correo: correo,
-                        direccion: direccion,
-                        codigoPostal: codigoPostal
-                        // Agregar otros datos editados según sea necesario
+                        TELF_Alumno: TELF_Alumno, // Corrección aquí
+                        EMAIL_Alumno: EMAIL_Alumno,
+                        Direccion: Direccion,
+                        Codigo_Postal: Codigo_Postal,
+                        N_Seg_social: N_Seg_social
                     })
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Manejar la respuesta del servidor (éxito o error)
-                    console.log(data); // Puedes mostrar mensajes de éxito o error según la respuesta del servidor
-                    // Actualizar la tabla después de guardar los datos
-                    if (data.success) {
+                    console.log(data); // Verifica la estructura de la respuesta JSON
+                    
+                    if (data && data.success) {
                         // Deshabilitar la edición y actualizar la interfaz
-                        fila.querySelectorAll('input').forEach(input => {
+                        fila.querySelectorAll('input, select').forEach(input => {
                             input.setAttribute('readonly', 'readonly');
                             input.classList.remove('editable');
                         });
-                        const checkboxValidez = fila.querySelector('.validez-checkbox');
-                        const checkboxActivo = fila.querySelector('.activo-checkbox');
-                        if (checkboxValidez) {
-                            checkboxValidez.setAttribute('disabled', 'disabled');
-                        }
-                        if (checkboxActivo) {
-                            checkboxActivo.setAttribute('disabled', 'disabled');
-                        }
                         btnSave.style.display = 'none';
                         fila.classList.remove('editando');
+                
+                        // Actualizar las opciones del select de ciclos formativos
+                        if (data.ciclos) {
+                            const cicloSelect = fila.querySelector('select[name="ciclo"]');
+                            cicloSelect.innerHTML = '';
+                            data.ciclos.forEach(ciclo => {
+                                const option = document.createElement('option');
+                                option.value = ciclo.ID_Ciclo_Formativo;
+                                option.text = ciclo.Nombre_Ciclo;
+                                cicloSelect.appendChild(option);
+                            });
+                
+                            actualizarCampoCiclo(fila);
+                        }
+
+                        // Mostrar SweetAlert de guardado exitoso
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Guardado exitoso',
+                            text: 'Los cambios han sido guardados correctamente.',
+                            confirmButtonText: 'Aceptar'
+                        });
+
+                    } else {
+                        console.error('Error al actualizar el alumno:', data.error);
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    console.error('Error al procesar la solicitud:', error);
                 });
             });
         });
     }
 
-    // Función para actualizar la tabla con los resultados de la búsqueda
-    function actualizarTabla(data) {
-        // Limpiamos la tabla
-        tabla.innerHTML= "";
+    // Función para actualizar el campo de selección de ciclo
+    function actualizarCampoCiclo(fila) {
+        const datosAlumnoJSON = fila.dataset.datosAlumno ? JSON.parse(fila.dataset.datosAlumno) : null;
+        if (datosAlumnoJSON) {
+            const cicloSelect = fila.querySelector('select[name="ciclo"]');
+            if (cicloSelect) {
+                cicloSelect.innerHTML = '';
+    
+                // Agregar el ciclo asociado al alumno
+                const cicloAsociado = datosAlumnoJSON.Ciclo;
+                if (cicloAsociado) {
+                    const optionAsociado = document.createElement('option');
+                    optionAsociado.value = cicloAsociado.ID_Ciclo_Formativo;
+                    optionAsociado.text = cicloAsociado.Nombre_Ciclo;
+                    cicloSelect.appendChild(optionAsociado);
+                }
+    
+                // Agregar los demás ciclos disponibles
+                const ciclosArray = Object.values(datosAlumnoJSON.Ciclo);
+                ciclosArray.forEach(ciclo => {
+                    if (ciclo.ID_Ciclo_Formativo !== cicloAsociado.ID_Ciclo_Formativo) {
+                        const option = document.createElement('option');
+                        option.value = ciclo.ID_Ciclo_Formativo;
+                        option.text = ciclo.Nombre_Ciclo;
+                        cicloSelect.appendChild(option);
+                    }
+                });
+    
+                // Establecer el valor seleccionado como el ciclo asociado al alumno
+                cicloSelect.value = cicloAsociado.ID_Ciclo_Formativo;
+            }
+        } else {
+            console.error('No se encontraron datos válidos del alumno.');
+        }
+    }
 
-        // Agregamos la estructura del encabezado de la tabla
+    function actualizarTabla(data) {
+        
+        tabla.innerHTML = "";
+
         const encabezado = `
             <thead>
                 <tr>
@@ -135,52 +189,52 @@ document.addEventListener('DOMContentLoaded', function(){
         `;
         tabla.insertAdjacentHTML('beforeend', encabezado);
 
-        // Verificar si hay resultado
-        if(data.length === 0){
-            const mensaje = document.createElement('tr');
-            mensaje.innerHTML = `<td colspan="14">No se encontraron resultados para la búsqueda.</td>`;
-            tabla.appendChild(mensaje);
-        } else {
-            // Iterar sobre los datos devueltos y agregarlos a la tabla
-            data.forEach(alumno => {
-                const {ID_Alumno, Nombre, Apellido1, Apellido2, DNI, N_Seg_social, Curriculum_Vitae,
-                    Fecha_Ultima_Activo, Activo, Validez, TELF_Alumno, EMAIL_Alumno, Direccion,
-                    Codigo_Postal, Nombre_Ciclo} = alumno;
+        if (data.datosAlumno && Array.isArray(data.datosAlumno)) {
+            data.datosAlumno.forEach(alumno => {
+                const { ID_Alumno, Nombre, Apellido1, DNI, ID_Ciclo_Formativo, N_Seg_social, Validez, Activo, TELF_Alumno, EMAIL_Alumno, Direccion, Codigo_Postal } = alumno;
+                const ciclo = getCicloNombre(ID_Ciclo_Formativo, data.ciclosFormativos);
                 const fila = `
-                    <tr class="fila-alumno">
+                    <tr class="fila-alumno" data-datos-alumno='${JSON.stringify(alumno)}'>
                         <td class='button-container'>
                             <button class='delete'><span class='material-symbols-sharp'>delete</span></button>
                             <button class='edit'><span class='material-symbols-sharp'>edit</span></button>
                             <button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>
                         </td>
                         <td><input type='hidden' name='id' value='${ID_Alumno}'><span>${ID_Alumno}</span></td>
-                        <td><input type='text' name='nombre' value='${Nombre}' readonly class='compact-input'></td>
-                        <td><input type='text' name='apellidos' value='${Apellido1}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${DNI}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Nombre_Ciclo}' id='ciclo' readonly class='compact-input'></td>
-                        <td><input type='text' value='${N_Seg_social}' id='N_Seg_social' readonly class='compact-input'></td>
+                        <td><input type='text' name='nombre' value='${Nombre}' readonly></td>
+                        <td><input type='text' name='apellidos' value='${Apellido1}' readonly></td>
+                        <td><input type='text' name='dni' value='${DNI}' readonly></td>
+                        <td><select name='ciclo' disabled><option value='${ID_Ciclo_Formativo}'>${ciclo}</option></select></td>
+                        <td><input type='text' name='N_Seg_social' value='${N_Seg_social}' readonly></td>
                         <td><span class='material-symbols-sharp'>download</span></td>
-                        <td><input type='text' value='${Validez == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Activo == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${TELF_Alumno}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${EMAIL_Alumno}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Direccion}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Codigo_Postal}' readonly class='compact-input'></td>
+                        <td><input type='text' name='Validez' value='${Validez == 1 ? 'Sí' : 'No'}' readonly></td>
+                        <td><input type='text' name='Activo' value='${Activo == 1 ? 'Sí' : 'No'}' readonly></td>
+                        <td><input type='text' name='TELF_Alumno' value='${TELF_Alumno}' readonly></td>
+                        <td><input type='text' name='EMAIL_Alumno' value='${EMAIL_Alumno}' readonly></td>
+                        <td><input type='text' name='Direccion' value='${Direccion}' readonly></td>
+                        <td><input type='text' name='Codigo_Postal' value='${Codigo_Postal}' readonly></td>
+                        <td><input type='hidden' name='editarAlumno' value='true'></td> <!-- Campo oculto para identificar la acción -->
                     </tr>
                 `;
                 tabla.insertAdjacentHTML('beforeend', fila);
             });
-
-            // Asignar eventos de clic a los botones de editar y guardar
-            asignarEventosEditarGuardar();
         }
+
+        asignarEventosEditarGuardar();
     }
 
+    function getCicloNombre(idCiclo, ciclos) {
+        const ciclo = ciclos.find(ciclo => ciclo.ID_Ciclo_Formativo === idCiclo);
+        return ciclo ? ciclo.Nombre_Ciclo : '';
+    }
+
+    
+    // Asignar evento al botón de buscar
     buscar.addEventListener('click', function(){
         const input = document.querySelector('#nombre').value;
         const nombre = input;
 
-        fetch(url,{
+        fetch(userControllerURL,{
             method: 'POST',
             body: new URLSearchParams({
                 buscarAlumno: true,

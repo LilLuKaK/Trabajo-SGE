@@ -178,47 +178,153 @@ function registrarCiclo($nombreCiclo) {
 
 /********************* Filtros de Busqueda ************************* */
 
-function busquedaGeneral($consulta, $parametro1, $parametro2){
+function busquedaGeneral($consulta, $parametro1, $parametro2) {
     $conn = ConexionBD::conectar();
-    if($conn){
+    if ($conn) {
         $stmt = $conn->prepare($consulta);
         $stmt->execute(array(
             ':parametro1' => $parametro1,
             ':parametro2' => $parametro2
         ));
 
+        // Obtener datos del alumno
+        $datosAlumno = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Obtener el ciclo formativo asociado a cada alumno
+        foreach ($datosAlumno as &$alumno) {
+            $cicloConsulta = "SELECT cf.ID_Ciclo_Formativo, cf.Nombre_Ciclo 
+                              FROM ciclos_formativos cf 
+                              INNER JOIN ciclo_alumno ca ON cf.ID_Ciclo_Formativo = ca.ID_Ciclo_Formativo 
+                              WHERE ca.ID_Alumno = :idAlumno";
+            $stmtCiclo = $conn->prepare($cicloConsulta);
+            $stmtCiclo->execute(array(':idAlumno' => $alumno['ID_Alumno']));
+            $ciclo = $stmtCiclo->fetch(PDO::FETCH_ASSOC);
+            $alumno['Ciclo'] = $ciclo;
+        }
+
+        return $datosAlumno;
+    } else {
+        return null; // Devolver null si no se pudo conectar a la base de datos
+    }
+}
+
+
+
+function obtenerCiclosFormativos($consultaCiclos) {
+    $conn = ConexionBD::conectar();
+    if($conn) {
+        $stmt = $conn->prepare($consultaCiclos);
+        $stmt->execute();
+
+        // Obtener los ciclos formativos disponibles
+        $ciclosFormativos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $ciclosFormativos;
+    } else {
+        // En caso de error en la conexión a la base de datos
+        return false;
+    }
+}
+
+
+
+function busquedaEmpresa($parametro, $valor) {
+    $conn = ConexionBD::conectar();
+    if ($conn) {
+        switch ($parametro) {
+            case 'buscarEmpresa':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.CIF LIKE :valor OR ce.Nombre LIKE :valor";
+                break;
+            case 'buscarCIF':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.CIF LIKE :valor";
+                break;
+            case 'buscarDuenyo':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.Duenyo LIKE :valor";
+                break;
+            case 'buscarFirmante':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa 
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa
+                        WHERE ce.Firmante_Convenio LIKE :valor";
+                break;
+            case 'buscarTodas':
+                $sql = "SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
+                        FROM control_empresas ce 
+                        LEFT JOIN contacto_control ccc ON ce.ID_Control_Empresa = ccc.ID_Control_Empresa
+                        LEFT JOIN contacto_empresa cc ON ccc.ID_Contacto_Empresa = cc.ID_Contacto_Empresa";
+                break;
+            case 'buscarTodas':
+                // Código para buscar todas las empresas
+                $stmt = $conn->prepare("SELECT ce.*, cc.ID_Contacto_Empresa, cc.Nombre AS Nombre_Contacto, cc.EMAIL_Contacto_Empresa, cc.TELF_Contacto_Empresa
+                                    FROM control_empresas ce 
+                                    LEFT JOIN contacto_empresa cc ON ce.ID_Control_Empresa = cc.ID_Control_Empresa");
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return json_encode($resultado);
+                break;
+            default:
+                return json_encode(array('error' => 'Parámetro de búsqueda no válido'));
+        }
+
+        $stmt = $conn->prepare($sql);
+        // Agrega comodines al valor para buscar coincidencias parciales
+        $valor = '%' . $valor . '%';
+        $stmt->execute(array(':valor' => $valor));
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return json_encode($resultado);
-    }else{
-        return json_encode(array('success' => 'No se encontraron resultados'));
+    } else {
+        return json_encode(array('error' => 'No se pudo conectar a la base de datos'));
     }
 }
+
 
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
+    // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
-    if ($conn) {
+    try {
+        // Comenzar una transacción
+        $conn->beginTransaction();
+
         // Actualizar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("UPDATE alumnos SET Nombre=?, Apellido1=?, DNI=?, N_Seg_social=?, Curriculum_Vitae=?, TELF_Alumno=?, EMAIL_Alumno=?, Direccion=?, Codigo_Postal=?, Activo=?, Validez=? WHERE ID_Alumno=?");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
+        $stmt = $conn->prepare("UPDATE alumnos 
+                        INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
+                        SET alumnos.Nombre=?, alumnos.Apellido1=?, alumnos.DNI=?, alumnos.N_Seg_social=?, alumnos.TELF_Alumno=?, alumnos.EMAIL_Alumno=?, alumnos.Direccion=?, alumnos.Codigo_Postal=?, ciclo_alumno.ID_Ciclo_Formativo=?, alumnos.Activo=?, alumnos.Validez=? 
+                        WHERE alumnos.ID_Alumno=?");
+        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez, $id_alumno]);
+        // Confirmar la transacción
+        $conn->commit();
 
-        // Actualizar la asociación entre el alumno y el ciclo formativo en la tabla ciclo_alumno
-        $stmt = $conn->prepare("UPDATE ciclo_alumno SET ID_Ciclo_Formativo=? WHERE ID_Alumno=?");
-        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+        // Obtener todos los ciclos formativos
+        $stmtCiclos = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
+        $ciclos = $stmtCiclos->fetchAll(PDO::FETCH_ASSOC);
 
-        // Actualizar la asociación entre el alumno y el centro educativo en la tabla centro_alumno
-        $stmt = $conn->prepare("UPDATE centro_alumno SET ID_Centro_Formativo=? WHERE ID_Alumno=?");
-        $stmt->execute([$id_centro_educativo, $id_alumno]);
-
-        return json_encode(array('success' => 'Alumno actualizado con éxito.'));
+        // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
+        return json_encode(array('success' => 'Alumno actualizado con éxito.', 'ciclos' => $ciclos));
+    } catch(PDOException $e) {
+        // Rollback en caso de error
+        $conn->rollback();
+        return json_encode(array('error' => 'Error al actualizar el alumno: ' . $e->getMessage()));
     }
-
-    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
+
 
 
 
