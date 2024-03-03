@@ -10,7 +10,7 @@ if ($conn) {
     if ($stmt->rowCount() > 0) {
         // Iterar sobre los resultados y mostrar las opciones del select
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='" . $row['Nombre_Ciclo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
+            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
         }
     } else {
         echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";

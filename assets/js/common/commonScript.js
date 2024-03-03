@@ -55,3 +55,12 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('nombreCentro').textContent = sessionStorage.getItem('nombre_centro');
     }
 });
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById('loader-overlay').style.display = 'block';
+});
+window.addEventListener("load", function() {
+    document.getElementById('loader-overlay').style.display = 'none';
+});

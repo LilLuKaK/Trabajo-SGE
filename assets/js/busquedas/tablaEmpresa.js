@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function(){
     const url = './controlador/userController.php';
-    const tabla = document.querySelector('#tablaAlumnos');
-    const buscarAlumno = document.querySelector('#buscarAlumno');
-    const buscarDni = document.querySelector('#buscarDni');
-    const botonBuscarValidez = document.querySelector('#searchBtn');
-    const botonBuscar = document.querySelector('#last');
-    const selectCiclos = document.querySelector('#ciclos');
+    const tabla = document.querySelector('#tablaEmpresas');
+    const buscarEmpresa = document.querySelector('#buscarEmpresa');
+    const buscarCIF = document.querySelector('#buscarCIF');
+    const buscarDuenyo = document.querySelector('#buscarDuenyo');
+    const buscarFirmante = document.querySelector('#buscarFirmante');
+
 
     // Función para asignar eventos de clic a los botones de editar y guardar
     function asignarEventosEditarGuardar() {
@@ -65,30 +65,28 @@ document.addEventListener('DOMContentLoaded', function(){
         .catch(error => console.error('Error:', error));
     }
 
-    // Evento de clic para buscar por nombre de alumno
-    buscarAlumno.addEventListener('click', function(){
-        debugger;
-        const nombre = document.querySelector('#nombre').value;
-        buscarYActualizar({ buscarAlumno: true, nombre: nombre });
+    // Evento de clic para buscar por nombre de la empresa
+    buscarEmpresa.addEventListener('click', function(){
+        const nombreEmpresa = document.querySelector('#nombreEmpresa').value;
+        buscarYActualizar({ buscarEmpresa: true, nombreEmpresa: nombreEmpresa });
     });
 
-    // Evento de clic para buscar por DNI
-    buscarDni.addEventListener('click', function(){
-        const dni = document.querySelector('#dni').value;
-        buscarYActualizar({ buscarDni: true, dni: dni });
+    // Evento de clic para buscar por CIF
+    buscarCIF.addEventListener('click', function(){
+        const CIF = document.querySelector('#CIF').value;
+        buscarYActualizar({ buscarCIF: true, CIF: CIF });
     });
 
-    // Evento de clic para buscar por validez
-    botonBuscarValidez.addEventListener('click', function(){
-        const slider = document.querySelector('#slider');
-        const valorSlider = slider.checked ? 0 : 1;
-        buscarYActualizar({ searchBoton: valorSlider });
+    // Evento de clic para buscar por duenyo
+    buscarDuenyo.addEventListener('click', function(){
+        const duenyo = document.querySelector('#duenyo').value;
+        buscarYActualizar({ buscarDuenyo: true, duenyo: duenyo });
     });
 
-    // Evento de clic para buscar por ciclo
-    botonBuscar.addEventListener('click', function(){
-        const cicloSeleccionado = selectCiclos.value;
-        buscarYActualizar({ buscarFP: true, ciclo: cicloSeleccionado });
+    // Evento de clic para buscar por firmante
+    buscarFirmante.addEventListener('click', function(){
+        const firmante = document.querySelector('#firmante').value;
+        buscarYActualizar({ buscarFirmante: true, firmante: firmante });
     });
 
     // Función para actualizar la tabla con los resultados de la búsqueda
@@ -103,17 +101,15 @@ document.addEventListener('DOMContentLoaded', function(){
                     <th></th>
                     <th>ID</th>
                     <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>DNI</th>
-                    <th>Ciclo</th>
-                    <th>SS</th>
-                    <th>CV</th>
-                    <th>Validez</th>
-                    <th>Activo</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
-                    <th>Dirección</th>
-                    <th>CP</th>
+                    <th>CIF</th>
+                    <th>Dueño</th>
+                    <th>Firmante del convenio</th>
+                    <th>Direccion</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Nombre de contacto</th>
+                    <th>Email de contacto</th>
+                    <th>Telefono de contacto</th>
                 </tr>
             </thead>
         `;
@@ -126,30 +122,27 @@ document.addEventListener('DOMContentLoaded', function(){
             tabla.appendChild(mensaje);
         } else {
             // Iterar sobre los datos devueltos y agregarlos a la tabla
-            data.forEach(alumno => {
-                const {ID_Alumno, Nombre, Apellido1, Apellido2, DNI, N_Seg_social, Curriculum_Vitae,
-                    Fecha_Ultima_Activo, Activo, Validez, TELF_Alumno, EMAIL_Alumno, Direccion,
-                    Codigo_Postal, Nombre_Ciclo} = alumno;
+            data.forEach(empresa => {
+                const {ID_Control_Empresa, Nombre_Empresa, CIF, Duenyo, Firmante_Convenio, Direccion, EMAIL_Empresa,
+                    TELF_Empresa, Nombre_Contacto, EMAIL_Contacto_Empresa, TELF_Contacto_Empresa} = empresa;
                 const fila = `
-                    <tr class="fila-alumno">
+                    <tr class="fila-empresa">
                         <td class='button-container'>
                             <button class='delete'><span class='material-symbols-sharp'>delete</span></button>
                             <button class='edit'><span class='material-symbols-sharp'>edit</span></button>
                             <button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>
                         </td>
-                        <td><input type='hidden' name='id' value='${ID_Alumno}'><span>${ID_Alumno}</span></td>
-                        <td><input type='text' name='nombre' value='${Nombre}' readonly class='compact-input'></td>
-                        <td><input type='text' name='apellidos' value='${Apellido1}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${DNI}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Nombre_Ciclo}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${N_Seg_social}' readonly class='compact-input'></td>
-                        <td><span class='material-symbols-sharp'>download</span></td>
-                        <td><input type='text' value='${Validez == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Activo == 1 ? 'Sí' : 'No'}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${TELF_Alumno}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${EMAIL_Alumno}' readonly class='compact-input'></td>
+                        <td><input type='hidden' name='ID_Control_Empresa' value='${ID_Control_Empresa}'><span>${ID_Control_Empresa}</span></td>
+                        <td><input type='text' name='Nombre_Empresa' value='${Nombre_Empresa}' readonly class='compact-input'></td>
+                        <td><input type='text' name='CIF' value='${CIF}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${Duenyo}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${Firmante_Convenio}' readonly class='compact-input'></td>
                         <td><input type='text' value='${Direccion}' readonly class='compact-input'></td>
-                        <td><input type='text' value='${Codigo_Postal}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${EMAIL_Empresa}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${TELF_Empresa}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${Nombre_Contacto}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${EMAIL_Contacto_Empresa}' readonly class='compact-input'></td>
+                        <td><input type='text' value='${TELF_Contacto_Empresa}' readonly class='compact-input'></td>
                     </tr>
                 `;
                 tabla.insertAdjacentHTML('beforeend', fila);

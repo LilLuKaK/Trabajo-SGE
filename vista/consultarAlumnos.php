@@ -53,26 +53,7 @@
                         <div class="input">
                             <select name="ciclos" id="ciclos" class="ciclos" sizeof="3">
                                 <?php
-                                    // Incluir la conexión y consulta a la base de datos
-                                    include './modelo/conexion.php';
-
-                                    // Realizar la consulta para obtener los ciclos formativos
-                                    $conn = ConexionBD::conectar();
-
-                                    if ($conn) {
-                                        $stmt = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
-
-                                        // Verificar si se encontraron resultados
-                                        if ($stmt->rowCount() > 0) {
-                                            // Iterar sobre los resultados y mostrar las opciones del select
-                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
-                                            }
-                                        } else {
-                                            echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
-                                        }
-                                    }
-                                include_once './modelo/ciclo_formativo.php';
+                                   include_once './modelo/ciclo_formativo.php';
                                 ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
@@ -107,6 +88,7 @@
                         <tbody>
                         <?php
                             // Incluir el archivo de conexión a la base de datos
+<<<<<<< HEAD
                             include_once './modelo/conexion.php';
 
                             $id_centro_educativo = $_SESSION['id_centro'];
@@ -170,6 +152,9 @@
                                 echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
                             }
 
+=======
+                                include_once './modelo/tablaAlumnos.php';
+>>>>>>> d454d7400d7cd9da418ce79d1a8d7eaf92f92db0
                         ?>
                         </tbody>
                     </table>
@@ -188,6 +173,7 @@
     </div>
     </div>
     <script src="./assets/js/busquedas/tablaAlumnos.js"></script>
+<<<<<<< HEAD
     <!-- <script src="./assets/js/busquedas/dni.js"></script> -->
     <script>
         // Aquí colocas el bloque de código que te proporcioné previamente
@@ -205,6 +191,8 @@
     </script>
     <!-- <script src="./assets/js/busquedas/nombre.js"></script> -->
     <script src="./assets/js/common/commonScript.js"></script>
+=======
+>>>>>>> d454d7400d7cd9da418ce79d1a8d7eaf92f92db0
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
