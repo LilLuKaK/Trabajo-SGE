@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Evento de clic para buscar por nombre de alumno
     buscarAlumno.addEventListener('click', function(){
+        debugger;
         const nombre = document.querySelector('#nombre').value;
         buscarYActualizar({ buscarAlumno: true, nombre: nombre });
     });
