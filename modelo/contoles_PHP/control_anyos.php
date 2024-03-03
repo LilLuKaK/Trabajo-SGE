@@ -1,9 +1,10 @@
 <?php
     // Incluir la conexión y consulta a la base de datos
-    include './modelo/conexion.php';
+    include './conexion.php';
 
     // Realizar la consulta para obtener los nombres de las empresas
-    $conn = ConexionBD::conectar();
+   
+    session_start();
     $id_centro_educativo = $_SESSION['id_centro'];
     if ($conn) {
         $stmt = $conn->prepare("SELECT control_empresas.* FROM control_empresas, control_convenios WHERE control_convenios.ID_Centro_Formativo = ? GROUP BY control_empresas.ID_Control_Empresa");
