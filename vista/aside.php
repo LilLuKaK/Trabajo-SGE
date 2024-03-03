@@ -1,3 +1,9 @@
+<div id="loader-overlay">
+    <div id="loader" class="superballs">
+        <div class="superballs__dot"></div>
+        <div class="superballs__dot"></div>
+    </div>
+</div>
 <aside>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
