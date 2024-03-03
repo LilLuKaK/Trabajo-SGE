@@ -17,8 +17,8 @@
         <div class="right">
             <div class="scroll">
                 <div class="top">
-                    <h1>Consulta de Convenios</h1>
-                    <h2>Aquí podrás consultar, modificar y eliminar convenios.</h2>
+                    <h1>Consulta de Necesidades</h1>
+                    <h2>Aquí podrás consultar, modificar y eliminar necesidades.</h2>
                 </div>
                 <div class="forms">
                     <div class="form__control">
@@ -105,6 +105,7 @@
     <script src="./assets/js/Editar_Borrar/editar.js"></script>
     <script src="./assets/js/busquedas/validez.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
+    <script src="./assets/js/crearNecesidad/crearNecesidadScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>

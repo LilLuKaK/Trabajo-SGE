@@ -71,6 +71,10 @@
                             <input type="text" id="cantidad" name="cantidad" placeholder="introduce la cantidad total de posibles puestos">
                             <div id="cantidad-error"></div>
                         </div>
+                        <div class="form__control">     
+                            <button type="button" id="agregarCursoBtn">Agregar Curso</button>
+                        </div>
+
                         <input type="hidden" name="registrarNecesidad" value="registrarNecesidad">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarNecesidad" id="buttonEnviar">
                     </form>

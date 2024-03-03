@@ -152,29 +152,39 @@ document.addEventListener('DOMContentLoaded', function () {
 //------------------------------------------------------------------------------------------------------------------------------------
 
 document.addEventListener("DOMContentLoaded", function () {
-    const siValidez = document.getElementById("siValidez");
-    const noValidez = document.getElementById("noValidez");
-    const siActivo = document.getElementById("siActivo");
-    const noActivo = document.getElementById("noActivo");
-
-    function validarValidez() {
-        if (noValidez.checked) {
-            noActivo.checked = true;
-            siActivo.disabled = true;
-            noActivo.disabled = true;
+    var cursoCounter = 0;
+    // Máximo número de cursos permitidos
+    var maxCursos = 5;
+    
+    // Función para agregar un nuevo curso
+    function agregarCurso() {
+        if (cursoCounter < maxCursos) {
+            cursoCounter++;
+    
+            var nuevoCursoHtml = `
+                <div class="curso">
+                    <h2>Curso ${cursoCounter}</h2>
+                    <div class="form__control">
+                        <label for="nombre_curso_${cursoCounter}">Nombre del Curso</label>
+                        <input type="text" id="nombre_curso_${cursoCounter}" name="nombre_curso_${cursoCounter}" placeholder="Introduce el nombre del curso">
+                    </div>
+                    <div class="form__control">
+                        <label for="vacantes_curso_${cursoCounter}">Vacantes del Curso</label>
+                        <input type="text" id="vacantes_curso_${cursoCounter}" name="vacantes_curso_${cursoCounter}" placeholder="Introduce la cantidad de vacantes">
+                    </div>
+                </div>`;
+    
+            // Agregar el nuevo curso al formulario
+            $('.sign-in__form').append(nuevoCursoHtml);
         } else {
-            siActivo.disabled = false;
-            noActivo.disabled = false;
+            alert("Se ha alcanzado el máximo número de cursos permitidos.");
         }
     }
-
-    function validarActivo() {
-        if (siActivo.checked && noValidez.checked) {
-            siValidez.checked = true;
-        }
-    }
-
-    siValidez.addEventListener("change", validarValidez);
-    noValidez.addEventListener("change", validarValidez);
-    siActivo.addEventListener("change", validarActivo);
+    
+    // Llamar a la función agregarCurso cuando el botón "Agregar Curso" sea clicado
+    $(document).ready(function() {
+        $('#agregarCursoBtn').click(function() {
+            agregarCurso();
+        });
+    });
 });
