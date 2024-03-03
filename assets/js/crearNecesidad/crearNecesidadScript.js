@@ -151,40 +151,75 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //------------------------------------------------------------------------------------------------------------------------------------
 
-document.addEventListener("DOMContentLoaded", function () {
-    var cursoCounter = 0;
-    // Máximo número de cursos permitidos
-    var maxCursos = 5;
-    
-    // Función para agregar un nuevo curso
-    function agregarCurso() {
-        if (cursoCounter < maxCursos) {
-            cursoCounter++;
-    
-            var nuevoCursoHtml = `
-                <div class="curso">
-                    <h2>Curso ${cursoCounter}</h2>
-                    <div class="form__control">
-                        <label for="nombre_curso_${cursoCounter}">Nombre del Curso</label>
-                        <input type="text" id="nombre_curso_${cursoCounter}" name="nombre_curso_${cursoCounter}" placeholder="Introduce el nombre del curso">
-                    </div>
-                    <div class="form__control">
-                        <label for="vacantes_curso_${cursoCounter}">Vacantes del Curso</label>
-                        <input type="text" id="vacantes_curso_${cursoCounter}" name="vacantes_curso_${cursoCounter}" placeholder="Introduce la cantidad de vacantes">
-                    </div>
-                </div>`;
-    
-            // Agregar el nuevo curso al formulario
-            $('.sign-in__form').append(nuevoCursoHtml);
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Contador para identificar los elementos añadidos
+    let contador = 0;
+
+    // Función para agregar un nuevo elemento al contenedor
+    function agregarElemento() {
+        // Verificar si ya se han agregado 5 elementos
+        if (contador < 5) {
+            contador++;
+            const contenedor = document.getElementById('Contenedor_Botones');
+            const nuevoElemento = document.createElement('div');
+            const hrElement = document.createElement('hr');
+
+            // Realizar una solicitud para obtener el select con opciones de cursos
+            fetch('./modelo/ciclo_formativo.php')
+                .then(response => response.text())
+                .then(data => {
+                    nuevoElemento.innerHTML = `<select name="ciclo${contador}" id="ciclo">
+                    <option value='' selected disabled>-- Selecciona el ciclo --</option>
+                    ${data} </select>`;
+                    // Crear el elemento "cantidad" justo debajo de cada select
+                    const cantidadInput = document.createElement('input');
+                    cantidadInput.type = 'text';
+                    cantidadInput.name = `cantidad${contador}`;
+                    cantidadInput.value = '';
+                    cantidadInput.placeholder = 'Introduce la cantidad';
+
+                    // Crear un botón para quitar el elemento
+                    const botonEliminar = document.createElement('button');
+                    botonEliminar.textContent = 'Eliminar';
+                    botonEliminar.classList.add('botonEliminar');
+                    botonEliminar.addEventListener('click', function() {
+                        contenedor.removeChild(nuevoElemento);
+                        contenedor.removeChild(hrElement);
+                        contador--;
+                    });
+                    // Agregar un espacio (salto de línea) entre el select y la cantidad
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    nuevoElemento.appendChild(cantidadInput);
+                    
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    
+                    nuevoElemento.appendChild(botonEliminar);
+                    
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    nuevoElemento.appendChild(document.createElement('br'));
+                    nuevoElemento.appendChild(document.createElement('br'));
+
+                    contenedor.appendChild(nuevoElemento);
+                    contenedor.appendChild(hrElement);
+                })
+                .catch(error => console.error('Error:', error));
         } else {
-            alert("Se ha alcanzado el máximo número de cursos permitidos.");
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Has alcanzado el límite de cursos añadibles."
+            });
         }
     }
-    
-    // Llamar a la función agregarCurso cuando el botón "Agregar Curso" sea clicado
-    $(document).ready(function() {
-        $('#agregarCursoBtn').click(function() {
-            agregarCurso();
-        });
+
+    // Agregar evento click al botón "Agregar Curso"
+    document.getElementById('agregarCursoBtn').addEventListener('click', function() {
+        agregarElemento();
     });
 });

@@ -176,6 +176,20 @@ function registrarCiclo($nombreCiclo) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+function registrarNecesidad($nombreCiclo) {
+    $conn = ConexionBD::conectar();
+
+    if ($conn) {
+        // Insertar el alumno en la tabla alumnos
+        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo) VALUES (?)");
+        $stmt->execute([$nombreCiclo]);
+
+        return json_encode(array('success' => 'Ciclo registrado con éxito.'));
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
 /********************* Filtros de Busqueda ************************* */
 
 function busquedaGeneral($consulta, $parametro1, $parametro2) {

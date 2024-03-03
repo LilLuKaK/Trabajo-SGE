@@ -16,7 +16,7 @@
         if ($stmt->rowCount() > 0) {
             // Iterar sobre los resultados y mostrar las opciones del select
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<option value='" . $row['Nombre_Empresa'] . "'>" . $row['Nombre_Empresa'] . "</option>";
+                echo "<option value='" . $row['ID_Control_Empresa'] . "'>" . $row['Nombre_Empresa'] . "</option>";
             }
         } else {
             echo "<option value='' disabled>No se encontraron Empresas.</option>";
