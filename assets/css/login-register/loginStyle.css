@@ -110,6 +110,12 @@ a, a:active, a:visited {
 
 .sign-in__form a:last-child{
     background-color: var(--color-danger);
+    transition: var(--transition);
+}
+
+.sign-in__form a:last-child:hover{
+    background: var(--color-black);
+    color: var(--color-white);
 }
 
 .btn:hover {

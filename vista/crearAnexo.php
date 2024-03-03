@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
+    <link rel="stylesheet" href="./assets/css/login-register/extendedLogin.css" />
 </head>
 <body>
     <div class="container">
@@ -19,44 +20,33 @@
             <section class="sign-in">
                 <article class="sign-in__details">
                     <div id="label">
-                        <h1>Crear práctica</h1>
+                        <h1>Crear anexo</h1>
                         <p>Complete el siguiente formulario para crear un centro educativo</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
                         <div class="form__control" id="contenedorNombre">
-                            <label for="anexo">Anexo</label>
-                            <input type="text" id="anexo" name="anexo" placeholder="Introduce el anexo">
-                            <div id="anexo-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="nombreAlumno">Alumno</label>
-                            <input type="hidden" name="nombreAlumno" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
-                            <select name="alumnos" id="alumnos">
-                                <option value='' selected disabled>-- Selecciona el alumno --</option>
-                                <?php
-                                require_once './modelo/alumnos.php';
-                                ?>
-                            </select>
-                            <div id="nombreAlumno-error"></div>
+                            <label for="version">Versión</label>
+                            <input type="text" id="version" name="version" placeholder="Introduce la versión del anexo">
+                            <div id="version-error"></div>
                         </div>
                         <div class="form__control" id="contenedorNombre">
-                            <label for="tutorCentro">Tutor del centro</label>
-                            <select name="tutoresCentro" id="tutoresCentro">
-                                <option value='' selected disabled>-- Selecciona el tutor de prácticas --</option>
-                                <?php
-                                require_once './modelo/tutoresCentro.php';
-                                ?>
-                            </select>
-                            <div id="tutorCentro-error"></div>
+                            <label for="cuadrante">Cuadrante</label>
+                            <input type="text" id="cuadrante" name="cuadrante" placeholder="Introduce el cuadrante del anexo">
+                            <div id="cuadrante-error"></div>
+                        </div>
+                        <div class="form__control" id="contenedorNombre">
+                            <label for="tutorEmpresa">Tutor de empresa</label>
+                            <input type="text" id="tutorEmpresa" name="tutorEmpresa" placeholder="Introduce el tutor de empresa">
+                            <div id="tutorEmpresa-error"></div>
                         </div>
                         <div class="form__control" id="contenedorNombre">
                             <label for="fechaInicio">Fecha de inicio</label>
-                            <input type="text" id="fechaInicio" name="fechaInicio" placeholder="Introduce la fecha de inicio de las prácticas">
+                            <input type="text" id="fechaInicio" name="fechaInicio" placeholder="Introduce la fecha de inicio del anexo">
                             <div id="fechaInicio-error"></div>
                         </div>
                         <div class="form__control" id="contenedorNombre">
                             <label for="fechaFin">Fecha de fin</label>
-                            <input type="text" id="fechaFin" name="fechaFin" placeholder="Introduce la fecha de fin de las prácticas">
+                            <input type="text" id="fechaFin" name="fechaFin" placeholder="Introduce la fecha de fin del anexo">
                             <div id="fechaFin-error"></div>
                         </div>
                         <input type="hidden" name="registrarPractica" value="registrarPractica">

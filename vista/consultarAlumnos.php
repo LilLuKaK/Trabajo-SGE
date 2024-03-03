@@ -104,7 +104,6 @@
             </div>
         </div>
     </div>
-    </div>
     <script src="./assets/js/busquedas/tablaAlumnos.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

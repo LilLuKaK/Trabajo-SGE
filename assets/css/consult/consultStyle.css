@@ -80,9 +80,9 @@ h1{
 }
 
 .middle{
-    width: 100%;
+    width: 83%;
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: auto;
     background-color: var(--c-bg-tertiary);
     margin-bottom: 80px;
@@ -225,7 +225,7 @@ td .material-symbols-sharp{
 }
 
 .forms{
-    width: 100%;
+    width: 1200px;
     border-top: 3px solid var(--color-primary);
     padding-top: 15px;
     gap: 1rem;

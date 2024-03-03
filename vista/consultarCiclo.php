@@ -46,18 +46,18 @@
                         include_once './modelo/tablaCiclos.php';
                         ?>
                     </tbody>
-                </table> 
+                </table>
             </div>         
             <div id="new">
                 <div class="top">
-                <p>Insertar Ciclo formativo</p>
+                <h1>Insertar ciclo formativo</h1>
                 <h2>Añadir un nuevo Ciclo Formativo a la base de datos.</h2>
                 </div>
                 <div class="forms">
-                    <h2>Para insertar un nuevo Ciclo Formativo, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
+                    <h2>Para insertar un nuevo ciclo formativo, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
                     <a href="index.php?pages=crearCiclo">
                         <button class="new">
-                            <label>Insertar Ciclo</label>
+                            <label>Insertar ciclo</label>
                             <span class="material-symbols-rounded">assignment_add</span>
                         </button>
                     </a>
