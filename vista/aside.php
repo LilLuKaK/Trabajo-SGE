@@ -25,11 +25,11 @@
         </a>
         <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">history_edu</span>
-            <h3>Registro(provisional)</h3>
+            <h3>Registrar Tutor</h3>
         </a>
         <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">inbox</span>
-            <h3>Crear Centro(provisional)</h3>
+            <span class="material-symbols-outlined">domain_add</span>
+            <h3>Crear Centro</h3>
         </a>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">school</span>
@@ -38,19 +38,19 @@
         </a>
         <a href="index.php?pages=consultarEmpresas" <?php if ($activeLink === 'consultarEmpresas') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">work</span>
-            <h3>Empresa</h3>
+            <h3>Empresas</h3>
         </a>
         <a href="index.php?pages=consultarCiclo" <?php if ($activeLink === 'consultarCiclo') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">browse_gallery</span>
+            <span class="material-symbols-outlined">auto_stories</span>
             <h3>Ciclos Formativos</h3>
         </a>
-        <a href="#">
-            <span class="material-symbols-sharp">settings</span>
-            <h3>Ejemplo 7</h3>
+        <a href="index.php?pages=consultarNecesidades" <?php if ($activeLink === 'consultarNecesidad') echo 'class="active"'; ?>>
+            <span class="material-symbols-sharp">linked_services</span>
+            <h3>Necesidades</h3>
         </a>
-        <a href="#">
+        <a href="index.php?pages=consultarPractica" <?php if ($activeLink === 'consultarPractica') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">settings_accessibility</span>
-            <h3>Ejemplo 8</h3>
+            <h3>Prácticas</h3>
         </a>
         <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>

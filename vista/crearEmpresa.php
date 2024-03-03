@@ -60,12 +60,12 @@
                             <div id="telefono-error"></div>
                         </div>
                         <input type="hidden" name="registrarEmpresa" value="registrarEmpresa">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarAlumno" id="buttonEnviar">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarEmpresa" id="buttonEnviar">
                         <a href="index.php?pages=consultarEmpresas" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">
-                    <div><img src="./assets/images/login-register/undraw_exams_re_4ios.svg" alt=""></div>
+                    <div><img src="./assets/images/login-register/undraw_businessman_e7v0.svg" alt=""></div>
                 </article>
             </section>
         </div>

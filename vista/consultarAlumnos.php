@@ -72,6 +72,7 @@
                                             echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
                                         }
                                     }
+                                include_once './modelo/ciclo_formativo.php';
                                 ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
@@ -169,6 +170,8 @@
                                 echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
                             }
                             ?>
+                                include_once './modelo/tablaAlumnos.php';
+                        ?>
                         </tbody>
                     </table>
                 </div>

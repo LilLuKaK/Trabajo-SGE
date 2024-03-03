@@ -50,16 +50,6 @@
                             <div id="Curriculum_Vitae-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="activo">Activo</label>
-                            <div id="activo">
-                                <input type="radio" id="siActivo" name="activo" value="1">
-                                <label for="siActivo">Sí</label>
-                                <input type="radio" id="noActivo" name="activo" value="0">
-                                <label for="noActivo">No</label>
-                            </div>
-                            <div id="activo-error"></div>
-                        </div>
-                        <div class="form__control">
                             <label for="validez">Validez</label>
                             <div id="validez">
                                 <input type="radio" id="siValidez" name="validez" value="1">
@@ -68,6 +58,16 @@
                                 <label for="noValidez">No</label>
                             </div>
                             <div id="validez-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="activo">Activo</label>
+                            <div id="activo">
+                                <input type="radio" id="siActivo" name="activo" value="1">
+                                <label for="siActivo">Sí</label>
+                                <input type="radio" id="noActivo" name="activo" value="0">
+                                <label for="noActivo">No</label>
+                            </div>
+                            <div id="activo-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="TELF_Alumno">Telefono</label>
@@ -106,25 +106,7 @@
                             <select name="ciclo" id="ciclo">
                                 <option value='' selected disabled>-- Selecciona el ciclo --</option>
                                 <?php
-                                // Incluir la conexión y consulta a la base de datos
-                                include './modelo/conexion.php';
-
-                                // Realizar la consulta para obtener los nombres de los ciclos formativos
-                                $conn = ConexionBD::conectar();
-
-                                if ($conn) {
-                                    $stmt = $conn->query("SELECT * FROM ciclos_formativos");
-
-                                    // Verificar si se encontraron resultados
-                                    if ($stmt->rowCount() > 0) {
-                                        // Iterar sobre los resultados y mostrar las opciones del select
-                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
-                                        }
-                                    } else {
-                                        echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
-                                    }
-                                }
+                                include './modelo/ciclo_formativo.php';
                                 ?>
                             </select>
                             <div id="ciclo-error"></div>

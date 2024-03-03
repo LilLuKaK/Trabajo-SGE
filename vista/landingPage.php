@@ -32,7 +32,7 @@
             <div class="mid">
                 
                 <div class="sales-analytics">
-                    <h2>Ultimos cámbios</h2>
+                    <h2>Ultimos cambios</h2>
                     <div class="item online">
                         <div class="icon">
                             <span class="material-icons-sharp">person_add</span>

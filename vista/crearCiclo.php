@@ -36,7 +36,7 @@
                     </form>
                 </article>
                 <article class="sign-in__logo">
-                    <div><img src="./assets/images/login-register/undraw_exams_re_4ios.svg" alt=""></div>
+                    <div><img src="./assets/images/login-register/undraw_online_learning_re_qw08.svg" alt=""></div>
                 </article>
             </section>
         </div>
