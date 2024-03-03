@@ -56,7 +56,7 @@
                         </div>
                         <input type="hidden" name="registrarCentro" value="registrarCentro">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarCentro" id="buttonEnviar">
-                        <a href="index.php?pages=consultarAlumnos" class="btn primary">Cancelar</a>
+                        <a href="index.php?pages=consultarPracticas" class="btn primary">Cancelar</a>
                     </form>
                 </article>
                 <article class="sign-in__logo">
