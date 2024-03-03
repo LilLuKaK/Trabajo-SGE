@@ -103,7 +103,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
-    }else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+    }/*else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['nombre']);
         $parametro2 = $_SESSION['id_centro'];
@@ -175,6 +175,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Finalizar la ejecución del script PHP para evitar salida adicional
         exit();
         
+    }*/
+    else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+        session_start();
+        $parametro1 = limpiaString($_POST['nombre']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE a.Nombre LIKE :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarDni']) && $_POST['buscarDni'] == true){
+        session_start();
+        $parametro1 = limpiaString($_POST['dni']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE a.DNI LIKE :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
     }elseif(isset($_POST['searchBoton'])){
         session_start();
         $parametro1 = $_POST['searchBoton'];
@@ -187,7 +204,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         session_start();
         $parametro1 = limpiaString($_POST['ciclo']);
         $parametro2 = $_SESSION['id_centro'];
-        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE cf.Nombre_Ciclo = :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
+        $consulta = "SELECT a.*, cf.Nombre_Ciclo FROM alumnos a INNER JOIN ciclo_alumno ca ON a.ID_Alumno = ca.ID_Alumno INNER JOIN ciclos_formativos cf ON ca.ID_Ciclo_Formativo = cf.ID_Ciclo_Formativo INNER JOIN centro_alumno cen_al ON a.ID_Alumno = cen_al.ID_Alumno WHERE cf.ID_Ciclo_Formativo = :parametro1 AND cen_al.ID_Centro_Formativo = :parametro2";
         $respuesta = busquedaGeneral($consulta, $parametro1, $parametro2);
         echo $respuesta;
 
