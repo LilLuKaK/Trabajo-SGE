@@ -44,7 +44,7 @@
             <span class="material-symbols-outlined">auto_stories</span>
             <h3>Ciclos Formativos</h3>
         </a>
-        <a href="index.php?pages=consultarNecesidades" <?php if ($activeLink === 'consultarNecesidades') echo 'class="active"'; ?>>
+        <a href="index.php?pages=consultarNecesidades" <?php if ($activeLink === 'consultarNecesidad') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">linked_services</span>
             <h3>Necesidades</h3>
         </a>

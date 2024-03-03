@@ -12,7 +12,7 @@
     <div class="container">
         
         <?php
-        $activeLink = 'crearConvenio';
+        $activeLink = 'consultarNecesidad';
         include 'aside.php';
         ?>
 
@@ -20,118 +20,59 @@
             <section class="sign-in">
                 <article class="sign-in__details">
                     <div id="label">
-                        <h1>Crear Alumno</h1>
-                        <p>Complete el siguiente formulario para crear un alumno</p>
+                        <h1>Crear Necesidad Nueva</h1>
+                        <p>Complete el siguiente formulario para crear una Nueva Necesidad</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
                         <!-- Aquí iría un combobox con las diferentes empresas-->
                         <div class="form__control">
-                            <label for="nombre">Nombre de la empresaEmpresa</label>
-                            
-                            <div id="nombre-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="apellidos">Apellido/s</label>
-                            <input type="text" id="apellidos" name="apellidos" placeholder="Introduce el apellido o apellidos">
-                            <div id="apellidos-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="dni">DNI</label>
-                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
-                            <div id="dni-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="N_Seg_social">Numero de la Seguridad Social</label>
-                            <input type="text" id="N_Seg_social" name="N_Seg_social" placeholder="Introduce el Numero de la Seguridad Social">
-                            <div id="N_Seg_social-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="Curriculum_Vitae">Curriculum Vitae</label>
-                            <input type="text" id="Curriculum_Vitae" name="Curriculum_Vitae" placeholder="Introduce el Curriculum Vitae">
-                            <div id="Curriculum_Vitae-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="activo">Activo</label>
-                            <div id="activo">
-                                <input type="radio" id="siActivo" name="activo" value="1">
-                                <label for="siActivo">Sí</label>
-                                <input type="radio" id="noActivo" name="activo" value="0">
-                                <label for="noActivo">No</label>
-                            </div>
-                            <div id="activo-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="validez">Validez</label>
-                            <div id="validez">
-                                <input type="radio" id="siValidez" name="validez" value="1">
-                                <label for="siValidez">Sí</label>
-                                <input type="radio" id="noValidez" name="validez" value="0">
-                                <label for="noValidez">No</label>
-                            </div>
-                            <div id="validez-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="TELF_Alumno">Telefono</label>
-                            <input type="text" id="TELF_Alumno" name="TELF_Alumno" placeholder="Introduce el telefono">
-                            <div id="TELF_Alumno-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="EMAIL_Alumno">Email</label>
-                            <input type="text" id="EMAIL_Alumno" name="EMAIL_Alumno" placeholder="Introduce el email">
-                            <div id="EMAIL_Alumno-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="Direccion">Direccion</label>
-                            <input type="text" id="Direccion" name="Direccion" placeholder="Introduce el Direccion">
-                            <div id="Direccion-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="Codigo_Postal">Codigo Postal</label>
-                            <input type="text" id="Codigo_Postal" name="Codigo_Postal" placeholder="Introduce el Codigo Postal">
-                            <div id="Codigo_Postal-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="fullname">Centro</label>
-                            <input type="hidden" name="centro" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
-                            <input type="text" value="<?php echo ($_SESSION['nombre_centro']); ?>" readonly>
-                            <!--<select name="centro" id="centro">
-                                <option value='' selected disabled>-- Selecciona el centro --</option>
+                            <label for="nombre">Nombre de la Empresa</label>
+                            <select name="empresa" id="empresa">
+                                <option value='' selected disabled>-- Selecciona la Empresa --</option>
                                 <?php
-                                include './../modelo/centro_formativo.php';
-                                ?>
-                            </select>-->
-                            <div id="centro-error"></div>
-                        </div>
-                        <div class="form__control">
-                            <label for="ciclo">Ciclo</label>
-                            <select name="ciclo" id="ciclo">
-                                <option value='' selected disabled>-- Selecciona el ciclo --</option>
-                                <?php
-                                // Incluir la conexión y consulta a la base de datos
-                                include './modelo/conexion.php';
+                                    // Incluir la conexión y consulta a la base de datos
+                                    include './modelo/conexion.php';
 
-                                // Realizar la consulta para obtener los nombres de los ciclos formativos
-                                $conn = ConexionBD::conectar();
-
-                                if ($conn) {
-                                    $stmt = $conn->query("SELECT * FROM ciclos_formativos");
-
-                                    // Verificar si se encontraron resultados
-                                    if ($stmt->rowCount() > 0) {
-                                        // Iterar sobre los resultados y mostrar las opciones del select
-                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
+                                    // Realizar la consulta para obtener los nombres de las empresas
+                                    $conn = ConexionBD::conectar();
+                                    $id_centro_educativo = $_SESSION['id_centro'];
+                                    if ($conn) {
+                                        $stmt = $conn->prepare("SELECT control_empresas.* FROM control_empresas, control_convenios WHERE control_convenios.ID_Centro_Formativo = ? GROUP BY control_empresas.ID_Control_Empresa");
+                                        $stmt->execute([$id_centro_educativo]);
+                                        // Verificar si se encontraron resultados
+                                        if ($stmt->rowCount() > 0) {
+                                            // Iterar sobre los resultados y mostrar las opciones del select
+                                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                                echo "<option value='" . $row['Nombre_Empresa'] . "'>" . $row['Nombre_Empresa'] . "</option>";
+                                            }
+                                        } else {
+                                            echo "<option value='' disabled>No se encontraron Empresas.</option>";
                                         }
                                     } else {
-                                        echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
+                                        // Manejar el caso en el que la conexión no se haya establecido correctamente
+                                        echo "Error: No se pudo conectar a la base de datos.";
                                     }
-                                }
-                                ?>
+                                    ?>
                             </select>
-                            <div id="ciclo-error"></div>
+                            <div id="empresa-error"></div>
                         </div>
-                        <input type="hidden" name="registrarConvenio" value="registrarConvenio">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarConvenio" id="buttonEnviar">
+                        <div class="form__control">
+                            <label for="anyo">Año de la Necesidad</label>
+                            <input type="text" id="anyo" name="anyo" placeholder="Introduce el Año">
+                            <div id="anyo-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="cuadrante">Cuadrante</label>
+                            <input type="text" id="cuadrante" name="cuadrante" placeholder="Introduce el mes del cuadrante">
+                            <div id="cuadrante-error"></div>
+                        </div>
+                        <div class="form__control">
+                            <label for="cantidad">Nº de vacantes totales</label>
+                            <input type="text" id="cantidad" name="cantidad" placeholder="introduce la cantidad total de posibles puestos">
+                            <div id="cantidad-error"></div>
+                        </div>
+                        <input type="hidden" name="registrarNecesidad" value="registrarNecesidad">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarNecesidad" id="buttonEnviar">
                     </form>
                 </article>
                 <article class="sign-in__logo">
@@ -147,7 +88,7 @@
         });*/
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="./assets/js/crearConvenio/crearConvenioScript.js"></script>
+    <script src="./assets/js/crearNecesidad/crearNecesidadScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

@@ -36,8 +36,8 @@ if(isset($_GET['pages'])) {
         case 'crearCiclo':
                 require_once 'vista/crearCiclo.php';
                 break;
-        case 'crearNecesidades':
-            require_once 'vista/crearNecesidades.php';
+        case 'crearNecesidad':
+            require_once 'vista/crearNecesidad.php';
                 break;
         case 'consultarNecesidades':
             require_once 'vista/consultarNecesidades.php';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-03-2024 a las 03:28:37
+-- Tiempo de generación: 03-03-2024 a las 07:06:44
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `gestor`
 --
-CREATE DATABASE IF NOT EXISTS `gestor` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `gestor`;
 
 -- --------------------------------------------------------
 
@@ -183,8 +181,16 @@ CREATE TABLE `centro_alumno` (
 --
 
 INSERT INTO `centro_alumno` (`ID_Centro_Formativo`, `ID_Alumno`) VALUES
+(1, 1),
+(1, 8),
 (1, 9),
-(2, 10);
+(2, 2),
+(2, 8),
+(2, 10),
+(3, 2),
+(3, 3),
+(3, 6),
+(3, 7);
 
 -- --------------------------------------------------------
 
@@ -251,7 +257,9 @@ INSERT INTO `ciclo_alumno` (`ID_Ciclo_Formativo`, `ID_Alumno`) VALUES
 (1, 1),
 (1, 7),
 (1, 9),
+(2, 2),
 (2, 3),
+(2, 8),
 (2, 10);
 
 -- --------------------------------------------------------
@@ -533,17 +541,18 @@ INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesid
 
 CREATE TABLE `vacantes_ciclo` (
   `ID_Vacantes` int(11) NOT NULL,
-  `ID_Ciclo_Formativo` int(11) NOT NULL
+  `ID_Ciclo_Formativo` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `vacantes_ciclo`
 --
 
-INSERT INTO `vacantes_ciclo` (`ID_Vacantes`, `ID_Ciclo_Formativo`) VALUES
-(1, 1),
-(2, 4),
-(3, 3);
+INSERT INTO `vacantes_ciclo` (`ID_Vacantes`, `ID_Ciclo_Formativo`, `cantidad`) VALUES
+(1, 1, 0),
+(2, 4, 0),
+(3, 3, 0);
 
 --
 -- Índices para tablas volcadas
