@@ -179,13 +179,35 @@ function registrarCiclo($nombreCiclo) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarNecesidad($nombreCiclo) {
+function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
     $conn = ConexionBD::conectar();
 
     if ($conn) {
-        // Insertar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo) VALUES (?)");
-        $stmt->execute([$nombreCiclo]);
+        $anyo_variable = $conn->query("SELECT ID_ANYO ");
+        // Insertar la Necesidad en la tabla necesidades
+
+
+        $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
+
+      
+        $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
+        // Buscar el id del Convenio que tiene la empresa y el centro 
+                //SELECT control_convenios.ID_Convenio
+                        //FROM control_empresas,control_convenios
+                        //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
+                        //AND control_empresas.Nombre_Empresa = ?
+                        //AND control_convenios.ID_Centro_Formativo=?
+                       
+                        $stmt->execute([ $Nombre_Empresa,
+                        $id_centro_educativo,]);
+
+
+
+
+
+
+
+       
 
         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
     }

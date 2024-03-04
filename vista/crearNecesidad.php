@@ -26,8 +26,8 @@
                     <form class="sign-in__form" id="registroForm">
                         <!-- Aquí iría un combobox con las diferentes empresas-->
                         <div class="form__control">
-                            <label for="nombre">Nombre de la Empresa</label>
-                            <select name="ciclos" id="empresas" class="ciclos" sizeof="3">
+                            <label for="Nombre_Empresa">Nombre de la Empresa</label>
+                            <select name="Nombre_Empresa" id="Nombre_Empresa" class="Nombre_Empresa" sizeof="3">
                             <option value='' selected disabled>-- Selecciona la Empresa --</option>
                                     <?php
                                     require_once'modelo\contoles_PHP\control_empresas.php';
