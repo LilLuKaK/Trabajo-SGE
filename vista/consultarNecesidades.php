@@ -40,7 +40,7 @@
                         <div class="input">
                             <select name="ciclos" id="anyos" class="ciclos" sizeof="3">
                                     <?php
-                                    require_once'modelo\contoles_PHP\control_anyos.php';
+                                    //require_once'modelo\contoles_PHP\control_anyos.php';
                                     ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
