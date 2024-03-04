@@ -2,6 +2,8 @@
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     include('./../modelo/usuario.php');
 
+    
+
     if(isset($_POST["login"])){
         // Nos llaman desde el formulario de login para que procesemos sus datos
         $email = limpiaString($_POST["email"]);
@@ -118,7 +120,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         // Llamamos a la función del modelo para obtener los datos del alumno y los ciclos formativos asociados
         $datosAlumno = busquedaGeneral($consultaAlumno, '%'.$parametro1.'%', $parametro2);
-    
+
+        numero = obtenerNumero(consulta);
+        letras = obtenerLetas(consulta);
+        simbolos = obtenerSimbolos(consulta);
+        edades = obtenerEdades(consulta);
+
+        $respuesta = array(
+            'datosNumeros' => numero,
+            'datosLetas' => letras,
+        );
+
+        json ecnode (respuesta)
+        4
+
         if ($datosAlumno === null) {
             // No se encontraron resultados
             echo json_encode(['mensaje' => 'No se encontraron resultados']);
@@ -132,8 +147,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $ciclosFormativos = obtenerCiclosFormativos($consultaCiclos);
     
         // Devolvemos los datos del alumno y los ciclos formativos en un array
-        $respuesta = array('datosAlumno' => $datosAlumno, 'ciclosFormativos' => $ciclosFormativos);
-    
+        $respuesta = array('datosAlumno' => $datosAlumno,
+                                id
+                                nombre
+                                apellido
+                         'ciclosFormativos' => $ciclosFormativos);
+                            nombre
+                            id
+
+                         fetch(url,{
+
+
+                         })
+                         .them(data => json())
+                         .them(response)
+                         data.datosalumno.nombre
+        [{datosAlumno},
+        {ciclosFormativos}]
+                         array = []
+                         array.push(data.ciclosFormativos) 
+                         array.foreach(alumno
+                         nombre
+                             )
         // Enviar la respuesta JSON al cliente
         echo json_encode($respuesta);
     
@@ -248,29 +283,58 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
-    }else if (isset($_POST['editarAlumno'])) {
-    // Obtener los datos del formulario
+    }else if (isset($_POST['editarAlumno']) ){
+        var_dump($_POST['ciclo']);
+        // Obtener el ID del alumno de la URL
         $idAlumno = $_POST['id'];
+            // Obtener los datos del formulario
         $nombre = $_POST['nombre'];
-        $apellidos = $_POST['apellidos'];
+        $apellido1 = $_POST['apellidos'];
         $dni = $_POST['dni'];
         $id_ciclo_formativo = $_POST['ciclo'];
+        
         $N_Seg_social = $_POST['N_Seg_social'];
         $TELF_Alumno = $_POST['TELF_Alumno'];
         $EMAIL_Alumno = $_POST['EMAIL_Alumno'];
         $Direccion = $_POST['Direccion'];
         $Codigo_Postal = $_POST['Codigo_Postal'];
-        
-        // Inicializar los valores de "activo" y "validez" como false por defecto
-        $activo = isset($_POST['Activo']) ? ($_POST['Activo'] === 'true') : false;
-        $validez = isset($_POST['Validez']) ? ($_POST['Validez'] === 'true') : false;
-        
+    
+        // Verificar el estado activo y validez
+        $activo = isset($_POST['activo']) ? ($_POST['activo'] == '1' ? true : false) : false;
+        $validez = isset($_POST['validez']) ? ($_POST['validez'] == '1' ? true : false) : false;
+    
         // Llama a la función para actualizar el alumno y obtener los ciclos formativos actualizados
-        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez);
-        
+        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez);
+    
         // Devuelve la respuesta JSON al cliente JavaScript
         echo $respuesta;
-        exit;
+        header("Location: ../index.php?pages=consultarAlumnos");
+        exit();
+
+    }else if (isset($_POST['editarEmpresa'])) {
+        // Obtener el ID de la empresa
+        $idEmpresa = $_POST['id'];
+
+        // Obtener los datos del formulario
+        $nombreEmpresa = $_POST['nombre'];
+        $cif = $_POST['cif'];
+        $duenyo = $_POST['duenyo'];
+        $firmanteConvenio = $_POST['firmante'];
+        $direccion = $_POST['direccion'];
+        $emailEmpresa = $_POST['email'];
+        $telefonoEmpresa = $_POST['telefono'];
+        // $nombreContacto = $_POST['nombreContacto'];
+        // $emailContactoEmpresa = $_POST['emailContactoEmpresa'];
+        // $telefonoContactoEmpresa = $_POST['telefonoContactoEmpresa'];
+
+        // Aquí deberías realizar la validación de los datos recibidos
+
+        // Llama a la función para actualizar la empresa
+        $actualizacionExitosa = actualizarEmpresa($idEmpresa, $nombreEmpresa, $cif, $duenyo, $firmanteConvenio, $direccion, $emailEmpresa, $telefonoEmpresa);
+
+        header("Location: ../index.php?pages=consultarEmpresas");
+        exit();
+
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();

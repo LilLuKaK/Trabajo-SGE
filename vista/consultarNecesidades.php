@@ -86,6 +86,7 @@
         </div>
     </div>
     </div>
+    
     <script src="./assets/js/Editar_Borrar/editar.js"></script>
     <script src="./assets/js/busquedas/validez.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>

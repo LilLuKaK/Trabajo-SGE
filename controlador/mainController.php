@@ -1,4 +1,5 @@
 <?php
+
 if(isset($_GET['pages'])) {
     $pages = $_GET['pages'];
     
@@ -32,6 +33,9 @@ if(isset($_GET['pages'])) {
             break;
         case 'editarAlumno':
             require_once 'vista/editarAlumno.php';
+            break;
+        case 'editarEmpresa':
+            require_once 'vista/editarEmpresa.php';
             break;
         case 'consultarCiclo':
             require_once 'vista/consultarCiclo.php';
