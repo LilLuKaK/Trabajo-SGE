@@ -90,6 +90,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
+    }else if(isset($_POST["registrarPractica"])){
+        // Nos llaman desde el formulario de registrar para que procesemos sus datos
+        $nombreCiclo = limpiaString($_POST["nombreCiclo"]);
+
+        $registroLimpio = array(
+            'nombreCiclo' => $nombreCiclo
+        );
+
+        // Llama a la función para registrar el centro y obtén la respuesta
+        $respuesta = registrarCiclo($nombreCiclo);
+
+        echo $respuesta;
+
     }else if(isset($_POST["registrarEmpresa"])){
         // Nos llaman desde el formulario de registrar para que procesemos sus datos
         $nombre = limpiaString($_POST["nombre"]);

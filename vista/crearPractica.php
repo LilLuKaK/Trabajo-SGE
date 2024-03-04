@@ -23,11 +23,6 @@
                         <p>Complete el siguiente formulario para crear un centro educativo</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
-                        <div class="form__control" id="contenedorNombre">
-                            <label for="anexo">Anexo</label>
-                            <input type="text" id="anexo" name="anexo" placeholder="Introduce el anexo">
-                            <div id="anexo-error"></div>
-                        </div>
                         <div class="form__control">
                             <label for="nombreAlumno">Alumno</label>
                             <input type="hidden" name="nombreAlumno" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
@@ -49,15 +44,16 @@
                             </select>
                             <div id="tutorCentro-error"></div>
                         </div>
-                        <div class="form__control" id="contenedorNombre">
-                            <label for="fechaInicio">Fecha de inicio</label>
-                            <input type="text" id="fechaInicio" name="fechaInicio" placeholder="Introduce la fecha de inicio de las prácticas">
-                            <div id="fechaInicio-error"></div>
-                        </div>
-                        <div class="form__control" id="contenedorNombre">
-                            <label for="fechaFin">Fecha de fin</label>
-                            <input type="text" id="fechaFin" name="fechaFin" placeholder="Introduce la fecha de fin de las prácticas">
-                            <div id="fechaFin-error"></div>
+                        <div class="form__control">
+                            <label for="empresao">Empresa</label>
+                            <input type="hidden" name="empresa" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
+                            <select name="empresa" id="empresa">
+                                <option value='' selected disabled>-- Selecciona la empresa --</option>
+                                <?php
+                                require_once './modelo/empresas.php';
+                                ?>
+                            </select>
+                            <div id="empresa-error"></div>
                         </div>
                         <input type="hidden" name="registrarPractica" value="registrarPractica">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarPractica" id="buttonEnviar">
@@ -70,6 +66,7 @@
             </section>
         </div>
     </div>
+    <script src="./assets/js/crearPractica/crearPracticaScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
