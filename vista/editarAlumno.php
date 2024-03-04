@@ -1,54 +1,8 @@
-<?php 
-    include 'modelo/conexion.php';
-    
-    // Verificar si se recibió un ID de alumno válido en la URL
-    if (isset($_GET['id'])) {
-        $alumnoID = $_GET['id'];
-        $conn = ConexionBD::conectar();
-
-        // Verificar si la conexión a la base de datos se estableció correctamente
-        if ($conn) {
-            // Consultar los datos del alumno por su ID
-            $stmt = $conn->prepare("SELECT alumnos.*, ciclos_formativos.ID_Ciclo_Formativo, ciclos_formativos.Nombre_Ciclo 
-                                    FROM alumnos 
-                                    INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
-                                    INNER JOIN ciclos_formativos ON ciclo_alumno.ID_Ciclo_Formativo = ciclos_formativos.ID_Ciclo_Formativo 
-                                    WHERE alumnos.ID_Alumno = ?");
-            if ($stmt) {
-                // Ejecutar la consulta
-                $stmt->execute([$alumnoID]);
-
-                // Verificar si se encontraron resultados
-                if ($stmt->rowCount() > 0) {
-                    // Obtener los datos del alumno
-                    $alumno = $stmt->fetch(PDO::FETCH_ASSOC);
-                } else {
-                    // Mostrar un mensaje de error si no se encontraron resultados
-                    echo "No se encontraron datos para el alumno con ID $alumnoID";
-                }
-            } else {
-                // Mostrar un mensaje de error si hubo un problema con la consulta SQL
-                echo "Error en la consulta SQL: " . $conn->errorInfo()[2];
-            }
-            
-           
-        } else {
-            // Mostrar un mensaje de error si no se pudo conectar a la base de datos
-            echo "Error de conexión a la base de datos.";
-        }
-    } else {
-        // Mostrar un mensaje de error si no se proporcionó un ID de alumno válido en la URL
-        echo "No se proporcionó un ID de alumno válido en la URL.";
-    }
-
-
-?>
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Alumno</title>
+    <title>Registrar</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
@@ -56,10 +10,12 @@
 </head>
 <body>
     <div class="container">
+        
         <?php
         $activeLink = 'consultarAlumnos';
         include 'aside.php';
         ?>
+
         <div class="contenedorRegistro">
             <section class="sign-in">
                 <article class="sign-in__details">
@@ -67,25 +23,25 @@
                         <h1>Editar Alumno</h1>
                         <p>Complete el siguiente formulario para Editar un alumno</p>
                     </div>
-                    <form class="sign-in__form" id="formEditarAlumno" action="editarAlumno.php" method="POST">
+                    <form class="sign-in__form" id="editarAlumnoForm">
                         <div class="form__control">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" value="<?php echo $alumno['Nombre']; ?>">
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre completo">
                             <div id="nombre-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="apellidos">Apellido/s</label>
-                            <input type="text" id="apellidos" name="apellidos" value="<?php echo $alumno['Apellido1']; ?>">
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Introduce el apellido o apellidos">
                             <div id="apellidos-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="dni">DNI</label>
-                            <input type="text" id="dni" name="dni" value="<?php echo $alumno['DNI']; ?>">
+                            <input type="text" id="dni" name="dni" placeholder="Introduce el DNI">
                             <div id="dni-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="N_Seg_social">Numero de la Seguridad Social</label>
-                            <input type="text" id="N_Seg_social" name="N_Seg_social" value="<?php echo $alumno['N_Seg_social']; ?>">
+                            <input type="text" id="N_Seg_social" name="N_Seg_social" placeholder="Introduce el Numero de la Seguridad Social">
                             <div id="N_Seg_social-error"></div>
                         </div>
                         <div class="form__control">
@@ -96,9 +52,9 @@
                         <div class="form__control">
                             <label for="activo">Activo</label>
                             <div id="activo">
-                                <input type="radio" id="siActivo" name="activo" value="1" <?php if ($alumno['Activo'] == 1) echo "checked"; ?>>
+                                <input type="radio" id="siActivo" name="activo" value="1">
                                 <label for="siActivo">Sí</label>
-                                <input type="radio" id="noActivo" name="activo" value="0" <?php if ($alumno['Activo'] == 0) echo "checked"; ?>>
+                                <input type="radio" id="noActivo" name="activo" value="0">
                                 <label for="noActivo">No</label>
                             </div>
                             <div id="activo-error"></div>
@@ -106,31 +62,31 @@
                         <div class="form__control">
                             <label for="validez">Validez</label>
                             <div id="validez">
-                                <input type="radio" id="siValidez" name="validez" value="1" <?php if ($alumno['Validez'] == 1) echo "checked"; ?>>
+                                <input type="radio" id="siValidez" name="validez" value="1">
                                 <label for="siValidez">Sí</label>
-                                <input type="radio" id="noValidez" name="validez" value="0" <?php if ($alumno['Validez'] == 0) echo "checked"; ?>>
+                                <input type="radio" id="noValidez" name="validez" value="0">
                                 <label for="noValidez">No</label>
                             </div>
                             <div id="validez-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="TELF_Alumno">Telefono</label>
-                            <input type="text" id="TELF_Alumno" name="TELF_Alumno" value="<?php echo $alumno['TELF_Alumno']; ?>">
+                            <input type="text" id="TELF_Alumno" name="TELF_Alumno" placeholder="Introduce el telefono">
                             <div id="TELF_Alumno-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="EMAIL_Alumno">Email</label>
-                            <input type="text" id="EMAIL_Alumno" name="EMAIL_Alumno" value="<?php echo $alumno['EMAIL_Alumno']; ?>">
+                            <input type="text" id="EMAIL_Alumno" name="EMAIL_Alumno" placeholder="Introduce el email">
                             <div id="EMAIL_Alumno-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="Direccion">Direccion</label>
-                            <input type="text" id="Direccion" name="Direccion" value="<?php echo $alumno['Direccion']; ?>">
+                            <input type="text" id="Direccion" name="Direccion" placeholder="Introduce el Direccion">
                             <div id="Direccion-error"></div>
                         </div>
                         <div class="form__control">
                             <label for="Codigo_Postal">Codigo Postal</label>
-                            <input type="text" id="Codigo_Postal" name="Codigo_Postal" value="<?php echo $alumno['Codigo_Postal']; ?>">
+                            <input type="text" id="Codigo_Postal" name="Codigo_Postal" placeholder="Introduce el Codigo Postal">
                             <div id="Codigo_Postal-error"></div>
                         </div>
                         <div class="form__control">
@@ -150,18 +106,31 @@
                             <select name="ciclo" id="ciclo">
                                 <option value='' selected disabled>-- Selecciona el ciclo --</option>
                                 <?php
-                                    // Iterar sobre los resultados y mostrar las opciones del select
-                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        // Comprobar si este ciclo es el que está asignado al alumno
-                                        $selected = ($alumno['ID_Ciclo_Formativo'] == $row['ID_Ciclo_Formativo']) ? "selected" : "";
-                                        echo "<option value='". $row['ID_Ciclo_Formativo'] . "' $selected>" . $row['ID_Ciclo_Formativo'] . "</option>";
+                                // Incluir la conexión y consulta a la base de datos
+                                include './modelo/conexion.php';
+
+                                // Realizar la consulta para obtener los nombres de los ciclos formativos
+                                $conn = ConexionBD::conectar();
+
+                                if ($conn) {
+                                    $stmt = $conn->query("SELECT * FROM ciclos_formativos");
+
+                                    // Verificar si se encontraron resultados
+                                    if ($stmt->rowCount() > 0) {
+                                        // Iterar sobre los resultados y mostrar las opciones del select
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            echo "<option value='" . $row['ID_Ciclo_Formativo'] . "'>" . $row['Nombre_Ciclo'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option value='' disabled>No se encontraron ciclos formativos.</option>";
                                     }
+                                }
                                 ?>
                             </select>
                             <div id="ciclo-error"></div>
                         </div>
                         <input type="hidden" name="EditarAlumno" value="EditarAlumno">
-                        <input type="submit" class="btn primary" value="Editar" name="EditarAlumno" id="buttonEditar">
+                        <input type="submit" class="btn primary" value="Registrar" name="EditarAlumno" id="buttonEditar">
                         <a href="index.php?pages=consultarAlumnos" class="btn primary">Cancelar</a>
                     </form>
                 </article>
