@@ -179,27 +179,27 @@ function registrarCiclo($nombreCiclo) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
-    $conn = ConexionBD::conectar();
+// function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+//     $conn = ConexionBD::conectar();
 
-    if ($conn) {
-        $anyo_variable = $conn->query("SELECT ID_ANYO ");
-        // Insertar la Necesidad en la tabla necesidades
+//     if ($conn) {
+//         $anyo_variable = $conn->query("SELECT ID_ANYO ");
+//         // Insertar la Necesidad en la tabla necesidades
 
 
-        $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
+//         $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
 
       
-        $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
-        // Buscar el id del Convenio que tiene la empresa y el centro 
-                //SELECT control_convenios.ID_Convenio
-                        //FROM control_empresas,control_convenios
-                        //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
-                        //AND control_empresas.Nombre_Empresa = ?
-                        //AND control_convenios.ID_Centro_Formativo=?
+//         $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
+//         // Buscar el id del Convenio que tiene la empresa y el centro 
+//                 //SELECT control_convenios.ID_Convenio
+//                         //FROM control_empresas,control_convenios
+//                         //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
+//                         //AND control_empresas.Nombre_Empresa = ?
+//                         //AND control_convenios.ID_Centro_Formativo=?
                        
-                        $stmt->execute([ $Nombre_Empresa,
-                        $id_centro_educativo,]);
+//                         $stmt->execute([ $Nombre_Empresa,
+//                         $id_centro_educativo,]);
 
 
 
@@ -209,11 +209,11 @@ function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_socia
 
        
 
-        return json_encode(array('success' => 'Ciclo registrado con éxito.'));
-    }
+//         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
+//     }
 
-    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
-}
+//     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+// }
 
 /********************* Filtros de Busqueda ************************* */
 
@@ -280,7 +280,32 @@ function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $N_Seg_social, 
     }
 }
 
+function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa) {
+    // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
+    $conn = ConexionBD::conectar();
 
+    try {
+        // Comenzar una transacción
+        $conn->beginTransaction();
+
+        // Preparar la consulta SQL para actualizar los datos de la empresa
+        $sql = "UPDATE control_empresas 
+                SET Nombre_Empresa = ?, CIF = ?, Duenyo = ?, Firmante_Convenio = ?, Direccion = ?, EMAIL_Empresa = ?, TELF_Empresa = ? 
+                WHERE ID_Control_Empresa = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa, $id_empresa]);
+
+        // Commit de la transacción
+        $conn->commit();
+
+        // Devolver una respuesta JSON indicando el éxito de la operación
+        return json_encode(array('success' => 'Empresa actualizada con éxito.'));
+    } catch(PDOException $e) {
+        // Rollback en caso de error
+        $conn->rollback();
+        return json_encode(array('error' => 'Error al actualizar la empresa: ' . $e->getMessage()));
+    }
+}
 
 
 

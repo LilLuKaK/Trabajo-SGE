@@ -34,6 +34,9 @@ if(isset($_GET['pages'])) {
         case 'editarAlumno':
             require_once 'vista/editarAlumno.php';
             break;
+        case 'editarEmpresa':
+            require_once 'vista/editarEmpresa.php';
+            break;
         case 'consultarCiclo':
             require_once 'vista/consultarCiclo.php';
             break;

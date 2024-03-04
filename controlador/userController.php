@@ -120,7 +120,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     
         // Llamamos a la función del modelo para obtener los datos del alumno y los ciclos formativos asociados
         $datosAlumno = busquedaGeneral($consultaAlumno, '%'.$parametro1.'%', $parametro2);
-    
+
+        numero = obtenerNumero(consulta);
+        letras = obtenerLetas(consulta);
+        simbolos = obtenerSimbolos(consulta);
+        edades = obtenerEdades(consulta);
+
+        $respuesta = array(
+            'datosNumeros' => numero,
+            'datosLetas' => letras,
+        );
+
+        json ecnode (respuesta)
+        4
+
         if ($datosAlumno === null) {
             // No se encontraron resultados
             echo json_encode(['mensaje' => 'No se encontraron resultados']);
@@ -134,8 +147,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $ciclosFormativos = obtenerCiclosFormativos($consultaCiclos);
     
         // Devolvemos los datos del alumno y los ciclos formativos en un array
-        $respuesta = array('datosAlumno' => $datosAlumno, 'ciclosFormativos' => $ciclosFormativos);
-    
+        $respuesta = array('datosAlumno' => $datosAlumno,
+                                id
+                                nombre
+                                apellido
+                         'ciclosFormativos' => $ciclosFormativos);
+                            nombre
+                            id
+
+                         fetch(url,{
+
+
+                         })
+                         .them(data => json())
+                         .them(response)
+                         data.datosalumno.nombre
+        [{datosAlumno},
+        {ciclosFormativos}]
+                         array = []
+                         array.push(data.ciclosFormativos) 
+                         array.foreach(alumno
+                         nombre
+                             )
         // Enviar la respuesta JSON al cliente
         echo json_encode($respuesta);
     
@@ -275,6 +308,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // Devuelve la respuesta JSON al cliente JavaScript
         echo $respuesta;
         header("Location: ../index.php?pages=consultarAlumnos");
+        exit();
+
+    }else if (isset($_POST['editarEmpresa'])) {
+        // Obtener el ID de la empresa
+        $idEmpresa = $_POST['id'];
+
+        // Obtener los datos del formulario
+        $nombreEmpresa = $_POST['nombre'];
+        $cif = $_POST['cif'];
+        $duenyo = $_POST['duenyo'];
+        $firmanteConvenio = $_POST['firmante'];
+        $direccion = $_POST['direccion'];
+        $emailEmpresa = $_POST['email'];
+        $telefonoEmpresa = $_POST['telefono'];
+        // $nombreContacto = $_POST['nombreContacto'];
+        // $emailContactoEmpresa = $_POST['emailContactoEmpresa'];
+        // $telefonoContactoEmpresa = $_POST['telefonoContactoEmpresa'];
+
+        // Aquí deberías realizar la validación de los datos recibidos
+
+        // Llama a la función para actualizar la empresa
+        $actualizacionExitosa = actualizarEmpresa($idEmpresa, $nombreEmpresa, $cif, $duenyo, $firmanteConvenio, $direccion, $emailEmpresa, $telefonoEmpresa);
+
+        header("Location: ../index.php?pages=consultarEmpresas");
         exit();
 
     }else if(isset($_POST["cerrarSesion"])){

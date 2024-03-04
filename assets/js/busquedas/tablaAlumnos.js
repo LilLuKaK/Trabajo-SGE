@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Delegación de eventos para los botones de editar
     tabla.addEventListener('click', function(event) {
         const boton = event.target.closest('.edit');
+        
         if (boton) {
             event.preventDefault();
             const idAlumno = boton.getAttribute('name');
-            window.location.href = `http://127.0.0.1/Trabajo-SGE/index.php?pages=editarAlumno&id=${idAlumno}`;
+            console.log(idAlumno);
+            window.location.href = `./index.php?pages=editarAlumno&id=${idAlumno}`;
         }
     });
 

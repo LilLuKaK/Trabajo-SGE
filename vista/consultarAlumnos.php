@@ -106,20 +106,7 @@
         </div>
     </div>
     </div>
-    <script>
-        //Evento que redirecciona la pagina
-        document.addEventListener('DOMContentLoaded', function(){
-            const botonesEdit = document.querySelectorAll('.edit'); 
-            
-            botonesEdit.forEach(boton => {
-                boton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const idAlumno = boton.getAttribute('name');
-                    window.location.href = `http://127.0.0.1/Trabajo-SGE/index.php?pages=editarAlumno&id=${idAlumno}`;
-                });
-            });
-        });
-    </script>
+    
     <script src="./assets/js/busquedas/tablaAlumnos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

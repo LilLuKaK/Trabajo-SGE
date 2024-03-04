@@ -20,7 +20,8 @@ if ($stmt->rowCount() > 0) {
         echo "<tr>";
         echo "<td>";
         echo "<button class='delete'><span class='material-symbols-sharp'>delete</span></button>";
-        echo "<button class='edit'><span class='material-symbols-sharp'>edit</span></button>";
+        echo "<button class='edit' name='" . $row['ID_Control_Empresa'] . "' id='editEmpresaButton_" . $row['ID_Control_Empresa'] . "'><span class='material-symbols-sharp'>edit</span></button>";
+        echo "<input id='editEmpresaInput_" . $row['ID_Control_Empresa'] . "' name='editaEmpresa' type='hidden' value='" . $row['ID_Control_Empresa'] . "'>";
         echo "</td>";
         echo "<td>" . $row['ID_Control_Empresa'] . "</td>";
         echo "<td>" . $row['Nombre_Empresa'] . "</td>";
@@ -35,6 +36,7 @@ if ($stmt->rowCount() > 0) {
         echo "<td>" . $row['TELF_Contacto_Empresa'] . "</td>";
         echo "</tr>";
     }
+    
 } else {
     // Si no se encontraron centros asociados al centro educativo, muestra un mensaje indicando que no hay resultados
     echo "<tr><td colspan='14'>No se encontraron alumnos asociados a este centro educativo.</td></tr>";
