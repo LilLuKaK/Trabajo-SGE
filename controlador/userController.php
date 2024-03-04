@@ -2,6 +2,8 @@
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     include('./../modelo/usuario.php');
 
+    
+
     if(isset($_POST["login"])){
         // Nos llaman desde el formulario de login para que procesemos sus datos
         $email = limpiaString($_POST["email"]);
@@ -248,29 +250,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
-    }else if (isset($_POST['editarAlumno'])) {
-    // Obtener los datos del formulario
+    }else if (isset($_POST['editarAlumno']) ){
+        // Obtener el ID del alumno de la URL
         $idAlumno = $_POST['id'];
+            // Obtener los datos del formulario
         $nombre = $_POST['nombre'];
-        $apellidos = $_POST['apellidos'];
+        $apellido1 = $_POST['apellidos'];
         $dni = $_POST['dni'];
-        $id_ciclo_formativo = $_POST['ciclo'];
+        // $id_ciclo_formativo = $_POST['ciclo'];
+        
         $N_Seg_social = $_POST['N_Seg_social'];
         $TELF_Alumno = $_POST['TELF_Alumno'];
         $EMAIL_Alumno = $_POST['EMAIL_Alumno'];
         $Direccion = $_POST['Direccion'];
         $Codigo_Postal = $_POST['Codigo_Postal'];
-        
-        // Inicializar los valores de "activo" y "validez" como false por defecto
-        $activo = isset($_POST['Activo']) ? ($_POST['Activo'] === 'true') : false;
-        $validez = isset($_POST['Validez']) ? ($_POST['Validez'] === 'true') : false;
-        
+    
+        // Verificar el estado activo y validez
+        $activo = isset($_POST['activo']) ? ($_POST['activo'] == '1' ? true : false) : false;
+        $validez = isset($_POST['validez']) ? ($_POST['validez'] == '1' ? true : false) : false;
+    
         // Llama a la función para actualizar el alumno y obtener los ciclos formativos actualizados
-        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez);
-        
+        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez);
+    
         // Devuelve la respuesta JSON al cliente JavaScript
         echo $respuesta;
-        exit;
+        header("Location: ../index.php?pages=consultarAlumnos");
+        exit();
+
     }else if(isset($_POST["cerrarSesion"])){
 
         cerrarSesion();

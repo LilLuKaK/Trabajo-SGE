@@ -230,7 +230,7 @@ function obtenerCiclosFormativos($consultaCiclos) {
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
+function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez) {
     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
@@ -238,13 +238,11 @@ function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, 
         // Comenzar una transacción
         $conn->beginTransaction();
 
-        // Actualizar el alumno en la tabla alumnos
         $stmt = $conn->prepare("UPDATE alumnos 
-                        INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
-                        SET alumnos.Nombre=?, alumnos.Apellido1=?, alumnos.DNI=?, alumnos.N_Seg_social=?, alumnos.TELF_Alumno=?, alumnos.EMAIL_Alumno=?, alumnos.Direccion=?, alumnos.Codigo_Postal=?, ciclo_alumno.ID_Ciclo_Formativo=?, alumnos.Activo=?, alumnos.Validez=? 
-                        WHERE alumnos.ID_Alumno=?");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez, $id_alumno]);
-        // Confirmar la transacción
+                        SET Nombre=?, Apellido1=?, DNI=?, N_Seg_social=?, TELF_Alumno=?, EMAIL_Alumno=?, Direccion=?, Codigo_Postal=?, Activo=?, Validez=?
+                        WHERE ID_Alumno=?");
+        $stmt->execute([$nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
+
         $conn->commit();
 
         // Obtener todos los ciclos formativos
