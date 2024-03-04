@@ -284,13 +284,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $respuesta;
 
     }else if (isset($_POST['editarAlumno']) ){
+        var_dump($_POST['ciclo']);
         // Obtener el ID del alumno de la URL
         $idAlumno = $_POST['id'];
             // Obtener los datos del formulario
         $nombre = $_POST['nombre'];
         $apellido1 = $_POST['apellidos'];
         $dni = $_POST['dni'];
-        // $id_ciclo_formativo = $_POST['ciclo'];
+        $id_ciclo_formativo = $_POST['ciclo'];
         
         $N_Seg_social = $_POST['N_Seg_social'];
         $TELF_Alumno = $_POST['TELF_Alumno'];
@@ -303,7 +304,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $validez = isset($_POST['validez']) ? ($_POST['validez'] == '1' ? true : false) : false;
     
         // Llama a la función para actualizar el alumno y obtener los ciclos formativos actualizados
-        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez);
+        $respuesta = actualizarAlumno($idAlumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez);
     
         // Devuelve la respuesta JSON al cliente JavaScript
         echo $respuesta;

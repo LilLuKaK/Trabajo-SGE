@@ -137,28 +137,11 @@
                             <div id="Codigo_Postal-error"></div>
                         </div>
                         <div class="form__control">
-                            <label for="fullname">Centro</label>
-                            <input type="hidden" name="centro" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
-                            <input type="text" name="centro" value="<?php echo ($_SESSION['nombre_centro']); ?>" readonly>
-                            <!--<select name="centro" id="centro">
-                                <option value='' selected disabled>-- Selecciona el centro --</option>
-                                <?php
-                                include './../modelo/centro_formativo.php';
-                                ?>
-                            </select>-->
-                            <div id="centro-error"></div>
-                        </div>
-                        <div class="form__control">
                             <label for="ciclo">Ciclo</label>
                             <select name="ciclo" id="ciclo">
                                 <option value='' selected disabled>-- Selecciona el ciclo --</option>
                                 <?php
-                                    // Iterar sobre los resultados y mostrar las opciones del select
-                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        // Comprobar si este ciclo es el que está asignado al alumno
-                                        $selected = ($alumno['ID_Ciclo_Formativo'] == $row['ID_Ciclo_Formativo']) ? "selected" : "";
-                                        echo "<option value='". $row['ID_Ciclo_Formativo'] . "' $selected>" . $row['ID_Ciclo_Formativo'] . "</option>";
-                                    }
+                                include './modelo/ciclo_formativo.php';
                                 ?>
                             </select>
                             <div id="ciclo-error"></div>
@@ -166,7 +149,7 @@
 
                         <input type="submit" class="btn primary" value="Editar" name="editarAlumno" id="buttonEditar">
                         <a href="index.php?pages=consultarAlumnos" class="btn primary">Cancelar</a>
-                        <input type="hidde" id="alertabtn" value="editarAlumno">
+                        <input type="hidden" id="alertabtn" value="editarAlumno">
                     </form>
                 </article>
                 <article class="sign-in__logo">

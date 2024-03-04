@@ -252,7 +252,7 @@ function obtenerCiclosFormativos($consultaCiclos) {
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez) {
+function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez) {
     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
@@ -265,14 +265,17 @@ function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $N_Seg_social, 
                         WHERE ID_Alumno=?");
         $stmt->execute([$nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
 
+        $stmt = $conn->prepare("UPDATE ciclo_alumno 
+                        SET ID_Ciclo_Formativo=?
+                        WHERE ID_Alumno=?");
+        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+        
         $conn->commit();
+        
 
-        // Obtener todos los ciclos formativos
-        $stmtCiclos = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
-        $ciclos = $stmtCiclos->fetchAll(PDO::FETCH_ASSOC);
 
         // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
-        return json_encode(array('success' => 'Alumno actualizado con éxito.', 'ciclos' => $ciclos));
+        return json_encode(array('success' => 'Alumno actualizado con éxito.'));
     } catch(PDOException $e) {
         // Rollback en caso de error
         $conn->rollback();
