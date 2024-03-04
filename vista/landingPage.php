@@ -184,51 +184,7 @@
             <!-- FIN DE MID -->
             <div class="low">
                 <div class="slider-valores">
-                    <div class="slide-track">
-                        <div class="slide">
-                            <img src="./assets/images/common/1.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/2.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/3.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/4.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/5.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/6.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/7.png" alt="">
-                        </div>
-            
-                        <div class="slide">
-                            <img src="./assets/images/common/1.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/2.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/3.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/4.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/5.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/6.png" alt="">
-                        </div>
-                        <div class="slide">
-                            <img src="./assets/images/common/7.png" alt="">
-                        </div>
-                    </div>
+                    <?php require_once './modelo/sliderEmpresas.php' ?>
                 </div>
             </div>
             <!-- FIN DE LOW -->
