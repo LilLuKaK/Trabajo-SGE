@@ -6,13 +6,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/login-register/loginStyle.css">
     <link rel="stylesheet" href="assets/css/common/commonStyle.css" />
-    <link rel="stylesheet" href="assets/css/login-register/extendedLogin.css" />
 </head>
 <body>
     <div class="container">
         
         <?php
-        $activeLink = 'crearCentro';
+        $activeLink = 'consultarPracticas';
         include 'aside.php';
         ?>
 
@@ -20,42 +19,44 @@
             <section class="sign-in">
                 <article class="sign-in__details">
                     <div id="label">
-                        <h1>Crear Centro</h1>
+                        <h1>Crear práctica</h1>
                         <p>Complete el siguiente formulario para crear un centro educativo</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">
+                        <div class="form__control">
+                            <label for="nombreAlumno">Alumno</label>
+                            <input type="hidden" name="nombreAlumno" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
+                            <select name="alumnos" id="alumnos">
+                                <option value='' selected disabled>-- Selecciona el alumno --</option>
+                                <?php
+                                require_once './modelo/alumnos.php';
+                                ?>
+                            </select>
+                            <div id="nombreAlumno-error"></div>
+                        </div>
                         <div class="form__control" id="contenedorNombre">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre">
-                            <div id="nombre-error"></div>
+                            <label for="tutorCentro">Tutor del centro</label>
+                            <select name="tutoresCentro" id="tutoresCentro">
+                                <option value='' selected disabled>-- Selecciona el tutor de prácticas --</option>
+                                <?php
+                                require_once './modelo/tutoresCentro.php';
+                                ?>
+                            </select>
+                            <div id="tutorCentro-error"></div>
                         </div>
-                        <div class="form__control" id="contenedorDif">
-                            <label for="cif">CIF</label>
-                            <input type="text" id="cif" name="cif" placeholder="Introduce el CIF del Centro Educativo">
-                            <div id="cif-error"></div>
+                        <div class="form__control">
+                            <label for="empresao">Empresa</label>
+                            <input type="hidden" name="empresa" id="<?php echo ($_SESSION['id_centro']); ?>" value="<?php echo ($_SESSION['id_centro']); ?>">
+                            <select name="empresa" id="empresa">
+                                <option value='' selected disabled>-- Selecciona la empresa --</option>
+                                <?php
+                                require_once './modelo/empresas.php';
+                                ?>
+                            </select>
+                            <div id="empresa-error"></div>
                         </div>
-                        <div class="form__control" id="contenedorDuenyo">
-                            <label for="duenyo">Dueño</label>
-                            <input type="text" id="duenyo" name="duenyo" placeholder="Introduce el Dueño del Centro">
-                            <div id="duenyo-error"></div>
-                        </div>
-                        <div class="form__control" id="contenedorDireccion">
-                            <label for="direccion">Direccion</label>
-                            <input type="text" id="direccion" name="direccion" placeholder="Introduce la Dirección del Centro">
-                            <div id="direccion-error"></div>
-                        </div>
-                        <div class="form__control" id="contenedorTelefono">
-                            <label for="telefono">Telefono</label>
-                            <input type="text" id="telefono" name="telefono" placeholder="Introduce el Teléfono del Centro">
-                            <div id="telefono-error"></div>
-                        </div>
-                        <div class="form__control" id="contenedorEmail">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Introduce el Correo Electrónico del Centro">
-                            <div id="email-error"></div>
-                        </div>
-                        <input type="hidden" name="registrarCentro" value="registrarCentro">
-                        <input type="submit" class="btn primary" value="Registrar" name="registrarCentro" id="buttonEnviar">
+                        <input type="hidden" name="registrarPractica" value="registrarPractica">
+                        <input type="submit" class="btn primary" value="Registrar" name="registrarPractica" id="buttonEnviar">
                         <a href="index.php?pages=consultarPracticas" class="btn primary">Cancelar</a>
                     </form>
                 </article>
@@ -65,7 +66,7 @@
             </section>
         </div>
     </div>
-    <script src="./assets/js/centroFormativo/centroFormativoScript.js"></script>
+    <script src="./assets/js/crearPractica/crearPracticaScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
