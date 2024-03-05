@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
+/**Esta función funciona guapísima, pero no sé recoger los datos para meterlos en un array. */
 
 document.addEventListener('DOMContentLoaded', function() {
     // Contador para identificar los elementos añadidos
