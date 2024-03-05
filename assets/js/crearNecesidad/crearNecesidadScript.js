@@ -19,7 +19,7 @@ $(document).ready(function() {
 });
 
 //------------------------------------------------------------------------------------------------------------------------------------
-
+/*
 document.addEventListener('DOMContentLoaded', function () {
 
     const anyoInput = document.getElementById('anyo');
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
+*/
 //------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -223,3 +223,28 @@ document.addEventListener('DOMContentLoaded', function() {
         agregarElemento();
     });
 });
+/*
+function enviarDatos(cantidad, elemento) {
+    // Crear un objeto FormData para enviar los datos al servidor
+    const formData = new FormData();
+    formData.append('cantidad', cantidad);
+    // También podrías enviar más datos si es necesario
+
+    // Realizar una solicitud AJAX
+    fetch('archivo_php.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Manejar la respuesta del servidor si es necesario
+        console.log(data);
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Agregar evento click al botón "Agregar Curso"
+document.getElementById('agregarCursoBtn').addEventListener('click', function() {
+    agregarElemento();
+});
+});*/

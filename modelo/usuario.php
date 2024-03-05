@@ -2,7 +2,8 @@
 
 require 'conexion.php';
 
-function logearUsuario($email, $clave) {
+function logearUsuario($email, $clave)
+{
     $conn = ConexionBD::conectar();
 
     if ($conn) {
@@ -21,18 +22,20 @@ function logearUsuario($email, $clave) {
                 $_SESSION['id_centro'] = $usuario['id_centro']; // Guardar el ID del centro en la sesión
 
                 // Devolver todos los datos del usuario
-                return json_encode(array(
-                    'success' => 'Inicio de sesión exitoso.',
-                    'nombre' => $usuario['Nombre'],
-                    'apellido1' => $usuario['Apellido1'],
-                    'email' => $usuario['EMAIL_Usuario'],
-                    'nombre_centro' => $usuario['nombre_centro'] // Incluir el nombre del centro en la respuesta
-                ));
-            // Si la contraseña está incorrecta
+                return json_encode(
+                    array(
+                        'success' => 'Inicio de sesión exitoso.',
+                        'nombre' => $usuario['Nombre'],
+                        'apellido1' => $usuario['Apellido1'],
+                        'email' => $usuario['EMAIL_Usuario'],
+                        'nombre_centro' => $usuario['nombre_centro'] // Incluir el nombre del centro en la respuesta
+                    )
+                );
+                // Si la contraseña está incorrecta
             } else {
                 return json_encode(array('error' => 'Contraseña incorrecta.'));
             }
-        // Si no se reconoce que el email esté registrado en la base de datos
+            // Si no se reconoce que el email esté registrado en la base de datos
         } else {
             return json_encode(array('error' => 'Correo desconocido.'));
         }
@@ -41,7 +44,8 @@ function logearUsuario($email, $clave) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativo) {
+function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativo)
+{
     $conn = ConexionBD::conectar();
 
     // Si la conexión a la base de datos es correcta
@@ -49,7 +53,7 @@ function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativ
         $stmt = $conn->prepare("SELECT EMAIL_Usuario FROM usuario WHERE EMAIL_Usuario = ?");
         $stmt->execute([$email]);
         $existeCorreo = $stmt->fetch();
-        
+
         // Si el correo está registrado en la base de datos
         if ($existeCorreo) {
             return json_encode(array('error' => 'El correo ya está registrado.'));
@@ -67,7 +71,7 @@ function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativ
             // Insertar la relación entre el usuario y el centro formativo en la tabla usuario_centro
             $stmt = $conn->prepare("INSERT INTO usuario_centro (ID_Usuario, ID_Centro_Formativo) VALUES (?, ?)");
             $stmt->execute([$id_usuario, $id_centro_formativo]);
-    
+
             return json_encode(array('success' => 'Usuario registrado con éxito.'));
         }
     }
@@ -75,7 +79,8 @@ function registrarTutor($nombre, $apellidos, $email, $clave, $id_centro_formativ
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) {
+function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email)
+{
     $conn = ConexionBD::conectar();
 
     // Si a conexion a la base de datos es correcta
@@ -83,16 +88,16 @@ function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) 
         $stmt = $conn->prepare("SELECT Nombre FROM centro_formativo WHERE Nombre = ?");
         $stmt->execute([$nombre]);
         $existeCentro = $stmt->fetch();
-        
+
         // Si el Centro esta registrado en la base de datos
         if ($existeCentro) {
             return json_encode(array('error' => 'El centro ya está registrado.'));
 
-        // Si el centro no existe en la base de datos
-        }else{
+            // Si el centro no existe en la base de datos
+        } else {
             $stmt = $conn->prepare("INSERT INTO centro_formativo (Nombre, CIF, DUENYO, Direccion, Telefono, EMAIL) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nombre, $cif, $duenyo, $direccion, $telefono, $email]);
-    
+
             return json_encode(array('success' => 'Centro registrado con éxito.'));
         }
     }
@@ -100,7 +105,8 @@ function registrarCentro($nombre, $cif, $duenyo, $direccion, $telefono, $email) 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono) {
+function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono)
+{
 
     session_start();
     $id_centro_educativo = $_SESSION['id_centro'];
@@ -112,13 +118,13 @@ function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email,
         $stmt = $conn->prepare("SELECT Nombre_Empresa FROM control_empresas WHERE Nombre_Empresa = ?");
         $stmt->execute([$nombre]);
         $existeEmpresa = $stmt->fetch();
-        
+
         // Si la empresa esta registrado en la base de datos
         if ($existeEmpresa) {
             return json_encode(array('error' => 'La empresa ya está registrada.'));
 
-        // Si la empresa no existe en la base de datos
-        }else{
+            // Si la empresa no existe en la base de datos
+        } else {
             $stmt = $conn->prepare("INSERT INTO control_empresas (Nombre_Empresa, CIF, Duenyo, Firmante_Convenio, Direccion, EMAIL_Empresa, TELF_Empresa) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([$nombre, $cif, $duenyo, $firmante, $direccion, $email, $telefono]);
         }
@@ -139,7 +145,8 @@ function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email,
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez)
+{
     $conn = ConexionBD::conectar();
 
     if ($conn) {
@@ -165,92 +172,265 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarCiclo($nombreCiclo) {
+function registrarCiclo($nombreCiclo, $familiaCiclo)
+{var_dump($nombreCiclo, $familiaCiclo);
     $conn = ConexionBD::conectar();
 
     if ($conn) {
         // Insertar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo) VALUES (?)");
-        $stmt->execute([$nombreCiclo]);
+        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo, Familia_profesional) VALUES (?,?)");
+        $stmt->execute([$nombreCiclo, $familiaCiclo]);
 
         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
     }
 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
-
-function registrarAnexo($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo){
+//Siento estos putos mosntruos de consultas, es lo que tienen no saber cómo hacer llamadsa funciones en PHP :C
+function registrarAnexo($cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo, $empresa)
+{
     $conn = ConexionBD::conectar();
+    $nombreAnyo = substr($fechaInicio, 0, 4);
 
-    var_dump($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo);
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT control_convenios.ID_Convenio
+                                FROM control_convenios
+                                WHERE control_convenios.ID_Convenio = (SELECT control_empresas.ID_Control_Empresa
+                                                                        FROM control_empresas
+                                                                        WHERE control_empresas.Nombre_Empresa = ?)");
+        if ($stmt->execute([$empresa])) {
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($fila) {
+                $ID_Convenio = $fila['ID_Convenio'];
 
+                $stmt = $conn->prepare("SELECT vacantes.ID_Vacantes
+                                        FROM vacantes
+                                        WHERE vacantes.ID_Anyo_Necesidad = (SELECT anyo_necesidad.ID_Anyo_Necesidad
+                                                                            FROM anyo_necesidad
+                                                                            WHERE anyo_necesidad.Anyo = ?
+                                                                            AND anyo_necesidad.ID_Convenio = ?)
+                                        AND vacantes.Cuadrante = ?");
+                if ($stmt->execute([$nombreAnyo, $ID_Convenio, $cuadrante])) {
+                    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($fila) {
+                        $ID_vacante = $fila['ID_Vacantes'];
+
+                        $stmt = $conn->prepare("SELECT COUNT(anexos.ID_Anexo) AS contador
+                                                FROM anexos
+                                                WHERE anexos.ID_Convenio = ?");
+                        if ($stmt->execute([$ID_Convenio])) {
+                            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                            if ($fila) {
+                                $contador = $fila['contador'];
+                                $valorVersion = $contador + 1;
+                                $stmt = $conn->prepare("INSERT INTO anexos (ID_Vacantes, Version, Cuadrante, Fecha_Inicio, Fecha_Final, Tutor_Empresa, Email_Tutor_Empresa, TELF_Tutor_Empresa, Aprobado, ID_Convenio)
+                                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+                                if ($stmt->execute([$ID_vacante, $valorVersion, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo, $ID_Convenio])) {
+                                    return json_encode(array('success' => 'Anexo registrado con éxito.'));
+                                } else {
+                                    echo "Error al insertar el nuevo anexo: " . $conn->errorInfo();
+                                }
+                            } else {
+                                echo "Error al obtener el contador de anexos.";
+                            }
+                        } else {
+                            echo "Error al ejecutar la consulta de contador de anexos: " . $conn->errorInfo();
+                        }
+                    } else {
+                        echo "Error al obtener la ID de la vacante.";
+                    }
+                } else {
+                    echo "Error al ejecutar la consulta de ID de vacante: " . $conn->errorInfo();
+                }
+            } else {
+                echo "Error al obtener la ID del convenio.";
+            }
+        } else {
+            echo "Error al ejecutar la consulta de ID del convenio: " . $conn->errorInfo();
+        }
+    } else {
+        return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+    }
+
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarPractica($nombreAlumno, $tutoresCentro, $empresa){
+function registrarPractica($nombreAlumno, $tutoresCentro, $empresa, $fechainicio, $direccion,$hora_entrada,$hora_salida)
+{
     $conn = ConexionBD::conectar();
 
-    var_dump($nombreAlumno, $tutoresCentro, $empresa);
+    var_dump($nombreAlumno, $tutoresCentro, $empresa, $fechainicio);
+    $nombreAnyo = substr($fechainicio, 0, 4);
+    $cuadrante = 0;
+    $ID_Anexo = 0;
+    $ID_Alumno = 0;
+    $Ciclo_Formativo = 0;
+    $ultimaPractica = 0;
 
+    $mes = date('m', strtotime($fechainicio));
+    if ($mes >= 2 && $mes <= 8) {
+        $cuadrante = "Abril";
+    } else {
+        $cuadrante = "Septiembre";
+    }
+
+
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT anexos.ID_Anexo
+                                        FROM anexos
+                                        JOIN control_convenios ON anexos.ID_Convenio = control_convenios.ID_Convenio
+                                        JOIN control_empresas ON control_convenios.ID_Control_Empresa = control_empresas.ID_Control_Empresa
+                                        JOIN vacantes ON anexos.ID_Vacantes = vacantes.ID_Vacantes
+                                        JOIN anyo_necesidad ON vacantes.ID_Anyo_Necesidad = anyo_necesidad.ID_Anyo_Necesidad
+                                        WHERE control_empresas.Nombre_Empresa = ?
+                                        AND anyo_necesidad.Anyo = ?
+                                        AND anexos.Cuadrante = ?;");
+        if ($stmt->execute([$empresa, $nombreAnyo, $cuadrante])) {
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($fila) {
+                $ID_Anexo = $fila['ID_Anexo'];
+                var_dump($tutoresCentro, $direccion, $ID_Anexo);
+                $stmt = $conn->prepare("INSERT INTO `control_practicas` (`Tutor_CFP`, `Direccion_Prácticas`, `ID_Anexo`,`Hora_Entrada`,`Hora_Salida` )
+                        VALUES (?, ?, ?,?,?);");
+
+                if ($stmt->execute([$tutoresCentro, $direccion, $ID_Anexo,$hora_entrada,$hora_salida])) {
+
+                    $ultimaPractica = $conn->query("SELECT ID_Practica
+                                                            FROM control_practicas
+                                                            ORDER BY ID_Practica DESC
+                                                            LIMIT 1");
+                    $ultimaPracticaRegistrada = $ultimaPractica->fetch(PDO::FETCH_ASSOC);
+
+                    $stmt = $conn->prepare("SELECT ID_Ciclo_Formativo
+                                                    FROM ciclo_alumno
+                                                    WHERE ID_Alumno = ?
+                                                    ORDER BY ID_Ciclo_Formativo DESC
+                                                    LIMIT 1");
+
+                    if ($stmt->execute([$nombreAlumno])) {
+                        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($fila) {
+                            $Ciclo_Formativo = $fila['ID_Ciclo_Formativo'];
+
+                            var_dump($ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno, $Ciclo_Formativo);
+                            $stmt = $conn->prepare("INSERT INTO practicas_alumnos (`ID_Practica`, `ID_Alumno`) VALUES (?, ?)");
+                            $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno]);
+
+                            $stmt = $conn->prepare("INSERT INTO anexo_ciclo (`ID_Practica`, `ID_Ciclo_Formativo`) VALUES (?, ?)");
+                            $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $Ciclo_Formativo]);
+                            return json_encode(array('success' => 'Práctica registrada con éxito.'));
+                        }
+                        return json_encode(array('error' => 'Última Práctica no encontrada'));
+                    }
+                    return json_encode(array('error' => 'Ultimo Curso no encontrado..'));
+                }
+                return json_encode(array('error' => 'No se pudo insertar la práctica'));
+            }
+            return json_encode(array('error' => 'ID Anexo no encontrado.'));
+        }
+        return json_encode(array('error' => 'Error Al ejecutar la consulta de búsqueda de Anexo.'));
+
+
+    }
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-// function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
-//     $conn = ConexionBD::conectar();
+function registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1)
+{
+    $conn = ConexionBD::conectar();
+    $id_Anyo = 0;
+    $id_convenio = 0;
+    $id_Vacante = 0;
+var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
+    //Esto es un sumatorio de todas las  cantidades que existen en el fichero rellenado actualmente
+    //Como no puedo recorrer la cantidad total, pues, de momento se queda comentada.     
+    $Cantidad_TOTAL += $cantidad1;
 
-//     if ($conn) {
-//         $anyo_variable = $conn->query("SELECT ID_ANYO ");
-//         // Insertar la Necesidad en la tabla necesidades
-
-
-//         $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
-
-      
-//         $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
-//         // Buscar el id del Convenio que tiene la empresa y el centro 
-//                 //SELECT control_convenios.ID_Convenio
-//                         //FROM control_empresas,control_convenios
-//                         //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
-//                         //AND control_empresas.Nombre_Empresa = ?
-//                         //AND control_convenios.ID_Centro_Formativo=?
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT control_convenios.Convenios
+        FROM control_convenios
+        WHERE  control_convenios.ID_Convenio = ?;");
+        if ($stmt->execute([$ID_Empresa])) {
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($fila) {
+                $id_convenio = $fila['Convenios'];
+                $stmt = $conn->prepare("SELECT anyo_necesidad.ID_Anyo_Necesidad
+                                                from anyo_necesidad
+                                                where anyo_necesidad.Anyo=?
+                                                AND anyo_necesidad.ID_Convenio= ?;");
+                if ($stmt->execute([$Anyo, $id_convenio])) {
+                    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($fila) {
+                        $id_Anyo = $fila['ID_Anyo_Necesidad'];
                        
-//                         $stmt->execute([ $Nombre_Empresa,
-//                         $id_centro_educativo,]);
+                    } else {
+                        $stmt = $conn->prepare("INSERT INTO `anyo_necesidad` ( `Anyo`, `ID_Convenio`) VALUES ('?', '?')");
+                        if ($stmt->execute([$Anyo, $id_convenio])) {
+                            $id_Anyo_Ultimo = $conn->query("SELECT ID_Practica
+                                                            FROM control_practicas
+                                                            ORDER BY ID_Practica DESC
+                                                            LIMIT 1");
+                            $id_Anyo = $id_Anyo_Ultimo->fetch(PDO::FETCH_ASSOC);
+                        }else{
+                            return json_encode(array('success' => 'fallo al escribir el anyo necesidad'));
+                        }
+                    }//Si no encuentra un año, lo crea.
+
+                    $stmt = $conn->prepare("INSERT INTO `vacantes` (`Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (?,?, ?)");
+
+                    if ($stmt->execute([$Cantidad_TOTAL, $Cuadrante, $id_Anyo])) {
+                        $id_Vacante_Ultimo = $conn->query("SELECT ID_Vacantes
+                        FROM vacantes
+                        ORDER BY ID_Vacantes DESC
+                        LIMIT 1");
+                        $id_Vacante = $id_Vacante_Ultimo->fetch(PDO::FETCH_ASSOC);
 
 
 
-
-
-
-
-       
-
-//         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
-//     }
-
-//     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
-// }
+                        $stmt = $conn->prepare("INSERT INTO `vacantes_ciclo` (`ID_Vacantes`, `ID_Ciclo_Formativo`, `cantidad`) VALUES (?, ?, ?)");
+                        if ($stmt->execute([$id_Vacante, $ID_Ciclo_Formativo1, $cantidad1])) {
+                            return json_encode(array('success' => 'Esta empresa no tiene Convenio con el centro.'));
+                        }
+                        return json_encode(array('success' => 'error al escribir una vacante_Ciclo'));
+                    }
+                    return json_encode(array('success' => 'Error al insertar una vacante'));
+                }
+                return json_encode(array('success' => 'fallo al escribir o leer Anyo Necesidad'));
+            }
+            return json_encode(array('success' => 'fallo en la base de datos 2'));
+        }
+        return json_encode(array('success' => 'ID Empresa no encontrado'));
+    }
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
 
 /********************* Filtros de Busqueda ************************* */
 
-function busquedaGeneral($consulta, $parametro1, $parametro2){
+function busquedaGeneral($consulta, $parametro1, $parametro2)
+{
     $conn = ConexionBD::conectar();
-    if($conn){
+    if ($conn) {
         $stmt = $conn->prepare($consulta);
-        $stmt->execute(array(
-            ':parametro1' => $parametro1,
-            ':parametro2' => $parametro2
-        ));
+        $stmt->execute(
+            array(
+                ':parametro1' => $parametro1,
+                ':parametro2' => $parametro2
+            )
+        );
 
         $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return json_encode($resultado);
-    }else{
+    } else {
         return json_encode(array('success' => 'No se encontraron resultados'));
     }
 }
 
-function obtenerCiclosFormativos($consultaCiclos) {
+function obtenerCiclosFormativos($consultaCiclos)
+{
     $conn = ConexionBD::conectar();
-    if($conn) {
+    if ($conn) {
         $stmt = $conn->prepare($consultaCiclos);
         $stmt->execute();
 
@@ -266,7 +446,8 @@ function obtenerCiclosFormativos($consultaCiclos) {
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez) {
+function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez)
+{
     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
@@ -283,21 +464,22 @@ function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $id_ciclo_forma
                         SET ID_Ciclo_Formativo=?
                         WHERE ID_Alumno=?");
         $stmt->execute([$id_ciclo_formativo, $id_alumno]);
-        
+
         $conn->commit();
-        
+
 
 
         // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
         return json_encode(array('success' => 'Alumno actualizado con éxito.'));
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         // Rollback en caso de error
         $conn->rollback();
         return json_encode(array('error' => 'Error al actualizar el alumno: ' . $e->getMessage()));
     }
 }
 
-function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa) {
+function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa)
+{
     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
@@ -317,7 +499,7 @@ function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmant
 
         // Devolver una respuesta JSON indicando el éxito de la operación
         return json_encode(array('success' => 'Empresa actualizada con éxito.'));
-    } catch(PDOException $e) {
+    } catch (PDOException $e) {
         // Rollback en caso de error
         $conn->rollback();
         return json_encode(array('error' => 'Error al actualizar la empresa: ' . $e->getMessage()));
@@ -326,7 +508,8 @@ function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmant
 
 
 
-function cerrarSesion() {
+function cerrarSesion()
+{
     session_start();
     session_unset();
     session_destroy();
@@ -334,8 +517,9 @@ function cerrarSesion() {
     exit();
 }
 
-function limpiaString($cadena){
-    $string = preg_replace(['/\s+/','/^\s|\s$/'], [' ', ''], $cadena);
+function limpiaString($cadena)
+{
+    $string = preg_replace(['/\s+/', '/^\s|\s$/'], [' ', ''], $cadena);
     $string = trim($string);
     $string = stripslashes($string);
     $string = str_ireplace("<script>", "", $string);

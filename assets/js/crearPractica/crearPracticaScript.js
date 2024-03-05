@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const enviarButton = document.getElementById('buttonEnviar');
 
+    function validarfechaInicio() {
+        if (fechaInicioInput.value.trim() === "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    fechaFinInput.addEventListener('input', function () {
+        validarInput(validarfechaFin);
+    });
+
     enviarButton.addEventListener('click', function (event) {
         event.preventDefault();
         const formData = new FormData(document.getElementById('registroForm'));

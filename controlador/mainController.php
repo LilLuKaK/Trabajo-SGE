@@ -54,7 +54,7 @@ if(isset($_GET['pages'])) {
             break;
         case 'consultarNecesidades':
             require_once 'vista/consultarNecesidades.php';
-            break;
+                break;
         default:
             require_once 'vista/landingPage.php';
             break;

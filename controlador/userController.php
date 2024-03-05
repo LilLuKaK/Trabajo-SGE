@@ -81,14 +81,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     }else if(isset($_POST["registrarCiclo"])){
         // Nos llaman desde el formulario de registrar para que procesemos sus datos
-        $nombreEmpresa = limpiaString($_POST["nombreCiclo"]);
-
+        $familiaCiclo = ($_POST["familiaCiclo"]);
+        $nombreCiclo = limpiaString($_POST["nombreCiclo"]);
         $registroLimpio = array(
             'nombreCiclo' => $nombreCiclo
         );
+        
 
         // Llama a la función para registrar el centro y obtén la respuesta
-        $respuesta = registrarCiclo($nombreCiclo);
+        $respuesta = registrarCiclo($nombreCiclo, $familiaCiclo);
 
         echo $respuesta;
 
@@ -106,7 +107,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $respuesta;
 
     }else if(isset($_POST["registrarAnexo"])){
-        $version = limpiaString($_POST["version"]);
+        
         $cuadrante = ($_POST["cuadrante"]);
         $fechaInicio = ($_POST["fechaInicio"]);
         $fechaFin = ($_POST["fechaFin"]);
@@ -114,8 +115,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $correoEmpresa = limpiaString($_POST["correoEmpresa"]);
         $telefonoEmpresa = limpiaString($_POST["telefonoEmpresa"]);
         $activo = ($_POST["activo"]);
+        $empresa = ($_POST["empresa"]);
 
-        $respuesta = registrarAnexo($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo);
+        $respuesta = registrarAnexo( $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo,$empresa);
 
         echo $respuesta;
 
@@ -123,10 +125,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $nombreAlumno = limpiaString($_POST["nombreAlumno"]);
         $tutoresCentro = ($_POST["tutoresCentro"]);
         $empresa = ($_POST["empresa"]);
+        $fechaInicio = ($_POST["fechaInicio"]);
+        $direccion =($_POST["direccion"]);
+        $hora_entrada=($_POST["hora_entrada"]);
+        $hora_salida = ($Post["hora_salida"]);
 
-        $respuesta = registrarPractica($nombreAlumno, $tutoresCentro, $empresa);
+
+
+        $respuesta = registrarPractica($nombreAlumno, $tutoresCentro, $empresa,$fechaInicio,$direccion,$hora_entrada,$hora_salida);
 
         echo $respuesta;
+
+    }else if(isset($Post["registrarNecesidad"])){
+
+        $ID_Empresa = ($_POST["ID_Control_Empresa"]);
+        $Anyo = $_POST["anyo"];
+        $Cuadrante = $_POST["cuadrante"];
+        $contadorPracticas= ($_POST['contador']);
+
+        //Aquí iría un for, que, va recogiendo las variables en dos arrays, uno de Enteros de id_Ciclo, otro de Enteros cantidad${contador}.
+        //Esto es provisional
+        $ID_Ciclo_Formativo1=($_POST["ID_Ciclo_Formativo"]);
+        $cantidad1= $_POST["cantidad1"];
+
+        $respuesta = registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante,$ID_Ciclo_Formativo1,$cantidad1);
+
+        echo $respuesta;
+
 
     }/*else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();

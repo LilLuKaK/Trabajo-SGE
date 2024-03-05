@@ -49,17 +49,13 @@
                             </select>
                             <div id="cuadrante-error"></div>
                         </div>
-                        <div class="form__control">
-                            <label for="cantidad">Nº de vacantes totales</label>
-                            <input type="text" id="cantidad" name="cantidad" placeholder="introduce la cantidad total de posibles puestos">
-                            <div id="cantidad-error"></div>
-                        </div>
                         <div class="form__control">     
                             <container id="Contenedor_Botones">
                             <button type="button" class="btn primary" id="agregarCursoBtn">Agregar Curso</button>
                             <br/>
                             </container>
                         </div>
+                        <input type="hidden" name="contador" id="contador" value="">
                         <input type="hidden" name="registrarNecesidad" value="registrarNecesidad">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarNecesidad" id="buttonEnviar">
                     </form>
@@ -70,6 +66,7 @@
             </section>
         </div>
     </div>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src ="./assets/js/crearNecesidad/crearNecesidadScript.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>

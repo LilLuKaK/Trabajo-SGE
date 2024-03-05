@@ -25,6 +25,7 @@
                         <label for="nombre">Nombre de la Empresa</label>
                         <div class="input">
                             <select name="ciclos" id="empresas" class="ciclos" sizeof="3">
+                                
                                     <?php
                                     require_once'modelo\contoles_PHP\control_empresas.php';
                                     ?>
@@ -36,11 +37,11 @@
                     </div>
                     <!-- Control de que la entrada sean números-->
                     <div class="form__control">
-                        <label for="nombre">Nombre de la Empresa</label>
+                        <label for="nombre">Año</label>
                         <div class="input">
                             <select name="ciclos" id="anyos" class="ciclos" sizeof="3">
                                     <?php
-                                    require_once'modelo\contoles_PHP\control_anyos.php';
+                                    //require_once'modelo\contoles_PHP\control_anyos.php';
                                     ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
