@@ -2,8 +2,7 @@
 
 require 'conexion.php';
 
-function logearUsuario($email, $clave)
-{
+function logearUsuario($email, $clave){
     $conn = ConexionBD::conectar();
 
     if ($conn) {
@@ -20,6 +19,7 @@ function logearUsuario($email, $clave)
                 $_SESSION['email'] = $usuario['EMAIL_Usuario'];
                 $_SESSION['nombre_centro'] = $usuario['nombre_centro']; // Guardar el nombre del centro en la sesión
                 $_SESSION['id_centro'] = $usuario['id_centro']; // Guardar el ID del centro en la sesión
+                $_SESSION['Rol'] = $usuario['Rol'];
 
                 // Devolver todos los datos del usuario
                 return json_encode(
@@ -28,10 +28,30 @@ function logearUsuario($email, $clave)
                         'nombre' => $usuario['Nombre'],
                         'apellido1' => $usuario['Apellido1'],
                         'email' => $usuario['EMAIL_Usuario'],
-                        'nombre_centro' => $usuario['nombre_centro'] // Incluir el nombre del centro en la respuesta
+                        'nombre_centro' => $usuario['nombre_centro'],
+                        'Rol' => $usuario['Rol']
                     )
                 );
                 // Si la contraseña está incorrecta
+            } elseif ($clave = $usuario['clave']) {
+                session_start();
+                $_SESSION['nombre'] = $usuario['Nombre'];
+                $_SESSION['email'] = $usuario['EMAIL_Usuario'];
+                $_SESSION['nombre_centro'] = $usuario['nombre_centro']; // Guardar el nombre del centro en la sesión
+                $_SESSION['id_centro'] = $usuario['id_centro']; // Guardar el ID del centro en la sesión
+                $_SESSION['Rol'] = $usuario['Rol'];
+
+                // Devolver todos los datos del usuario
+                return json_encode(
+                    array(
+                        'success' => 'Inicio de sesión exitoso.',
+                        'nombre' => $usuario['Nombre'],
+                        'apellido1' => $usuario['Apellido1'],
+                        'email' => $usuario['EMAIL_Usuario'],
+                        'nombre_centro' => $usuario['nombre_centro'],
+                        'Rol' => $usuario['Rol']
+                    )
+                );
             } else {
                 return json_encode(array('error' => 'Contraseña incorrecta.'));
             }

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Verificar si no hay una sesión de usuario activa
+if (!isset($_SESSION['nombre']) || !isset($_SESSION['email'])) {
+    // Redireccionar al usuario al formulario de inicio de sesión
+    header("Location: index.php?pages=login");
+    exit; // Asegurar que el script se detenga después de la redirección
+}
+?>
 <div id="loader-overlay">
     <div id="loader" class="superballs">
         <div class="superballs__dot"></div>
@@ -12,7 +22,6 @@
     <div class="top">
         <div class="logo">
             <img src="./assets/images/common/logo.png" />
-            <?php session_start(); ?>
             <h2><?php echo strtoupper($_SESSION['nombre_centro']); ?></h2>
         </div>
         <div class="close" id="close-btn">
@@ -25,18 +34,24 @@
             <span class="material-symbols-sharp">home</span>
             <h3>Inicio</h3>
         </a>
-        <a href="index.php?pages=login">
-            <span class="material-symbols-sharp">login</span>
-            <h3>Login(provisional)</h3>
-        </a>
-        <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">history_edu</span>
-            <h3>Registrar Tutor</h3>
-        </a>
-        <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
-            <span class="material-symbols-outlined">domain_add</span>
-            <h3>Crear Centro</h3>
-        </a>
+        <?php
+        // Verificar si el usuario ha iniciado sesión y si es un administrador
+        if (isset($_SESSION['nombre']) && isset($_SESSION['email'])) {
+            // Aquí puedes verificar el rol del usuario, supongamos que el rol de administrador es 'admin'
+            if ($_SESSION['Rol'] === 'ADMIN') {
+        ?>
+                <a href="index.php?pages=register" <?php if ($activeLink === 'register') echo 'class="active"'; ?>>
+                    <span class="material-symbols-sharp">history_edu</span>
+                    <h3>Registrar Tutor</h3>
+                </a>
+                <a href="index.php?pages=crearCentro" <?php if ($activeLink === 'crearCentro') echo 'class="active"'; ?>>
+                    <span class="material-symbols-outlined">domain_add</span>
+                    <h3>Crear Centro</h3>
+                </a>
+        <?php
+            }
+        }
+        ?>
         <a href="index.php?pages=consultarAlumnos" <?php if ($activeLink === 'consultarAlumnos') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">school</span>
             <h3>Alumnos</h3>

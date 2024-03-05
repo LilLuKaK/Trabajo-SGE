@@ -29,19 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validarClave() {
         const contenedorClave = document.getElementById('contenedorClave');
-        const clavePattern = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){1,16}$/;
         if (claveInput.value.trim() === "") {
-            claveError.textContent = '';
-            contenedorClave.style.borderBottom = '';
-            return false;
-        } else if (!clavePattern.test(claveInput.value)) {
-            claveError.textContent = 'Debe tener mayúsculas, minúsculas, números y caracteres especiales';
-            claveError.style.color ='red';
-            claveError.style.fontSize ='13px';
             return false;
         } else {
-            claveError.textContent = '';
-            contenedorClave.style.borderBottom = '2px solid white';
             return true;
         }
     }

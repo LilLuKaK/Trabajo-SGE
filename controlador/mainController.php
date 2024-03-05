@@ -53,7 +53,7 @@ if(isset($_GET['pages'])) {
             require_once 'vista/crearNecesidad.php';
             break;
         case 'consultarNecesidades':
-            require_once 'vista/consultarNecesidades.php';
+            require_once 'vista/consultarNecesidad.php';
                 break;
         case 'crearNecesidadBolsa':
             require_once 'vista/crearNecesidadBolsa.php';
@@ -70,7 +70,7 @@ if(isset($_GET['pages'])) {
 
                 
         default:
-            require_once 'vista/landingPage.php';
+            require_once 'vista/login.php';
             break;
     }
 } else {

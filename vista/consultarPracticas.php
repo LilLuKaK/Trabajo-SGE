@@ -24,9 +24,9 @@
                     <div class="form__control">
                         <label for="nombre">Nombre del alumno</label>
                         <div class="input">
-                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre del alumno"></input>
-                            <button id="buscarEmpresa" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
-                            <input type="hidden" value="buscarEmpresa">
+                            <input type="text" id="nombre" name="nombre" placeholder="Introduce el Nombre del Alumno"></input>
+                            <button id="buscarAlumnoPracticas" class="search" name="buscarAlumnoPracticas"><span class="material-symbols-sharp">manage_search</span></button>
+                            <input type="hidden" value="buscarAlumnoPracticas">
                         </div>
                     </div>
                     <div class="form__control">
@@ -53,7 +53,7 @@
                             <input type="hidden" value="buscarAnexo">
                         </div>
                     </div>
-                    <a href="index.php?pages=consultarEmpresas"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
+                    <a href="index.php?pages=consultarPracticas"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
                     <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
                 </div>
                 <!-- TABLA DE CONNSULTAS -->
@@ -61,7 +61,6 @@
                     <table class="data" id="tablaEmpresas">
                         <thead>
                             <tr>
-                                <th></th>
                                 <th>Nombre del alumno</th>
                                 <th>Apellidos del alumno</th>
                                 <th>CV</th>
@@ -77,11 +76,13 @@
                                 <th>Horas Totales</th> <!--Recoge la hora de entrada y la de salida, y las resta, 
                                                             y luego multiplica por la diferencia de días de fecha
                                                             de inicio con fecha final o, si no hay, por la Fecha Actual
-                                                            *OJO* son Varchar
--->
+                                                            *OJO* son Varchar-->
                             </tr>
                         </thead>
                         <tbody>
+                        <?php
+                            include_once './modelo/tablaPracticas.php';
+                        ?>
                         </tbody>
                     </table>
                 </div>
@@ -110,10 +111,7 @@
         </div>
     </div>
     </div>
-    <script src="./assets/js/busquedas/validez.js"></script>
-    <script src="./assets/js/busquedas/cicloFP.js"></script>
-    <script src="./assets/js/busquedas/dni.js"></script>
-    <script src="./assets/js/busquedas/nombre.js"></script>
+    <script src="./assets/js/busquedas/tablaPracticas.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

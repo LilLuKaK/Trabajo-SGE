@@ -356,6 +356,38 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
         echo $respuesta;
 
+    }else if(isset($_POST['buscarAlumnoPracticas']) && $_POST['buscarAlumnoPracticas'] == true){
+        session_start();
+        $parametro1 = limpiaString($_POST['nombre']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.Nombre AS Nombre_Alumno, CONCAT(a.Apellido1, ' ', a.Apellido2) AS Apellidos_Alumno, a.Curriculum_Vitae AS CV, cp.Tutor_CFP AS Tutor_Centro, ce.Nombre_Empresa AS Nombre_Empresa, an.Tutor_Empresa AS Tutor_Practicas, an.Fecha_Inicio, an.Fecha_Final, an.Cuadrante, an.ID_Anexo AS Anexo, an.Version AS Versionado, TIME_FORMAT(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada), '%H:%i') AS Horario, ((DATEDIFF(an.Fecha_Final, an.Fecha_Inicio) / 7) * 5 * HOUR(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada))) AS Horas_Totales FROM alumnos a JOIN practicas_alumnos pa ON a.ID_Alumno = pa.ID_Alumno JOIN control_practicas cp ON pa.ID_Practica = cp.ID_Practica JOIN anexos an ON cp.ID_Anexo = an.ID_Anexo JOIN centro_alumno ca ON a.ID_Alumno = ca.ID_Alumno JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa WHERE ca.ID_Centro_Formativo = :parametro2 AND a.Nombre LIKE :parametro1";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarTutorCentro'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['tutor_centro']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.Nombre AS Nombre_Alumno, CONCAT(a.Apellido1, ' ', a.Apellido2) AS Apellidos_Alumno, a.Curriculum_Vitae AS CV, cp.Tutor_CFP AS Tutor_Centro, ce.Nombre_Empresa AS Nombre_Empresa, an.Tutor_Empresa AS Tutor_Practicas, an.Fecha_Inicio, an.Fecha_Final, an.Cuadrante, an.ID_Anexo AS Anexo, an.Version AS Versionado, TIME_FORMAT(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada), '%H:%i') AS Horario, ((DATEDIFF(an.Fecha_Final, an.Fecha_Inicio) / 7) * 5 * HOUR(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada))) AS Horas_Totales FROM alumnos a JOIN practicas_alumnos pa ON a.ID_Alumno = pa.ID_Alumno JOIN control_practicas cp ON pa.ID_Practica = cp.ID_Practica JOIN anexos an ON cp.ID_Anexo = an.ID_Anexo JOIN centro_alumno ca ON a.ID_Alumno = ca.ID_Alumno JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa WHERE ca.ID_Centro_Formativo = :parametro2 AND cp.Tutor_CFP LIKE :parametro1";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarTutorEmpresa'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['tutor_empresa']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.Nombre AS Nombre_Alumno, CONCAT(a.Apellido1, ' ', a.Apellido2) AS Apellidos_Alumno, a.Curriculum_Vitae AS CV, cp.Tutor_CFP AS Tutor_Centro, ce.Nombre_Empresa AS Nombre_Empresa, an.Tutor_Empresa AS Tutor_Practicas, an.Fecha_Inicio, an.Fecha_Final, an.Cuadrante, an.ID_Anexo AS Anexo, an.Version AS Versionado, TIME_FORMAT(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada), '%H:%i') AS Horario, ((DATEDIFF(an.Fecha_Final, an.Fecha_Inicio) / 7) * 5 * HOUR(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada))) AS Horas_Totales FROM alumnos a JOIN practicas_alumnos pa ON a.ID_Alumno = pa.ID_Alumno JOIN control_practicas cp ON pa.ID_Practica = cp.ID_Practica JOIN anexos an ON cp.ID_Anexo = an.ID_Anexo JOIN centro_alumno ca ON a.ID_Alumno = ca.ID_Alumno JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa WHERE ca.ID_Centro_Formativo = :parametro2 AND an.Tutor_Empresa LIKE :parametro1";
+        $respuesta = busquedaGeneral($consulta, '%'.$parametro1.'%', $parametro2);
+        echo $respuesta;
+
+    }elseif(isset($_POST['buscarAnexo'])){
+        session_start();
+        $parametro1 = limpiaString($_POST['anexo']);
+        $parametro2 = $_SESSION['id_centro'];
+        $consulta = "SELECT a.Nombre AS Nombre_Alumno, CONCAT(a.Apellido1, ' ', a.Apellido2) AS Apellidos_Alumno, a.Curriculum_Vitae AS CV, cp.Tutor_CFP AS Tutor_Centro, ce.Nombre_Empresa AS Nombre_Empresa, an.Tutor_Empresa AS Tutor_Practicas, an.Fecha_Inicio, an.Fecha_Final, an.Cuadrante, an.ID_Anexo AS Anexo, an.Version AS Versionado, TIME_FORMAT(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada), '%H:%i') AS Horario, ((DATEDIFF(an.Fecha_Final, an.Fecha_Inicio) / 7) * 5 * HOUR(TIMEDIFF(cp.Hora_Salida, cp.Hora_Entrada))) AS Horas_Totales FROM alumnos a JOIN practicas_alumnos pa ON a.ID_Alumno = pa.ID_Alumno JOIN control_practicas cp ON pa.ID_Practica = cp.ID_Practica JOIN anexos an ON cp.ID_Anexo = an.ID_Anexo JOIN centro_alumno ca ON a.ID_Alumno = ca.ID_Alumno JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa WHERE ca.ID_Centro_Formativo = :parametro2 AND an.ID_Anexo = :parametro1";
+        $respuesta = busquedaGeneral($consulta, $parametro1, $parametro2);
+        echo $respuesta;
+
     }else if (isset($_POST['editarAlumno']) ){
         var_dump($_POST['ciclo']);
         // Obtener el ID del alumno de la URL
