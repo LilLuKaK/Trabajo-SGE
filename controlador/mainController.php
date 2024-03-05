@@ -50,10 +50,10 @@ if(isset($_GET['pages'])) {
             require_once 'vista/consultarNecesidades.php';
                 break;
         case 'crearPractica':
-            require_once 'vista/crearPracticas_Piero.php';
+            require_once 'vista/crearPractica.php';
                 break;
         case 'consultarPractica':
-            require_once 'vista/consultarPracticas_Piero.php';
+            require_once 'vista/consultarPracticas.php';
                 break;
         default:
             require_once 'vista/landingPage.php';

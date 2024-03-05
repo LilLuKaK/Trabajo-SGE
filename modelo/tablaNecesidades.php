@@ -13,16 +13,16 @@
                         COUNT(vc.ID_Vacantes) AS 'Numero de vacantes cubiertas',
                         vn.Cantidad - COUNT(vc.ID_Vacantes) AS 'Vacantes que quedan',
                         an.Anyo AS 'Año de solicitud'
-                    FROM vacantes vn
-                    JOIN anyo_necesidad an ON vn.ID_Anyo_Necesidad = an.ID_Anyo_Necesidad
-                    JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio
-                    JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa
-                    JOIN (SELECT ID_Vacantes, ID_Ciclo_Formativo
-                        FROM vacantes_ciclo) vc ON vn.ID_Vacantes = vc.ID_Vacantes
-                    JOIN (SELECT ID_Control_Empresa, Nombre_Empresa 
-                        FROM control_empresas) a ON ce.ID_Control_Empresa = a.ID_Control_Empresa
-                    WHERE cc.ID_Centro_Formativo =?
-                    GROUP BY a.Nombre_Empresa, an.Anyo;");
+                        FROM vacantes vn
+                        JOIN anyo_necesidad an ON vn.ID_Anyo_Necesidad = an.ID_Anyo_Necesidad
+                        JOIN control_convenios cc ON an.ID_Convenio = cc.ID_Convenio
+                        JOIN control_empresas ce ON cc.ID_Control_Empresa = ce.ID_Control_Empresa
+                        JOIN (SELECT ID_Vacantes, ID_Ciclo_Formativo
+                            FROM vacantes_ciclo) vc ON vn.ID_Vacantes = vc.ID_Vacantes
+                        JOIN (SELECT ID_Control_Empresa, Nombre_Empresa 
+                            FROM control_empresas) a ON ce.ID_Control_Empresa = a.ID_Control_Empresa
+                        WHERE cc.ID_Centro_Formativo =?
+                        GROUP BY a.Nombre_Empresa, an.Anyo;");
                         $stmt->execute([$id_centro_educativo]);
                         
 
