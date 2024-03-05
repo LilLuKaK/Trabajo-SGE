@@ -49,12 +49,36 @@
                             </select>
                             <div id="cuadrante-error"></div>
                         </div>
-                        <div class="form__control">     
+                          
+                           <!--
+                            Si alguno consigue que funcione, le como los morros
+                             <div class="form__control">  
                             <container id="Contenedor_Botones">
                             <button type="button" class="btn primary" id="agregarCursoBtn">Agregar Curso</button>
                             <br/>
                             </container>
+                            </div>
+                        --> 
+                        <!--En caso de conseguir lo de los arrays: Comentar desde aquí-->
+
+                        <div class="form__control">
+                            <label for="ID_Ciclo_Formativo">Nombre de la Empresa</label>
+                            <select name="ID_Ciclo_Formativo" id="ID_Ciclo_Formativo" class="ID_Ciclo_Formativo" sizeof="3">
+                            <option value='' selected disabled>-- Selecciona la Empresa --</option>
+                                    <?php
+                                    require_once'modelo\ciclo_formativo.php';
+                                    ?>
+                            </select>
+                            <input type="hidden" value="buscarEmpresa">
+                            <div id="ciclo-error"></div>
                         </div>
+                        <div class="form__control">
+                            <label for="cantidad1">Cantidad de alumnos del ciclo</label>
+                            <input type="text" id="cantidad1" name="cantidad1" placeholder="Introduce el Año">
+                            <div id="cantidad1-error"></div>
+                        </div>
+                        
+                        <!-- HAsta aquí-->
                         <input type="hidden" name="contador" id="contador" value="">
                         <input type="hidden" name="registrarNecesidad" value="registrarNecesidad">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarNecesidad" id="buttonEnviar">
