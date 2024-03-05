@@ -55,6 +55,15 @@
                             </select>
                             <div id="empresa-error"></div>
                         </div>
+                        <div class="form__control" >
+                            <label for="fechaInicio">Fecha de inicio</label>
+                            <input type="date" id="fechaInicio" name="fechaInicio" placeholder="Introduce la fecha de inicio de las prácticas" value="<?php echo date('Y-m-d'); ?>">
+                        </div>
+                        <div class="form__control">
+                            <label for="direccion">Direccion</label>
+                            <input type="text" id="direccion" name="direccion" placeholder="Introduce el Direccion">
+                            <div id="direccion-error"></div>
+                        </div>
                         <input type="hidden" name="registrarPractica" value="registrarPractica">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarPractica" id="buttonEnviar">
                         <a href="index.php?pages=consultarPracticas" class="btn primary">Cancelar</a>

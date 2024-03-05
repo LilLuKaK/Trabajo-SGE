@@ -106,7 +106,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         echo $respuesta;
 
     }else if(isset($_POST["registrarAnexo"])){
-        $version = limpiaString($_POST["version"]);
+        
         $cuadrante = ($_POST["cuadrante"]);
         $fechaInicio = ($_POST["fechaInicio"]);
         $fechaFin = ($_POST["fechaFin"]);
@@ -114,8 +114,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $correoEmpresa = limpiaString($_POST["correoEmpresa"]);
         $telefonoEmpresa = limpiaString($_POST["telefonoEmpresa"]);
         $activo = ($_POST["activo"]);
+        $empresa = ($_POST["empresa"]);
 
-        $respuesta = registrarAnexo($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo);
+        $respuesta = registrarAnexo( $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo,$empresa);
 
         echo $respuesta;
 
@@ -123,8 +124,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $nombreAlumno = limpiaString($_POST["nombreAlumno"]);
         $tutoresCentro = ($_POST["tutoresCentro"]);
         $empresa = ($_POST["empresa"]);
+        $fechaInicio = ($_POST["fechaInicio"]);
+        $direccion =($_POST["direccion"]);
 
-        $respuesta = registrarPractica($nombreAlumno, $tutoresCentro, $empresa);
+        $respuesta = registrarPractica($nombreAlumno, $tutoresCentro, $empresa,$fechaInicio,$direccion);
 
         echo $respuesta;
 

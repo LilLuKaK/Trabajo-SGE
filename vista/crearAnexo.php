@@ -25,10 +25,6 @@
                     </div>
                     <form class="sign-in__form" id="registroForm">
                         <div class="form__control" id="contenedorNombre">
-                            <label for="version">Versión</label>
-                            <input type="text" id="version" name="version" placeholder="Introduce la versión del anexo">
-                        </div>
-                        <div class="form__control" id="contenedorNombre">
                             <label for="cuadrante">Cuadrante</label>
                             <select name="cuadrante" id="cuadrante">
                                 <option value='' selected disabled>-- Selecciona el cuadrante --</option>

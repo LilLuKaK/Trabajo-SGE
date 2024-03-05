@@ -25,6 +25,7 @@
                         <label for="nombre">Nombre de la Empresa</label>
                         <div class="input">
                             <select name="ciclos" id="empresas" class="ciclos" sizeof="3">
+                                
                                     <?php
                                     require_once'modelo\contoles_PHP\control_empresas.php';
                                     ?>
