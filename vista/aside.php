@@ -73,14 +73,14 @@ if (!isset($_SESSION['nombre']) || !isset($_SESSION['email'])) {
             <span class="material-symbols-sharp">settings_accessibility</span>
             <h3>Prácticas</h3>
         </a>
-       <!-- <a href="index.php?pages=consultarEmpresasBolsa" <?php if ($activeLink === 'consultarEmpresasBolsa') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">taunt</span>
-            <h3>Empresas Bolsa de trabajo</h3>
+       <a href="index.php?pages=consultarEmpresasBolsa" <?php if ($activeLink === 'consultarEmpresasBolsa') echo 'class="active"'; ?>>
+            <span class="material-symbols-sharp">cases</span>
+            <h3>Empresas (Bolsa de trabajo)</h3>
         </a>
         <a href="index.php?pages=consultarNecesidadBolsa" <?php if ($activeLink === 'consultarNecesidadBolsa') echo 'class="active"'; ?>>
-            <span class="material-symbols-sharp">gynecology</span>
-            <h3>Necesidades Bolsa de Trabajo</h3>
-        </a> -->
+            <span class="material-symbols-sharp">person_alert</span>
+            <h3>Necesidades (Bolsa de Trabajo)</h3>
+        </a>
         <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>
             <h3>Cerrar Sesión</h3>
