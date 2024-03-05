@@ -22,7 +22,7 @@
                 </div>
                 <div class="forms">
                     <div class="form__control">
-                        <label for="nombre">Nombre</label>
+                        <label for="nombre">Nombre del alumno</label>
                         <div class="input">
                             <input type="text" id="nombre" name="nombre" placeholder="Introduce el nombre del alumno"></input>
                             <button id="buscarEmpresa" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
@@ -62,13 +62,17 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>Anexo</th>
-                                <th>Nombre</th>
-                                <th>Apellidos</th>
+                                <th>Nombre del alumno</th>
+                                <th>Apellidos del alumno</th>
+                                <th>CV</th>
                                 <th>Tutor del centro</th>
+                                <th>Empresa</th>
                                 <th>Tutor de prácticas</th>
                                 <th>Fecha de inicio</th>
                                 <th>Fecha de fin</th>
+                                <th>Cuadrante</th>
+                                <th>Anexo</th>
+                                <th>Versionado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,15 +81,22 @@
                 </div>
                 <div id="new">
                     <div class="top">
-                        <h1>Insertar Práctica</h1>
-                        <h2>Añadir una práctica a la base de datos.</h2>
+                        <h1>Insertar práctica / anexo</h1>
+                        <h2>Añadir una práctica o anexo a la base de datos.</h2>
                 </div>
                 <div class="forms">
                     <h2>Para insertar una nueva práctica, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
                     <a href="index.php?pages=crearPractica">
                         <button class="new">
                             <label>Insertar práctica</label>
-                            <span class="material-symbols-sharp">domain_add</span>
+                            <span class="material-symbols-sharp">new_window</span>
+                        </button>
+                    </a>
+                    <h2>Si quieres insertar un anexo, haga click en el siguiente botón. Este abrirá una nueva ventana:</h2>
+                    <a href="index.php?pages=crearAnexo">
+                        <button class="new">
+                            <label>Insertar anexo</label>
+                            <span class="material-symbols-sharp">text_increase</span>
                         </button>
                     </a>
                 </div>

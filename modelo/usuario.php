@@ -179,6 +179,20 @@ function registrarCiclo($nombreCiclo) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+function registrarAnexo($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo){
+    $conn = ConexionBD::conectar();
+
+    var_dump($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo);
+
+}
+
+function registrarPractica($nombreAlumno, $tutoresCentro, $empresa){
+    $conn = ConexionBD::conectar();
+
+    var_dump($nombreAlumno, $tutoresCentro, $empresa);
+
+}
+
 // function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
 //     $conn = ConexionBD::conectar();
 

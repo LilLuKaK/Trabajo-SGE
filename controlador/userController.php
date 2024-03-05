@@ -105,6 +105,29 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         echo $respuesta;
 
+    }else if(isset($_POST["registrarAnexo"])){
+        $version = limpiaString($_POST["version"]);
+        $cuadrante = ($_POST["cuadrante"]);
+        $fechaInicio = ($_POST["fechaInicio"]);
+        $fechaFin = ($_POST["fechaFin"]);
+        $tutorEmpresa = limpiaString($_POST["tutorEmpresa"]);
+        $correoEmpresa = limpiaString($_POST["correoEmpresa"]);
+        $telefonoEmpresa = limpiaString($_POST["telefonoEmpresa"]);
+        $activo = ($_POST["activo"]);
+
+        $respuesta = registrarAnexo($version, $cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo);
+
+        echo $respuesta;
+
+    }else if(isset($_POST["registrarPractica"])){
+        $nombreAlumno = limpiaString($_POST["nombreAlumno"]);
+        $tutoresCentro = ($_POST["tutoresCentro"]);
+        $empresa = ($_POST["empresa"]);
+
+        $respuesta = registrarPractica($nombreAlumno, $tutoresCentro, $empresa);
+
+        echo $respuesta;
+
     }/*else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['nombre']);

@@ -54,7 +54,7 @@
             <span class="material-symbols-sharp">linked_services</span>
             <h3>Necesidades</h3>
         </a>
-        <a href="index.php?pages=consultarPractica" <?php if ($activeLink === 'consultarPractica') echo 'class="active"'; ?>>
+        <a href="index.php?pages=consultarPracticas" <?php if ($activeLink === 'consultarPracticas') echo 'class="active"'; ?>>
             <span class="material-symbols-sharp">settings_accessibility</span>
             <h3>Prácticas</h3>
         </a>

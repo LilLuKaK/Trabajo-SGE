@@ -28,6 +28,12 @@ if(isset($_GET['pages'])) {
         case 'consultarPracticas':
             require_once 'vista/consultarPracticas.php';
             break;
+        case 'crearPractica':
+            require_once 'vista/crearPractica.php';
+            break;
+        case 'crearAnexo':
+            require_once 'vista/crearAnexo.php';
+            break;
         case 'landing':
             require_once 'vista/landingPage.php';
             break;
@@ -41,19 +47,13 @@ if(isset($_GET['pages'])) {
             require_once 'vista/consultarCiclo.php';
             break;
         case 'crearCiclo':
-                require_once 'vista/crearCiclo.php';
-                break;
+            require_once 'vista/crearCiclo.php';
+            break;
         case 'crearNecesidad':
             require_once 'vista/crearNecesidad.php';
-                break;
+            break;
         case 'consultarNecesidades':
             require_once 'vista/consultarNecesidades.php';
-                break;
-        case 'crearPractica':
-            require_once 'vista/crearPractica.php';
-                break;
-        case 'consultarPractica':
-            require_once 'vista/consultarPracticas.php';
                 break;
         default:
             require_once 'vista/landingPage.php';
