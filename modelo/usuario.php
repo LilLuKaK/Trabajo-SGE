@@ -145,6 +145,35 @@ function registrarEmpresa($nombre, $cif, $duenyo, $firmante, $direccion, $email,
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
+
+
+function registrarEmpresaBolsa($nombre, $email, $telefono)
+{
+
+    session_start();
+    $conn = ConexionBD::conectar();
+
+    // Si a conexion a la base de datos es correcta
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT Nombre_Empresa_Bolsa FROM empresa_bolsa  WHERE Nombre_Empresa_Bolsa = ?");
+        $stmt->execute([$nombre]);
+        $existeEmpresa = $stmt->fetch();
+        // Si la empresa esta registrado en la base de datos
+        if ($existeEmpresa) {
+            return json_encode(array('error' => 'La empresa ya está registrada.'));
+
+            // Si la empresa no existe en la base de datos
+        } else {
+            $stmt = $conn->prepare("INSERT INTO empresa_bolsa (Nombre_Empresa, EMAIL_Empresa, TELF_Empresa) VALUES ( ?, ?, ?)");
+            $stmt->execute([$nombre, $email, $telefono]);
+        }
+        return json_encode(array('success' => 'Empresa registrada con éxito.'));
+    }
+
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
+
 function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez)
 {
     $conn = ConexionBD::conectar();
@@ -342,7 +371,6 @@ function registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1
     $id_Anyo = 0;
     $id_convenio = 0;
     $id_Vacante = 0;
-var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
     //Esto es un sumatorio de todas las  cantidades que existen en el fichero rellenado actualmente
     //Como no puedo recorrer la cantidad total, pues, de momento se queda comentada.     
     $Cantidad_TOTAL += $cantidad1;
@@ -404,6 +432,42 @@ var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
     }
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
+function registrarNecesidadBolsa($ID_Empresa, $ID_Ciclo_Formativo1, $cantidad1, $Comentarios)
+{
+    $conn = ConexionBD::conectar();
+    $ID_Bolsa_Trabajo = 0;
+
+    //Esto es un sumatorio de todas las  cantidades que existen en el fichero rellenado actualmente
+    //Como no puedo recorrer la cantidad total, pues, de momento se queda comentada.     
+    $Cantidad_TOTAL += $cantidad1;
+
+    if ($conn) {
+       
+
+                    $stmt = $conn->prepare("INSERT INTO `bolsa_trabajo` ( `Cantidad`, `Comentarios`) VALUES ( ?, ?)");
+
+                    if ($stmt->execute([ $cantidad1, $Comentarios])) {
+                        $ID_Bolsa_Trabajo_Ultimo = $conn->query("SELECT ID_Bolsa_Trabajo
+                        FROM vacantes
+                        ORDER BY ID_Bolsa_Trabajo DESC
+                        LIMIT 1");
+                        $ID_Bolsa_Trabajo = $ID_Bolsa_Trabajo_Ultimo->fetch(PDO::FETCH_ASSOC);
+
+                        $stmt = $conn->prepare("INSERT INTO `Bolsa_Ciclo` (`ID_Bolsa_Trabajo`, `ID_Ciclo_Formativo`) VALUES (?, ?)");
+                        $stmt->execute([$ID_Bolsa_Trabajo, $ID_Ciclo_Formativo1]);
+
+                        $stmt = $conn->prepare("INSERT INTO `Empresa_Bolsa_Trabajo` (`ID_Empresa_Bolsa`, `ID_Bolsa_Trabajo`) VALUES (?, ?)");
+                        if ($stmt->execute([$ID_Empresa, $ID_Ciclo_Formativo1])) {
+                            return json_encode(array('success' => 'Esta empresa no tiene Convenio con el centro.'));
+                        }
+         
+            return json_encode(array('success' => 'fallo en la base de datos 2'));
+        }
+        return json_encode(array('success' => 'ID Empresa no encontrado'));
+    }
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
+
 
 /********************* Filtros de Busqueda ************************* */
 
@@ -443,6 +507,7 @@ function obtenerCiclosFormativos($consultaCiclos)
         return false;
     }
 }
+
 
 /********************* Editar Borrar ************************* */
 

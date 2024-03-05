@@ -58,6 +58,10 @@
             <span class="material-symbols-sharp">settings_accessibility</span>
             <h3>Prácticas</h3>
         </a>
+        <a href="index.php?pages=consultarPracticas" <?php if ($activeLink === 'consultarPracticas') echo 'class="active"'; ?>>
+            <span class="material-symbols-sharp">settings_accessibility</span>
+            <h3>Prácticas</h3>
+        </a>
         <a id="cerrarSesion" style="cursor: pointer;">
             <span class="material-icons-sharp">logout</span>
             <h3>Cerrar Sesión</h3>

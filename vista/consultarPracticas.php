@@ -78,6 +78,7 @@
                                                             y luego multiplica por la diferencia de días de fecha
                                                             de inicio con fecha final o, si no hay, por la Fecha Actual
                                                             *OJO* son Varchar
+-->
                             </tr>
                         </thead>
                         <tbody>

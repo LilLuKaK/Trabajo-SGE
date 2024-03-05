@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-03-2024 a las 01:43:51
+-- Tiempo de generación: 05-03-2024 a las 11:45:06
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -20,9 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `gestor`
 --
-DROP DATABASE  IF EXISTS `gestor`;
-CREATE DATABASE  `gestor` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `gestor`;
 
 -- --------------------------------------------------------
 
@@ -89,7 +86,9 @@ CREATE TABLE `anexos` (
 
 INSERT INTO `anexos` (`ID_Anexo`, `ID_Vacantes`, `Version`, `Cuadrante`, `Fecha_Inicio`, `Fecha_Final`, `Tutor_Empresa`, `Email_Tutor_Empresa`, `TELF_Tutor_Empresa`, `NombreArchivo`, `Aprobado`, `ID_Convenio`) VALUES
 (1, 1, 1, 'Abril', '2024-03-20', '2024-09-20', 'MI_tutor_empresa', 'tutor_empresa@gmail.com', '915478451', 'JosePiero_Anexo_Genérico', 1, 1),
-(2, 1, 2, 'Septiembre', '2024-09-20', '2025-03-20', 'MI_Tutor_Practicas', 'tutor_otro@gmail.com', '602278845', NULL, 0, 2);
+(2, 1, 2, 'Septiembre', '2024-09-20', '2025-03-20', 'MI_Tutor_Practicas', 'tutor_otro@gmail.com', '602278845', NULL, 0, 2),
+(3, 2, 1, 'Abril', '2024-03-06', '2024-03-15', 'empresa', 'email', '123123123', 'asasasas', 1, 1),
+(6, 1, 3, 'Abril', '2024-03-09', '2024-06-08', '123123123', '123123123@', '123123123', NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +106,8 @@ CREATE TABLE `anexo_ciclo` (
 --
 
 INSERT INTO `anexo_ciclo` (`ID_Practica`, `ID_Ciclo_Formativo`) VALUES
-(1, 1);
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -230,18 +230,20 @@ INSERT INTO `centro_formativo` (`ID_Centro_Formativo`, `Nombre`, `CIF`, `DUENYO`
 
 CREATE TABLE `ciclos_formativos` (
   `ID_Ciclo_Formativo` int(11) NOT NULL,
-  `Nombre_Ciclo` varchar(80) NOT NULL
+  `Nombre_Ciclo` varchar(80) NOT NULL,
+  `Familia_profesional` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `ciclos_formativos`
 --
 
-INSERT INTO `ciclos_formativos` (`ID_Ciclo_Formativo`, `Nombre_Ciclo`) VALUES
-(1, 'DAM'),
-(2, 'DAW'),
-(3, 'Marketing'),
-(4, 'Infantil');
+INSERT INTO `ciclos_formativos` (`ID_Ciclo_Formativo`, `Nombre_Ciclo`, `Familia_profesional`) VALUES
+(1, 'DAM', 'INFORMÁTICA Y COMUNICACIONES'),
+(2, 'DAW', 'INFORMÁTICA Y COMUNICACIONES'),
+(3, 'Marketing', 'ECONOMÍA'),
+(4, 'Infantil', 'ENSEÑANZA'),
+(5, 'Prueba Final', 'Registro');
 
 -- --------------------------------------------------------
 
@@ -352,15 +354,18 @@ CREATE TABLE `control_practicas` (
   `ID_Practica` int(11) NOT NULL,
   `Tutor_CFP` varchar(100) NOT NULL,
   `Direccion_Prácticas` varchar(200) NOT NULL,
-  `ID_Anexo` int(11) NOT NULL
+  `ID_Anexo` int(11) NOT NULL,
+  `Hora_Entrada` varchar(5) NOT NULL DEFAULT '09:00',
+  `Hora_Salida` varchar(5) NOT NULL DEFAULT '17:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `control_practicas`
 --
 
-INSERT INTO `control_practicas` (`ID_Practica`, `Tutor_CFP`, `Direccion_Prácticas`, `ID_Anexo`) VALUES
-(1, 'Tutor_Prácticas_Centro', 'Dirección empresa que no tiene que ser la  misma que la  dad en empresa', 1);
+INSERT INTO `control_practicas` (`ID_Practica`, `Tutor_CFP`, `Direccion_Prácticas`, `ID_Anexo`, `Hora_Entrada`, `Hora_Salida`) VALUES
+(1, 'Tutor_Prácticas_Centro', 'Dirección empresa que no tiene que ser la  misma que la  dad en empresa', 1, '09:00', '17:00'),
+(2, 'Admin Appellido', '123', 1, '09:00', '17:00');
 
 -- --------------------------------------------------------
 
@@ -441,7 +446,8 @@ CREATE TABLE `practicas_alumnos` (
 INSERT INTO `practicas_alumnos` (`ID_Practica`, `ID_Alumno`) VALUES
 (1, 1),
 (1, 3),
-(1, 6);
+(1, 6),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -518,7 +524,6 @@ INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesid
 (3, 1, 'Abril', 3),
 (4, 3, 'Septiembre', 4),
 (5, 2, 'Septiembre', 5),
-(6, 4, 'Abril', 1),
 (7, 5, 'Septiembre', 1);
 
 -- --------------------------------------------------------
@@ -716,7 +721,7 @@ ALTER TABLE `alumnos`
 -- AUTO_INCREMENT de la tabla `anexos`
 --
 ALTER TABLE `anexos`
-  MODIFY `ID_Anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_Anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `anyo_necesidad`
@@ -740,7 +745,7 @@ ALTER TABLE `centro_formativo`
 -- AUTO_INCREMENT de la tabla `ciclos_formativos`
 --
 ALTER TABLE `ciclos_formativos`
-  MODIFY `ID_Ciclo_Formativo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_Ciclo_Formativo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `contacto_empresa`
@@ -764,7 +769,7 @@ ALTER TABLE `control_empresas`
 -- AUTO_INCREMENT de la tabla `control_practicas`
 --
 ALTER TABLE `control_practicas`
-  MODIFY `ID_Practica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_Practica` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa_bolsa`

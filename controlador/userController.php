@@ -139,21 +139,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }else if(isset($Post["registrarNecesidad"])){
 
         $ID_Empresa = ($_POST["ID_Control_Empresa"]);
-        $Anyo = $_POST["anyo"];
-        $Cuadrante = $_POST["cuadrante"];
-        $contadorPracticas= ($_POST['contador']);
+        $Anyo = ($_POST["anyo"]);
+        $Cuadrante =($_POST["cuadrante"]);
+       // $contadorPracticas= ($_POST['contador']);
 
         //Aquí iría un for, que, va recogiendo las variables en dos arrays, uno de Enteros de id_Ciclo, otro de Enteros cantidad${contador}.
         //Esto es provisional
         $ID_Ciclo_Formativo1=($_POST["ID_Ciclo_Formativo"]);
-        $cantidad1= $_POST["cantidad1"];
+        $cantidad1=($_POST["cantidad1"]);
 
         $respuesta = registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante,$ID_Ciclo_Formativo1,$cantidad1);
 
         echo $respuesta;
 
 
-    }/*else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
+    }else if(isset($_POST["registrarEmpresaBolsa"])){
+
+        $nombre = limpiaString($_POST["nombre"]);
+        $email = limpiaString($_POST["email"]);
+        $telefono = limpiaString($_POST["telefono"]);
+
+        $respuesta = registrarEmpresaBolsa($nombre, $email, $telefono);
+
+        echo $respuesta;
+    }else if(isset($_POST["registrarNecesidadBolsa"])){
+
+        $ID_Empresa = ($_POST["ID_Control_Empresa"]);
+       // $contadorPracticas= ($_POST['contador']);
+
+        //Aquí iría un for, que, va recogiendo las variables en dos arrays, uno de Enteros de id_Ciclo, otro de Enteros cantidad${contador}.
+        //Esto es provisional
+        $ID_Ciclo_Formativo1=($_POST["ID_Ciclo_Formativo"]);
+        $cantidad1= ($_POST["cantidad1"]);
+        $Comentarios = ($_POST["Comentarios"]);
+
+        $respuesta = registrarNecesidadBolsa($ID_Empresa, $ID_Ciclo_Formativo1,$cantidad1,$Comentarios);
+
+        echo $respuesta;
+
+    }
+        /*else if(isset($_POST['buscarAlumno']) && $_POST['buscarAlumno'] == true){
         session_start();
         $parametro1 = limpiaString($_POST['nombre']);
         $parametro2 = $_SESSION['id_centro'];
