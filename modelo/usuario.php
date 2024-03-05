@@ -179,27 +179,27 @@ function registrarCiclo($nombreCiclo) {
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
-    $conn = ConexionBD::conectar();
+// function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
+//     $conn = ConexionBD::conectar();
 
-    if ($conn) {
-        $anyo_variable = $conn->query("SELECT ID_ANYO ");
-        // Insertar la Necesidad en la tabla necesidades
+//     if ($conn) {
+//         $anyo_variable = $conn->query("SELECT ID_ANYO ");
+//         // Insertar la Necesidad en la tabla necesidades
 
 
-        $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
+//         $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
 
       
-        $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
-        // Buscar el id del Convenio que tiene la empresa y el centro 
-                //SELECT control_convenios.ID_Convenio
-                        //FROM control_empresas,control_convenios
-                        //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
-                        //AND control_empresas.Nombre_Empresa = ?
-                        //AND control_convenios.ID_Centro_Formativo=?
+//         $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
+//         // Buscar el id del Convenio que tiene la empresa y el centro 
+//                 //SELECT control_convenios.ID_Convenio
+//                         //FROM control_empresas,control_convenios
+//                         //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
+//                         //AND control_empresas.Nombre_Empresa = ?
+//                         //AND control_convenios.ID_Centro_Formativo=?
                        
-                        $stmt->execute([ $Nombre_Empresa,
-                        $id_centro_educativo,]);
+//                         $stmt->execute([ $Nombre_Empresa,
+//                         $id_centro_educativo,]);
 
 
 
@@ -209,11 +209,11 @@ function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_socia
 
        
 
-        return json_encode(array('success' => 'Ciclo registrado con éxito.'));
-    }
+//         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
+//     }
 
-    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
-}
+//     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+// }
 
 /********************* Filtros de Busqueda ************************* */
 
@@ -252,7 +252,7 @@ function obtenerCiclosFormativos($consultaCiclos) {
 
 /********************* Editar Borrar ************************* */
 
-function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez) {
+function actualizarAlumno($id_alumno, $nombre, $apellido1, $dni, $id_ciclo_formativo, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez) {
     // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
     $conn = ConexionBD::conectar();
 
@@ -260,21 +260,22 @@ function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, 
         // Comenzar una transacción
         $conn->beginTransaction();
 
-        // Actualizar el alumno en la tabla alumnos
         $stmt = $conn->prepare("UPDATE alumnos 
-                        INNER JOIN ciclo_alumno ON alumnos.ID_Alumno = ciclo_alumno.ID_Alumno 
-                        SET alumnos.Nombre=?, alumnos.Apellido1=?, alumnos.DNI=?, alumnos.N_Seg_social=?, alumnos.TELF_Alumno=?, alumnos.EMAIL_Alumno=?, alumnos.Direccion=?, alumnos.Codigo_Postal=?, ciclo_alumno.ID_Ciclo_Formativo=?, alumnos.Activo=?, alumnos.Validez=? 
-                        WHERE alumnos.ID_Alumno=?");
-        $stmt->execute([$nombre, $apellidos, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_ciclo_formativo, $activo, $validez, $id_alumno]);
-        // Confirmar la transacción
-        $conn->commit();
+                        SET Nombre=?, Apellido1=?, DNI=?, N_Seg_social=?, TELF_Alumno=?, EMAIL_Alumno=?, Direccion=?, Codigo_Postal=?, Activo=?, Validez=?
+                        WHERE ID_Alumno=?");
+        $stmt->execute([$nombre, $apellido1, $dni, $N_Seg_social, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $activo, $validez, $id_alumno]);
 
-        // Obtener todos los ciclos formativos
-        $stmtCiclos = $conn->query("SELECT ID_Ciclo_Formativo, Nombre_Ciclo FROM ciclos_formativos");
-        $ciclos = $stmtCiclos->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $conn->prepare("UPDATE ciclo_alumno 
+                        SET ID_Ciclo_Formativo=?
+                        WHERE ID_Alumno=?");
+        $stmt->execute([$id_ciclo_formativo, $id_alumno]);
+        
+        $conn->commit();
+        
+
 
         // Devolver una respuesta JSON con los ciclos formativos y un mensaje de éxito
-        return json_encode(array('success' => 'Alumno actualizado con éxito.', 'ciclos' => $ciclos));
+        return json_encode(array('success' => 'Alumno actualizado con éxito.'));
     } catch(PDOException $e) {
         // Rollback en caso de error
         $conn->rollback();
@@ -282,7 +283,32 @@ function actualizarAlumno($id_alumno, $nombre, $apellidos, $dni, $N_Seg_social, 
     }
 }
 
+function actualizarEmpresa($id_empresa, $nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa) {
+    // Obtener la conexión a la base de datos utilizando el método conectar() de la clase ConexionBD
+    $conn = ConexionBD::conectar();
 
+    try {
+        // Comenzar una transacción
+        $conn->beginTransaction();
+
+        // Preparar la consulta SQL para actualizar los datos de la empresa
+        $sql = "UPDATE control_empresas 
+                SET Nombre_Empresa = ?, CIF = ?, Duenyo = ?, Firmante_Convenio = ?, Direccion = ?, EMAIL_Empresa = ?, TELF_Empresa = ? 
+                WHERE ID_Control_Empresa = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$nombre_empresa, $cif, $duenyo, $firmante_convenio, $direccion, $email_empresa, $telf_empresa, $id_empresa]);
+
+        // Commit de la transacción
+        $conn->commit();
+
+        // Devolver una respuesta JSON indicando el éxito de la operación
+        return json_encode(array('success' => 'Empresa actualizada con éxito.'));
+    } catch(PDOException $e) {
+        // Rollback en caso de error
+        $conn->rollback();
+        return json_encode(array('error' => 'Error al actualizar la empresa: ' . $e->getMessage()));
+    }
+}
 
 
 

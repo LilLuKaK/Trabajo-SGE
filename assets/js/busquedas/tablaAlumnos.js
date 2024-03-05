@@ -1,55 +1,25 @@
-document.addEventListener('DOMContentLoaded', function(){
-    const url = './controlador/userController.php';
+document.addEventListener('DOMContentLoaded', function() {
     const tabla = document.querySelector('#tablaAlumnos');
+
+    // Delegación de eventos para los botones de editar
+    tabla.addEventListener('click', function(event) {
+        const boton = event.target.closest('.edit');
+        
+        if (boton) {
+            event.preventDefault();
+            const idAlumno = boton.getAttribute('name');
+            console.log(idAlumno);
+            window.location.href = `./index.php?pages=editarAlumno&id=${idAlumno}`;
+        }
+    });
+
+    // Resto del código para la búsqueda y actualización de la tabla
+    const url = './controlador/userController.php';
     const buscarAlumno = document.querySelector('#buscarAlumno');
     const buscarDni = document.querySelector('#buscarDni');
     const botonBuscarValidez = document.querySelector('#searchBtn');
     const botonBuscar = document.querySelector('#last');
     const selectCiclos = document.querySelector('#ciclos');
-
-    // Función para asignar eventos de clic a los botones de editar y guardar
-    function asignarEventosEditarGuardar() {
-        tabla.querySelectorAll('.edit').forEach(btnEdit => {
-            btnEdit.addEventListener('click', function() {
-                const fila = btnEdit.closest('tr');
-                fila.classList.add('editando');
-                const btnSave = fila.querySelector('.save');
-                if (btnSave) {
-                    btnSave.style.display = 'inline';
-                }
-                
-                // Habilitar la edición de los campos de la fila
-                fila.querySelectorAll('input').forEach(input => {
-                    input.removeAttribute('readonly');
-                    input.classList.add('editable');
-                });
-
-                // Habilitar la edición de los campos "Validez" y "Activo"
-                fila.querySelectorAll('.validez-checkbox, .activo-checkbox').forEach(checkbox => {
-                    checkbox.removeAttribute('disabled');
-                });
-            });
-        });
-
-        tabla.querySelectorAll('.save').forEach(btnSave => {
-            btnSave.addEventListener('click', function() {
-                const fila = btnSave.closest('tr');
-                fila.classList.remove('editando');
-                btnSave.style.display = 'none';
-                
-                // Deshabilitar la edición de los campos de la fila
-                fila.querySelectorAll('input').forEach(input => {
-                    input.setAttribute('readonly', 'readonly');
-                    input.classList.remove('editable');
-                });
-
-                // Deshabilitar la edición de los campos "Validez" y "Activo"
-                fila.querySelectorAll('.validez-checkbox, .activo-checkbox').forEach(checkbox => {
-                    checkbox.setAttribute('disabled', 'disabled');
-                });
-            });
-        });
-    }
 
     // Función para realizar la búsqueda y actualizar la tabla
     function buscarYActualizar(parametros) {
@@ -67,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Evento de clic para buscar por nombre de alumno
     buscarAlumno.addEventListener('click', function(){
-        debugger;
         const nombre = document.querySelector('#nombre').value;
         buscarYActualizar({ buscarAlumno: true, nombre: nombre });
     });
@@ -134,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     <tr class="fila-alumno">
                         <td class='button-container'>
                             <button class='delete'><span class='material-symbols-sharp'>delete</span></button>
-                            <button class='edit'><span class='material-symbols-sharp'>edit</span></button>
+                            <a href='index.php?pages=editarAlumno'><button class='edit' name='${ID_Alumno}'><span class='material-symbols-sharp'>edit</span></abutton></a>
                             <button class='save' style='display: none'><span class='material-symbols-sharp'>save</span></button>
                         </td>
                         <td><input type='hidden' name='id' value='${ID_Alumno}'><span>${ID_Alumno}</span></td>
@@ -156,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function(){
             });
 
             // Asignar eventos de clic a los botones de editar y guardar
-            asignarEventosEditarGuardar();
+            // asignarEventosEditarGuardar();
         }
     }
 });
