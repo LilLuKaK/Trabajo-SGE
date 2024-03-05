@@ -36,7 +36,7 @@
                     </div>
                     <!-- Control de que la entrada sean números-->
                     <div class="form__control">
-                        <label for="nombre">Nombre de la Empresa</label>
+                        <label for="nombre">Año</label>
                         <div class="input">
                             <select name="ciclos" id="anyos" class="ciclos" sizeof="3">
                                     <?php
