@@ -12,7 +12,7 @@
     <div class="container">
         
         <?php
-        $activeLink = 'consultarEmpresas';
+        $activeLink = 'consultarEmpresasBolsa';
         include 'aside.php';
         ?>
 
@@ -20,7 +20,7 @@
             <section class="sign-in">
                 <article class="sign-in__details">
                     <div id="label">
-                        <h1>Crear Empresa</h1>
+                        <h1>Crear Empresa Bolsa de Trabajo</h1>
                         <p>Complete el siguiente formulario para crear una empresa</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">

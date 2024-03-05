@@ -10,14 +10,14 @@
     <div class="container">
         
         <?php
-        $activeLink = 'consultarNecesidad';
+        $activeLink = 'consultarNecesidadBolsa';
         include 'aside.php';
         ?>
 
         <div class="right">
             <div class="scroll">
                 <div class="top">
-                    <h1>Consulta de Necesidades</h1>
+                    <h1>Consulta de Necesidades Bolsa</h1>
                     <h2>Aquí podrás consultar, modificar y eliminar necesidades.</h2>
                 </div>
                 <div class="forms">
@@ -67,7 +67,7 @@
                         </thead>
                         <tbody>
                         <?php
-                        include_once './modelo/tablaNecesidades.php';
+                        include_once './modelo/tablaNecesidadesBolsa.php';
                         ?>
                         </tbody>
                     </table>

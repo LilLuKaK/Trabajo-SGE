@@ -20,7 +20,7 @@
             <section class="sign-in">
                 <article class="sign-in__details">
                     <div id="label">
-                        <h1>Crear Necesidad Nueva en labolsa de trabajo</h1>
+                        <h1>Crear Necesidad Nueva en la bolsa de trabajo</h1>
                         <p>Complete el siguiente formulario para crear una Nueva Necesidad</p>
                     </div>
                     <form class="sign-in__form" id="registroForm">

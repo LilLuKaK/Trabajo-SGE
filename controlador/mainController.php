@@ -55,6 +55,20 @@ if(isset($_GET['pages'])) {
         case 'consultarNecesidades':
             require_once 'vista/consultarNecesidades.php';
                 break;
+        case 'crearNecesidadBolsa':
+            require_once 'vista/crearNecesidadBolsa.php';
+            break;
+        case 'consultarNecesidadBolsa':
+            require_once 'vista/consultarNecesidadBolsa.php';
+                break;
+        case 'crearEmpresaBolsa':
+            require_once 'vista/crearEmpresaBolsa.php';
+            break;
+        case 'consultarEmpresasBolsa':
+            require_once 'vista/consultarEmpresaBolsa.php';
+            break;
+
+                
         default:
             require_once 'vista/landingPage.php';
             break;
