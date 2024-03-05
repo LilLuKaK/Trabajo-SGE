@@ -8,18 +8,27 @@
     //Necesita:
         //ID_Empresa de origen
         //ID_Centro Formativo
+        //en caso de conseguir la empresa origen, agregar esta línea al espacio en blanco:
+            //  AND control_empresas.ID_Control_Empresa=?
 
     session_start();
     $id_centro_educativo = $_SESSION['id_centro'];
+    var_dump($id_centro_educativo);
     if ($conn) {
         $stmt = $conn->prepare("
         SELECT anyo_necesidad.*,control_empresas.*,control_convenios.*
         FROM anyo_necesidad, control_empresas,control_convenios
         WHERE control_empresas.ID_Control_Empresa=control_convenios.ID_Control_Empresa
-        AND control_empresas.ID_Control_Empresa=?
+      
+
+
         AND anyo_necesidad.ID_Convenio=control_convenios.ID_Convenio
         AND control_convenios.ID_Centro_Formativo =?
+        ORDER BY anyo_necesidad.Anyo
+        DESC
         ");
+
+
         $stmt->execute([$id_centro_educativo]);
         // Verificar si se encontraron resultados
         if ($stmt->rowCount() > 0) {

@@ -41,7 +41,7 @@
                         <div class="input">
                             <select name="ciclos" id="anyos" class="ciclos" sizeof="3">
                                     <?php
-                                    //require_once'modelo\contoles_PHP\control_anyos.php';
+                                    require_once'modelo\contoles_PHP\control_anyos.php';
                                     ?>
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
@@ -49,8 +49,6 @@
                             <input type="hidden" value="buscarEmpresa">
                         </div>
                     </div>
-                    
-
                     <a href="index.php?pages=consultarAlumnos"><button class="new" id="all"><label>Mostrar todos</label><span class="material-symbols-sharp">list</span></button></a>
                     <h2>Debes de rellenar un campo y darle al botón de buscar, para hacer una consulta con un filtro.</h2>
                 </div>
