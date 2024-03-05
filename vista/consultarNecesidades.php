@@ -25,7 +25,7 @@
                         <label for="nombre">Nombre de la Empresa</label>
                         <div class="input">
                             <select name="ciclos" id="empresas" class="ciclos" sizeof="3">
-                                
+                            <option value="">---Selecciona Empresa---</option>
                                     <?php
                                     require_once'modelo\contoles_PHP\control_empresas.php';
                                     ?>
@@ -40,9 +40,8 @@
                         <label for="nombre">Año</label>
                         <div class="input">
                             <select name="ciclos" id="anyos" class="ciclos" sizeof="3">
-                                    <?php
-                                    require_once'modelo\contoles_PHP\control_anyos.php';
-                                    ?>
+                            <option value="">Selecciona el año</option>
+                                   
                             </select>
                             <span class="material-symbols-sharp expand">expand_more</span>
                             <button id="last" class="search" name="buscarEmpresa"><span class="material-symbols-sharp">manage_search</span></button>
@@ -89,7 +88,8 @@
     <script src="./assets/js/Editar_Borrar/editar.js"></script>
     <script src="./assets/js/busquedas/validez.js"></script>
     <script src="./assets/js/common/commonScript.js"></script>
-    <script src="./assets/js/crearNecesidad/crearNecesidadScript.js"></script>
+    <script src="./assets/js/consultarNecesidades/consultarNecesidades.js"></script>
+    <!-- <script src="./assets/js/crearNecesidad/crearNecesidadScript.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>

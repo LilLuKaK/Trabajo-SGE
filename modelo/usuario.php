@@ -345,7 +345,7 @@ function registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1
 var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
     //Esto es un sumatorio de todas las  cantidades que existen en el fichero rellenado actualmente
     //Como no puedo recorrer la cantidad total, pues, de momento se queda comentada.     
-    $Cantidad_TOTAL += $cantidad1;
+    // $Cantidad_TOTAL += $cantidad1;
 
     if ($conn) {
         $stmt = $conn->prepare("SELECT control_convenios.Convenios
@@ -379,7 +379,7 @@ var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
 
                     $stmt = $conn->prepare("INSERT INTO `vacantes` (`Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (?,?, ?)");
 
-                    if ($stmt->execute([$Cantidad_TOTAL, $Cuadrante, $id_Anyo])) {
+                    if ($stmt->execute([$cantidad1, $Cuadrante, $id_Anyo])) {
                         $id_Vacante_Ultimo = $conn->query("SELECT ID_Vacantes
                         FROM vacantes
                         ORDER BY ID_Vacantes DESC
