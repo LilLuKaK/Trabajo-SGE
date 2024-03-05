@@ -172,21 +172,21 @@ function registrarAlumno($nombre, $apellidos, $dni, $N_Seg_social, $Curriculum_V
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarCiclo($nombreCiclo)
-{
+function registrarCiclo($nombreCiclo, $familiaCiclo)
+{var_dump($nombreCiclo, $familiaCiclo);
     $conn = ConexionBD::conectar();
 
     if ($conn) {
         // Insertar el alumno en la tabla alumnos
-        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo) VALUES (?)");
-        $stmt->execute([$nombreCiclo]);
+        $stmt = $conn->prepare("INSERT INTO ciclos_formativos (Nombre_Ciclo, Familia_profesional) VALUES (?,?)");
+        $stmt->execute([$nombreCiclo, $familiaCiclo]);
 
         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
     }
 
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
-
+//Siento estos putos mosntruos de consultas, es lo que tienen no saber cómo hacer llamadsa funciones en PHP :C
 function registrarAnexo($cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $correoEmpresa, $telefonoEmpresa, $activo, $empresa)
 {
     $conn = ConexionBD::conectar();
@@ -256,7 +256,7 @@ function registrarAnexo($cuadrante, $fechaInicio, $fechaFin, $tutorEmpresa, $cor
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
-function registrarPractica($nombreAlumno, $tutoresCentro, $empresa, $fechainicio, $direccion)
+function registrarPractica($nombreAlumno, $tutoresCentro, $empresa, $fechainicio, $direccion,$hora_entrada,$hora_salida)
 {
     $conn = ConexionBD::conectar();
 
@@ -277,7 +277,7 @@ function registrarPractica($nombreAlumno, $tutoresCentro, $empresa, $fechainicio
 
 
     if ($conn) {
-       $stmt = $conn->prepare("SELECT anexos.ID_Anexo
+        $stmt = $conn->prepare("SELECT anexos.ID_Anexo
                                         FROM anexos
                                         JOIN control_convenios ON anexos.ID_Convenio = control_convenios.ID_Convenio
                                         JOIN control_empresas ON control_convenios.ID_Control_Empresa = control_empresas.ID_Control_Empresa
@@ -286,86 +286,124 @@ function registrarPractica($nombreAlumno, $tutoresCentro, $empresa, $fechainicio
                                         WHERE control_empresas.Nombre_Empresa = ?
                                         AND anyo_necesidad.Anyo = ?
                                         AND anexos.Cuadrante = ?;");
-                if ($stmt->execute([$empresa, $nombreAnyo, $cuadrante])) {
-                    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($fila) {
-                        $ID_Anexo = $fila['ID_Anexo'];
-                        var_dump($tutoresCentro, $direccion, $ID_Anexo);
-                        $stmt = $conn->prepare("INSERT INTO `control_practicas` (`Tutor_CFP`, `Direccion_Prácticas`, `ID_Anexo`)
-                        VALUES (?, ?, ?);");
+        if ($stmt->execute([$empresa, $nombreAnyo, $cuadrante])) {
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($fila) {
+                $ID_Anexo = $fila['ID_Anexo'];
+                var_dump($tutoresCentro, $direccion, $ID_Anexo);
+                $stmt = $conn->prepare("INSERT INTO `control_practicas` (`Tutor_CFP`, `Direccion_Prácticas`, `ID_Anexo`,`Hora_Entrada`,`Hora_Salida` )
+                        VALUES (?, ?, ?,?,?);");
 
-                        if ($stmt->execute([$tutoresCentro, $direccion, $ID_Anexo])) {
+                if ($stmt->execute([$tutoresCentro, $direccion, $ID_Anexo,$hora_entrada,$hora_salida])) {
 
-                            $ultimaPractica = $conn->query("SELECT ID_Practica
+                    $ultimaPractica = $conn->query("SELECT ID_Practica
                                                             FROM control_practicas
                                                             ORDER BY ID_Practica DESC
                                                             LIMIT 1");
-                            $ultimaPracticaRegistrada = $ultimaPractica->fetch(PDO::FETCH_ASSOC);
+                    $ultimaPracticaRegistrada = $ultimaPractica->fetch(PDO::FETCH_ASSOC);
 
-                            $stmt = $conn->prepare("SELECT ID_Ciclo_Formativo
+                    $stmt = $conn->prepare("SELECT ID_Ciclo_Formativo
                                                     FROM ciclo_alumno
                                                     WHERE ID_Alumno = ?
                                                     ORDER BY ID_Ciclo_Formativo DESC
                                                     LIMIT 1");
 
-                            if ($stmt->execute([$nombreAlumno])) {
-                                $fila = $stmt->fetch(PDO::FETCH_ASSOC);
-                                if ($fila) {
-                                    $Ciclo_Formativo = $fila['ID_Ciclo_Formativo'];
+                    if ($stmt->execute([$nombreAlumno])) {
+                        $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($fila) {
+                            $Ciclo_Formativo = $fila['ID_Ciclo_Formativo'];
 
-                                    var_dump($ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno, $Ciclo_Formativo);
-                                    $stmt = $conn->prepare("INSERT INTO practicas_alumnos (`ID_Practica`, `ID_Alumno`) VALUES (?, ?)");
-                                    $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno]);
+                            var_dump($ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno, $Ciclo_Formativo);
+                            $stmt = $conn->prepare("INSERT INTO practicas_alumnos (`ID_Practica`, `ID_Alumno`) VALUES (?, ?)");
+                            $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $nombreAlumno]);
 
-                                    $stmt = $conn->prepare("INSERT INTO anexo_ciclo (`ID_Practica`, `ID_Ciclo_Formativo`) VALUES (?, ?)");
-                                    $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $Ciclo_Formativo]);
-                                    return json_encode(array('success' => 'Práctica registrada con éxito.'));
-                                } return json_encode(array('error' => 'Última Práctica no encontrada'));
-                            } return json_encode(array('error' => 'Ultimo Curso no encontrado..'));
-                        } return json_encode(array('error' => 'No se pudo insertar la práctica'));
-                    } return json_encode(array('error' => 'ID Anexo no encontrado.'));
-                } return json_encode(array('error' => 'Error Al ejecutar la consulta de búsqueda de Anexo.'));
-            
-        
+                            $stmt = $conn->prepare("INSERT INTO anexo_ciclo (`ID_Practica`, `ID_Ciclo_Formativo`) VALUES (?, ?)");
+                            $stmt->execute([$ultimaPracticaRegistrada['ID_Practica'], $Ciclo_Formativo]);
+                            return json_encode(array('success' => 'Práctica registrada con éxito.'));
+                        }
+                        return json_encode(array('error' => 'Última Práctica no encontrada'));
+                    }
+                    return json_encode(array('error' => 'Ultimo Curso no encontrado..'));
+                }
+                return json_encode(array('error' => 'No se pudo insertar la práctica'));
+            }
+            return json_encode(array('error' => 'ID Anexo no encontrado.'));
+        }
+        return json_encode(array('error' => 'Error Al ejecutar la consulta de búsqueda de Anexo.'));
+
+
     }
     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
 }
 
- function registrarNecesidad($Nombre_Empresa, $cantidad, $cuadrante, $N_Seg_social, $Curriculum_Vitae, $TELF_Alumno, $EMAIL_Alumno, $Direccion, $Codigo_Postal, $id_centro_educativo, $id_ciclo_formativo, $activo, $validez) {
-     $conn = ConexionBD::conectar();
+function registrarNecesidad($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1)
+{
+    $conn = ConexionBD::conectar();
+    $id_Anyo = 0;
+    $id_convenio = 0;
+    $id_Vacante = 0;
+var_dump($ID_Empresa, $Anyo, $Cuadrante, $ID_Ciclo_Formativo1, $cantidad1);
+    //Esto es un sumatorio de todas las  cantidades que existen en el fichero rellenado actualmente
+    //Como no puedo recorrer la cantidad total, pues, de momento se queda comentada.     
+    $Cantidad_TOTAL += $cantidad1;
 
-     if ($conn) {
-         $anyo_variable = $conn->query("SELECT ID_ANYO ");
-// Insertar la Necesidad en la tabla necesidades
+    if ($conn) {
+        $stmt = $conn->prepare("SELECT control_convenios.Convenios
+        FROM control_convenios
+        WHERE  control_convenios.ID_Convenio = ?;");
+        if ($stmt->execute([$ID_Empresa])) {
+            $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($fila) {
+                $id_convenio = $fila['Convenios'];
+                $stmt = $conn->prepare("SELECT anyo_necesidad.ID_Anyo_Necesidad
+                                                from anyo_necesidad
+                                                where anyo_necesidad.Anyo=?
+                                                AND anyo_necesidad.ID_Convenio= ?;");
+                if ($stmt->execute([$Anyo, $id_convenio])) {
+                    $fila = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($fila) {
+                        $id_Anyo = $fila['ID_Anyo_Necesidad'];
+                       
+                    } else {
+                        $stmt = $conn->prepare("INSERT INTO `anyo_necesidad` ( `Anyo`, `ID_Convenio`) VALUES ('?', '?')");
+                        if ($stmt->execute([$Anyo, $id_convenio])) {
+                            $id_Anyo_Ultimo = $conn->query("SELECT ID_Practica
+                                                            FROM control_practicas
+                                                            ORDER BY ID_Practica DESC
+                                                            LIMIT 1");
+                            $id_Anyo = $id_Anyo_Ultimo->fetch(PDO::FETCH_ASSOC);
+                        }else{
+                            return json_encode(array('success' => 'fallo al escribir el anyo necesidad'));
+                        }
+                    }//Si no encuentra un año, lo crea.
+
+                    $stmt = $conn->prepare("INSERT INTO `vacantes` (`Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (?,?, ?)");
+
+                    if ($stmt->execute([$Cantidad_TOTAL, $Cuadrante, $id_Anyo])) {
+                        $id_Vacante_Ultimo = $conn->query("SELECT ID_Vacantes
+                        FROM vacantes
+                        ORDER BY ID_Vacantes DESC
+                        LIMIT 1");
+                        $id_Vacante = $id_Vacante_Ultimo->fetch(PDO::FETCH_ASSOC);
 
 
-         $stmt = $conn->prepare("INSERT INTO `vacantes` (`ID_Vacantes`, `Cantidad`, `Cuadrante`, `ID_Anyo_Necesidad`) VALUES (NULL, ?, ?, '4')");
 
-
-         $stmt->execute([$cantidad,$cuadrante,anyo_variable]);
-         // Buscar el id del Convenio que tiene la empresa y el centro 
-                 //SELECT control_convenios.ID_Convenio
-                         //FROM control_empresas,control_convenios
-                         //WHERE control_empresas.ID_Control_Empresa = control_convenios.ID_Control_Empresa
-                         //AND control_empresas.Nombre_Empresa = ?
-                         //AND control_convenios.ID_Centro_Formativo=?
-
-                         $stmt->execute([ $Nombre_Empresa,
-                         $id_centro_educativo,]);
-
-
-
-
-
-
-
-
-
-         return json_encode(array('success' => 'Ciclo registrado con éxito.'));
-              }
-
-     return json_encode(array('error' => 'Error de conexión a la base de datos.'));
- }
+                        $stmt = $conn->prepare("INSERT INTO `vacantes_ciclo` (`ID_Vacantes`, `ID_Ciclo_Formativo`, `cantidad`) VALUES (?, ?, ?)");
+                        if ($stmt->execute([$id_Vacante, $ID_Ciclo_Formativo1, $cantidad1])) {
+                            return json_encode(array('success' => 'Esta empresa no tiene Convenio con el centro.'));
+                        }
+                        return json_encode(array('success' => 'error al escribir una vacante_Ciclo'));
+                    }
+                    return json_encode(array('success' => 'Error al insertar una vacante'));
+                }
+                return json_encode(array('success' => 'fallo al escribir o leer Anyo Necesidad'));
+            }
+            return json_encode(array('success' => 'fallo en la base de datos 2'));
+        }
+        return json_encode(array('success' => 'ID Empresa no encontrado'));
+    }
+    return json_encode(array('error' => 'Error de conexión a la base de datos.'));
+}
 
 /********************* Filtros de Busqueda ************************* */
 

@@ -29,7 +29,11 @@
                             <input type="text" id="nombreCiclo" name="nombreCiclo" placeholder="Introduce el nombre completo">
                             <div id="nombreCiclo-error"></div>
                         </div>
-                        
+                        <div class="form__control">
+                            <label for="familiaCiclo">Familia Profesional</label>
+                            <input type="text" id="familiaCiclo" name="familiaCiclo" placeholder="Introduce el nombrede la familia Profesional a la que pertenece el completo">
+                            <div id="familiaCiclo-error"></div>
+                        </div>                        
                         <input type="hidden" name="registrarCiclo" value="registrarCiclo">
                         <input type="submit" class="btn primary" value="Registrar" name="registrarCiclo" id="buttonEnviar">
                         <a href="index.php?pages=consultarCiclo" class="btn primary">Cancelar</a>

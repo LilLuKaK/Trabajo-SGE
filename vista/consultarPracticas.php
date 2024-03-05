@@ -73,6 +73,11 @@
                                 <th>Cuadrante</th>
                                 <th>Anexo</th>
                                 <th>Versionado</th>
+                                <th>Horario</th>
+                                <th>Horas Totales</th> <!--Recoge la hora de entrada y la de salida, y las resta, 
+                                                            y luego multiplica por la diferencia de días de fecha
+                                                            de inicio con fecha final o, si no hay, por la Fecha Actual
+                                                            *OJO* son Varchar
                             </tr>
                         </thead>
                         <tbody>
